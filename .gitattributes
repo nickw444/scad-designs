@@ -1,0 +1,3 @@
+# Golden-master meshes are intentionally versioned but should not produce huge text diffs.
+tests/reference/*.stl -diff
+
