@@ -20,11 +20,11 @@ all: validate
 render: check-openscad $(OUTPUTS)
 
 validate: render
-	$(PYTHON) tools/stl_compare.py tests/reference/ucg-ultra-4-keystone.stl $(BUILD)/ucg-ultra-4-keystone.stl
-	$(PYTHON) tools/stl_compare.py tests/reference/nbn-ntd-6-keystone-panel.stl $(BUILD)/nbn-ntd-6-keystone-panel.stl
-	$(PYTHON) tools/stl_compare.py tests/reference/nbn-ntd-6-keystone-labels.stl $(BUILD)/nbn-ntd-6-keystone-labels.stl
-	$(PYTHON) tools/stl_compare.py tests/reference/10-port-two-thirds-u-panel.stl $(BUILD)/10-port-two-thirds-u-panel.stl
-	$(PYTHON) tools/stl_compare.py tests/reference/10-port-two-thirds-u-labels.stl $(BUILD)/10-port-two-thirds-u-labels.stl
+	$(PYTHON) tools/stl_compare.py tests/reference/geometry.json $(BUILD)/ucg-ultra-4-keystone.stl --model ucg-ultra-4-keystone
+	$(PYTHON) tools/stl_compare.py tests/reference/geometry.json $(BUILD)/nbn-ntd-6-keystone-panel.stl --model nbn-ntd-6-keystone-panel
+	$(PYTHON) tools/stl_compare.py tests/reference/geometry.json $(BUILD)/nbn-ntd-6-keystone-labels.stl --model nbn-ntd-6-keystone-labels
+	$(PYTHON) tools/stl_compare.py tests/reference/geometry.json $(BUILD)/10-port-two-thirds-u-panel.stl --model 10-port-two-thirds-u-panel
+	$(PYTHON) tools/stl_compare.py tests/reference/geometry.json $(BUILD)/10-port-two-thirds-u-labels.stl --model 10-port-two-thirds-u-labels
 
 check-openscad:
 	@test -n "$(OPENSCAD)" || (echo "OpenSCAD was not found; set OPENSCAD=/path/to/OpenSCAD" >&2; exit 1)
@@ -49,4 +49,3 @@ $(BUILD)/10-port-two-thirds-u-labels.stl: $(PATCH) lib/rack/patch_panel.scad | $
 
 clean:
 	rm -f $(OUTPUTS)
-

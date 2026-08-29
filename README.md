@@ -8,7 +8,7 @@ Parametric OpenSCAD source for printable designs, with reusable geometry kept se
 lib/                         Reusable modules and geometry
   rack/                      Focused shared rack geometry
 models/                      One directory and entry point per printable model
-tests/reference/             Golden-master STLs from the original designs
+tests/reference/             Compact validated geometry manifest
 tools/                       Repository validation utilities
 build/                       Generated files (not committed)
 ```
@@ -34,7 +34,7 @@ make render
 make validate
 ```
 
-`make validate` renders all five production STLs and compares them with the original artifacts using triangle count, bounding box, surface area, volume, and an order-independent triangle fingerprint. Set `OPENSCAD=/path/to/OpenSCAD` when the executable is not on `PATH`; the Makefile also detects the standard macOS application bundle.
+`make validate` renders all five production STLs and compares them with the recorded original geometry using triangle count, bounding box, surface area, volume, and an order-independent triangle fingerprint. The original STL fixtures remain recoverable from the initial Git commit but are not carried in the current tree. Set `OPENSCAD=/path/to/OpenSCAD` when the executable is not on `PATH`; the Makefile also detects the standard macOS application bundle.
 
 ## Adding a model
 

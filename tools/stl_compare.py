@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import math
 import struct
 from pathlib import Path
@@ -84,12 +85,18 @@ def close(left: float, right: float, tolerance: float) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("reference", type=Path)
+    parser.add_argument("reference", type=Path, help="Reference STL or geometry manifest")
     parser.add_argument("candidate", type=Path)
+    parser.add_argument("--model", help="Model key when reference is a JSON manifest")
     parser.add_argument("--tolerance", type=float, default=1e-8)
     args = parser.parse_args()
 
-    expected = metrics(read_triangles(args.reference))
+    if args.reference.suffix == ".json":
+        if not args.model:
+            parser.error("--model is required with a JSON reference manifest")
+        expected = json.loads(args.reference.read_text())[args.model]
+    else:
+        expected = metrics(read_triangles(args.reference))
     actual = metrics(read_triangles(args.candidate))
     print(f"reference: {expected}")
     print(f"candidate: {actual}")
@@ -103,12 +110,9 @@ def main() -> int:
     equivalent &= all(
         close(expected[key], actual[key], args.tolerance) for key in scalar_keys
     )
+    equivalent &= expected["topology"] == actual["topology"]
     if equivalent:
-        print("equivalent: mesh counts, bounds, area, and volume match")
-        if expected["topology"] == actual["topology"]:
-            print("topology: exact triangle set match")
-        else:
-            print("topology: equivalent metrics with different triangulation/order")
+        print("equivalent: exact triangle set, bounds, area, and volume match")
         return 0
 
     print("equivalent: no")

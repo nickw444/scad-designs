@@ -1,6 +1,5 @@
-# Golden-master meshes
+# Reference geometry
 
-These STL files are the finished outputs copied from the working tree of `10-Inch-Rack-OpenSCAD` during migration on 2026-08-29. They are retained only to prove that refactoring and future shared-library changes preserve printable geometry.
+`geometry.json` records the validated properties of the original STL outputs without storing the 4.7 MB source meshes themselves. Each entry includes its triangle count, bounds, surface area, enclosed volume, and an order-independent SHA-256 fingerprint of its complete triangle set.
 
-ASCII STL facet order is not stable, so validation compares order-independent geometry rather than raw file hashes.
-
+The original golden-master STLs remain recoverable from the repository's initial commit, `5561d4c`.
