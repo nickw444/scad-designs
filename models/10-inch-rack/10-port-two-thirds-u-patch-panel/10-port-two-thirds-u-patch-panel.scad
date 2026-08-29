@@ -1,7 +1,7 @@
 // Numbered ten-port, two-thirds-U keystone patch panel for a 10-inch rack.
 // Export panel and labels separately for a multi-material print.
 
-include <../../lib/rack/patch_panel.scad>
+include <patch-panel.scad>
 
 /* [Output] */
 output_part = "assembled"; // [assembled: Complete preview, panel: Panel only, labels: Labels only]

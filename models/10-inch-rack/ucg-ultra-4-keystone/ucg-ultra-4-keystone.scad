@@ -1,7 +1,7 @@
 // Ubiquiti Cloud Gateway Ultra + four-keystone 10-inch rack mount.
 // Dimensions are millimetres. OpenSCAD Customizer parameters are grouped below.
 
-include <../../lib/rack/device_mount.scad>
+include <../device-mount.scad>
 
 /* [Output] */
 output_part = "assembled"; // [assembled: Complete mount, panel: Mount only, labels: Labels only]

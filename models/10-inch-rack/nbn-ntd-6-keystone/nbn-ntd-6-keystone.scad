@@ -1,7 +1,7 @@
 // NBN NTD + six numbered keystones, sized to pair with the 2/3U patch panel.
 // Export panel and labels separately for a multi-material print.
 
-include <../../lib/rack/device_mount.scad>
+include <../device-mount.scad>
 
 /* [Output] */
 output_part = "assembled"; // [assembled: Complete preview, panel: Mount only, labels: Labels only]
