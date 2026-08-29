@@ -8,10 +8,10 @@ Parametric OpenSCAD source for printable designs, with reusable geometry kept se
 lib/                         Reusable modules and geometry
   rack/                      Focused shared rack geometry
 models/                      One directory and entry point per printable model
-build/                       Generated files (not committed)
+build/                       Committed, ready-to-print STL outputs
 ```
 
-Model entry points own their measured dimensions, MakerWorld-facing parameters, preview orientation, and final render call. Reusable code belongs under `lib/` and does not render by itself. Keep generated STL, PNG, and 3MF files under `build/` unless a file is deliberately serving as a validation fixture.
+Model entry points own their measured dimensions, MakerWorld-facing parameters, preview orientation, and final render call. Reusable code belongs under `lib/` and does not render by itself. Ready-to-print STL exports are committed under `build/` and can be regenerated with `make render`.
 
 ## Models
 

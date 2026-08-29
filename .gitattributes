@@ -1,0 +1,2 @@
+# Rendered STL files are text-formatted but should be treated as binary artifacts.
+*.stl -diff
