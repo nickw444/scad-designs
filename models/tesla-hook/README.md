@@ -1,5 +1,7 @@
 # Tesla trunk hook with M6 nut trap
 
+[View this model on MakerWorld](https://makerworld.com/en/models/3237225-tesla-trunk-hook-with-captured-m6-nut).
+
 This version preserves the hook arms derived from the supplied
 `obj_1_Body1.stl` but replaces
 its printed M6×1 internal thread with a loose 7.2 mm bolt passage and a side-loaded

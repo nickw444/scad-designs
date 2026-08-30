@@ -17,13 +17,13 @@ Model entry points own their measured dimensions, MakerWorld-facing parameters, 
 
 | Model | Entry point | Rendered outputs |
 | --- | --- | --- |
-| NBN NTD rack mounts, 0/1/4/6 keystones | `models/10-inch-rack/nbn-ntd/` | four unnumbered mount variants |
-| UCG Ultra + four keystones | `models/10-inch-rack/ucg-ultra-4-keystone/ucg-ultra-4-keystone.scad` | assembled STL |
-| Numbered ten-port ⅔U patch panel | `models/10-inch-rack/10-port-two-thirds-u-patch-panel/10-port-two-thirds-u-patch-panel.scad` | panel and label STLs |
+| [NBN NTD rack mounts, 0/1/4/6 keystones](https://makerworld.com/en/models/3237154-nbn-ntd-10-inch-rack-mount-with-keystones-cm8200b) | `models/10-inch-rack/nbn-ntd/` | four unnumbered mount variants |
+| [UCG Ultra + four keystones](https://makerworld.com/en/models/3237102-1u-ucg-ultra-max-10-inch-rack-mount-4x-keystones) | `models/10-inch-rack/ucg-ultra-4-keystone/ucg-ultra-4-keystone.scad` | assembled STL |
+| [Numbered ten-port ⅔U patch panel](https://makerworld.com/en/models/3237051-10-port-2-3u-keystone-patch-panel-for-10-inch-rack) | `models/10-inch-rack/10-port-two-thirds-u-patch-panel/10-port-two-thirds-u-patch-panel.scad` | panel and label STLs |
 | [Parametric sous-vide pot lid](https://makerworld.com/en/models/3072514-sous-vide-pot-lid-cover-for-240mm-pot) | `models/sous-vide-pot-lid/sous-vide-pot-lid.scad` | pot-lid STL |
 | Sewing stitch guides | `models/stitch-guides/` | four labelled guide STLs |
 | [UniFi G5 PTZ soffit mount](https://makerworld.com/en/models/3095613-unifi-g5-ptz-soffit-ceiling-mount#profileId-3488652) | `models/unifi-g5-ptz-soffit-mount/unifi-g5-ptz-soffit-mount.scad` | three carriers and ceiling flange |
-| Tesla trunk hook with M6 nut trap | `models/tesla-hook/tesla-hook.scad` | nut-retained trunk hook |
+| [Tesla trunk hook with M6 nut trap](https://makerworld.com/en/models/3237225-tesla-trunk-hook-with-captured-m6-nut) | `models/tesla-hook/tesla-hook.scad` | nut-retained trunk hook |
 
 Open an entry point in OpenSCAD to use the Customizer. For numbered designs, choose `assembled` for previewing or export `panel` and `labels` separately for aligned multi-material parts.
 

@@ -4,6 +4,8 @@
 
 Tesla trunk hook with captured M6 nut
 
+Published at: https://makerworld.com/en/models/3237225-tesla-trunk-hook-with-captured-m6-nut
+
 ## Description
 
 A reinforced three-arm trunk hook for the exposed M6 bolt found in compatible

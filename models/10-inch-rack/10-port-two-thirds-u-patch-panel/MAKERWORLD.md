@@ -4,6 +4,8 @@
 
 10-port ⅔U keystone patch panel for a 10-inch rack
 
+Published at: https://makerworld.com/en/models/3237051-10-port-2-3u-keystone-patch-panel-for-10-inch-rack
+
 ## Description
 
 A space-efficient 10-inch rack patch panel holding ten numbered keystone jacks

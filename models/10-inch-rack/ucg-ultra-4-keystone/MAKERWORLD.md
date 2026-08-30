@@ -4,6 +4,8 @@
 
 UniFi Cloud Gateway Ultra 10-inch rack mount with four keystones
 
+Published at: https://makerworld.com/en/models/3237102-1u-ucg-ultra-max-10-inch-rack-mount-4x-keystones
+
 ## Description
 
 A compact 1U mount for fitting a Ubiquiti Cloud Gateway Ultra and four keystone
