@@ -15,7 +15,7 @@ component_fit_scale = 1.0; // [1:0.001:1.03]
 preserve_component_wall_thickness = false; // [true: Preserve wall thickness, false: Preserve nominal exterior]
 
 // Position of the component cradle within the usable space between the rack ears.
-component_alignment = "right"; // [left: Align left, right: Align right]
+component_alignment = "right"; // [left: Align left, center: Centre, right: Align right]
 // Remove the cradle roof behind the front plate for drop-in access and cooling.
 open_top = true;
 // Open a large framed aperture in the lower wall behind the front plate.
@@ -50,6 +50,10 @@ half_height_holes = true; // [true:Show partial holes at edges, false:Hide parti
 case_thickness = 6; // Thickness of case walls
 // Thickness of the front panel (the flat face plate).
 front_plate_thickness = 3.0;
+// Optional inset lip retained through the front portion of the faceplate.
+front_retaining_lip = 0;
+front_retaining_lip_depth = 0;
+front_retaining_lip_corner_radius = 0;
 // Flare the component entry outward by this amount per side.
 front_entry_chamfer = 0;
 // Front-to-back depth of the flared entry.
@@ -114,6 +118,7 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
     chassis_width = min(chassis_component_width + (2 * case_thickness), usable_width);
     chassis_height = min(chassis_component_height + (2 * case_thickness), height);
     chassis_x = component_alignment == "left" ? usable_left :
+                component_alignment == "center" ? usable_left + (usable_width - chassis_width) / 2 :
                 usable_right - chassis_width;
     corner_radius = 4.0;
     rear_clearance_depth = 7;
@@ -134,8 +139,11 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
     keystone_effective_column_gap = keystone_shared_walls ? -2.5 : keystone_gap;
     keystone_effective_row_gap = keystone_shared_walls ? -2.5 :
         (keystone_row_gap != 0 ? keystone_row_gap : keystone_gap);
-    keystone_grid_width = keystone_columns * keystone_outer_width + (keystone_columns - 1) * keystone_effective_column_gap;
-    keystone_grid_height = keystone_rows * keystone_outer_height + (keystone_rows - 1) * keystone_effective_row_gap;
+    keystone_enabled = keystone_columns > 0 && keystone_rows > 0;
+    keystone_grid_width = keystone_enabled ?
+        keystone_columns * keystone_outer_width + (keystone_columns - 1) * keystone_effective_column_gap : 0;
+    keystone_grid_height = keystone_enabled ?
+        keystone_rows * keystone_outer_height + (keystone_rows - 1) * keystone_effective_row_gap : 0;
     keystone_grid_left = keystone_layout == "left_block" ?
         usable_left + (chassis_x - usable_left - keystone_grid_width) / 2 :
         chassis_x + chassis_width + (usable_right - chassis_x - chassis_width - keystone_grid_width) / 2;
@@ -143,10 +151,12 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
     keystone_grid_available_width = keystone_layout == "left_block" ?
         chassis_x - usable_left : usable_right - (chassis_x + chassis_width);
 
-    assert(keystone_grid_width <= keystone_grid_available_width,
-        "Keystone grid does not fit beside the component; reduce columns/gap or change component alignment.");
-    assert(keystone_grid_height <= height,
-        "Keystone grid does not fit within the selected rack height; reduce rows/gap or increase rack height.");
+    if (keystone_enabled) {
+        assert(keystone_grid_width <= keystone_grid_available_width,
+            "Keystone grid does not fit beside the component; reduce columns/gap or change component alignment.");
+        assert(keystone_grid_height <= height,
+            "Keystone grid does not fit within the selected rack height; reduce rows/gap or increase rack height.");
+    }
 
     // Helper modules
     module capsule_slot_2d(L, H) {
@@ -236,16 +246,50 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
         }
     }
     
-    // Both retained designs use a fully open front cavity with no retaining lip.
     module switch_cutout() {
-        component_cutout_volume(
-            cutout_x,
-            (height - cutout_h) / 2,
-            cutout_w,
-            cutout_h,
-            -tolerance,
-            chassis_depth_main + 2*tolerance
-        );
+        if (front_retaining_lip > 0 && front_retaining_lip_depth > 0) {
+            lip_depth = min(front_retaining_lip_depth, chassis_depth_main);
+            overlap = 0.01;
+
+            translate([
+                cutout_x + front_retaining_lip,
+                (height - cutout_h) / 2 + front_retaining_lip,
+                -tolerance
+            ]) linear_extrude(height=lip_depth + tolerance + overlap) {
+                if (front_retaining_lip_corner_radius > 0) {
+                    rounded_rect_2d(
+                        cutout_w - 2 * front_retaining_lip,
+                        cutout_h - 2 * front_retaining_lip,
+                        front_retaining_lip_corner_radius
+                    );
+                } else {
+                    component_profile_2d(
+                        cutout_w - 2 * front_retaining_lip,
+                        cutout_h - 2 * front_retaining_lip,
+                        tolerance,
+                        component_fit_scale
+                    );
+                }
+            }
+
+            component_cutout_volume(
+                cutout_x,
+                (height - cutout_h) / 2,
+                cutout_w,
+                cutout_h,
+                lip_depth,
+                chassis_depth_main - lip_depth + tolerance
+            );
+        } else {
+            component_cutout_volume(
+                cutout_x,
+                (height - cutout_h) / 2,
+                cutout_w,
+                cutout_h,
+                -tolerance,
+                chassis_depth_main + 2*tolerance
+            );
+        }
     }
 
     module front_entry_chamfer_cutout() {
@@ -558,29 +602,33 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
 
 
     module keystone_grid_cutouts() {
-        for (row = [0:keystone_rows-1]) {
-            for (column = [0:keystone_columns-1]) {
-                translate([
-                    keystone_grid_left + column * (keystone_outer_width + keystone_effective_column_gap) + keystone_plate_overlap,
-                    keystone_grid_bottom + row * (keystone_outer_height + keystone_effective_row_gap) + keystone_plate_overlap,
-                    -tolerance
-                ]) cube([
-                    keystone_outer_width - 2 * keystone_plate_overlap,
-                    keystone_outer_height - 2 * keystone_plate_overlap,
-                    front_plate_thickness + 2 * tolerance
-                ]);
+        if (keystone_enabled) {
+            for (row = [0:keystone_rows-1]) {
+                for (column = [0:keystone_columns-1]) {
+                    translate([
+                        keystone_grid_left + column * (keystone_outer_width + keystone_effective_column_gap) + keystone_plate_overlap,
+                        keystone_grid_bottom + row * (keystone_outer_height + keystone_effective_row_gap) + keystone_plate_overlap,
+                        -tolerance
+                    ]) cube([
+                        keystone_outer_width - 2 * keystone_plate_overlap,
+                        keystone_outer_height - 2 * keystone_plate_overlap,
+                        front_plate_thickness + 2 * tolerance
+                    ]);
+                }
             }
         }
     }
 
     module keystone_grid() {
-        for (row = [0:keystone_rows-1]) {
-            for (column = [0:keystone_columns-1]) {
-                translate([
-                    keystone_grid_left + column * (keystone_outer_width + keystone_effective_column_gap),
-                    keystone_grid_bottom + row * (keystone_outer_height + keystone_effective_row_gap) + keystone_outer_height,
-                    0
-                ]) rotate([90,0,0]) rack_keystone_holder();
+        if (keystone_enabled) {
+            for (row = [0:keystone_rows-1]) {
+                for (column = [0:keystone_columns-1]) {
+                    translate([
+                        keystone_grid_left + column * (keystone_outer_width + keystone_effective_column_gap),
+                        keystone_grid_bottom + row * (keystone_outer_height + keystone_effective_row_gap) + keystone_outer_height,
+                        0
+                    ]) rotate([90,0,0]) rack_keystone_holder();
+                }
             }
         }
     }
@@ -589,7 +637,7 @@ module rack_device_mount(switch_width, switch_height, switch_depth) {
     // cradle's installed top is model -Y, so row zero is the visible top row.
     module keystone_grid_labels(extra_depth=0) {
         label_y_in_holder = 2.2;
-        if (port_labels) {
+        if (keystone_enabled && port_labels) {
             for (row = [0:keystone_rows-1]) {
                 for (column = [0:keystone_columns-1]) {
                     port_number = row * keystone_columns + column + 1;
