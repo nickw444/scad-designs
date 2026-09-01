@@ -22,6 +22,8 @@ UNIFI := $(UNIFI_DIR)/unifi-g5-ptz-soffit-mount.scad
 TESLA_HOOK_DIR := models/tesla-hook
 TESLA_HOOK := $(TESLA_HOOK_DIR)/tesla-hook.scad
 TESLA_HOOK_SOURCE := $(TESLA_HOOK_DIR)/source/tesla-hook-arms.stl
+TABLET_MOUNT_DIR := models/tablet-mount
+TABLET_MOUNT := $(TABLET_MOUNT_DIR)/tablet-mount.scad
 
 BUILD_DIRS := \
 	$(UCG_DIR)/build \
@@ -30,7 +32,8 @@ BUILD_DIRS := \
 	$(SOUS_VIDE_DIR)/build \
 	$(STITCH_DIR)/build \
 	$(UNIFI_DIR)/build \
-	$(TESLA_HOOK_DIR)/build
+	$(TESLA_HOOK_DIR)/build \
+	$(TABLET_MOUNT_DIR)/build
 
 OUTPUTS := \
 	$(UCG_DIR)/build/ucg-ultra-4-keystone.stl \
@@ -49,7 +52,10 @@ OUTPUTS := \
 	$(UNIFI_DIR)/build/unifi-g5-ptz-carrier-plus15mm.stl \
 	$(UNIFI_DIR)/build/unifi-g5-ptz-carrier-plus30mm.stl \
 	$(UNIFI_DIR)/build/unifi-g5-ptz-ceiling-flange.stl \
-	$(TESLA_HOOK_DIR)/build/tesla-hook-m6-nut.stl
+	$(TESLA_HOOK_DIR)/build/tesla-hook-m6-nut.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-round-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-flat-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-cleat.stl
 
 PREVIEWS := \
 	$(UCG_DIR)/preview.png \
@@ -130,6 +136,15 @@ $(UNIFI_DIR)/build/unifi-g5-ptz-ceiling-flange.stl: $(UNIFI) | $(UNIFI_DIR)/buil
 
 $(TESLA_HOOK_DIR)/build/tesla-hook-m6-nut.stl: $(TESLA_HOOK) $(TESLA_HOOK_SOURCE) | $(TESLA_HOOK_DIR)/build
 	"$(OPENSCAD)" -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-round-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="round_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-flat-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="flat_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-cleat.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="cleat"' -o $@ $<
 
 $(UCG_DIR)/preview.png: $(UCG) $(RACK_SHARED)
 	"$(OPENSCAD)" $(PREVIEW_FLAGS) -o $@ $<
