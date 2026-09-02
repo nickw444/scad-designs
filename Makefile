@@ -55,7 +55,14 @@ OUTPUTS := \
 	$(TESLA_HOOK_DIR)/build/tesla-hook-m6-nut.stl \
 	$(TABLET_MOUNT_DIR)/build/tablet-mount-round-housing.stl \
 	$(TABLET_MOUNT_DIR)/build/tablet-mount-flat-housing.stl \
-	$(TABLET_MOUNT_DIR)/build/tablet-mount-cleat.stl
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-round-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-flat-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-vertical-round-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-vertical-flat-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-european-uk-round-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-european-uk-flat-housing.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-cleat.stl \
+	$(TABLET_MOUNT_DIR)/build/tablet-mount-vertical-cleat.stl
 
 PREVIEWS := \
 	$(UCG_DIR)/preview.png \
@@ -143,8 +150,29 @@ $(TABLET_MOUNT_DIR)/build/tablet-mount-round-housing.stl: $(TABLET_MOUNT) | $(TA
 $(TABLET_MOUNT_DIR)/build/tablet-mount-flat-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
 	"$(OPENSCAD)" -D 'part="flat_housing"' -o $@ $<
 
+$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-round-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="australian_round_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-flat-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="australian_flat_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-vertical-round-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="australian_vertical_round_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-australian-vertical-flat-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="australian_vertical_flat_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-european-uk-round-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="european_uk_round_housing"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-european-uk-flat-housing.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="european_uk_flat_housing"' -o $@ $<
+
 $(TABLET_MOUNT_DIR)/build/tablet-mount-cleat.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
 	"$(OPENSCAD)" -D 'part="cleat"' -o $@ $<
+
+$(TABLET_MOUNT_DIR)/build/tablet-mount-vertical-cleat.stl: $(TABLET_MOUNT) | $(TABLET_MOUNT_DIR)/build
+	"$(OPENSCAD)" -D 'part="vertical_cleat"' -o $@ $<
 
 $(UCG_DIR)/preview.png: $(UCG) $(RACK_SHARED)
 	"$(OPENSCAD)" $(PREVIEW_FLAGS) -o $@ $<

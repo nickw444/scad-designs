@@ -24,7 +24,7 @@ Model entry points own their measured dimensions, MakerWorld-facing parameters, 
 | Sewing stitch guides | `models/stitch-guides/` | four labelled guide STLs |
 | [UniFi G5 PTZ soffit mount](https://makerworld.com/en/models/3095613-unifi-g5-ptz-soffit-ceiling-mount#profileId-3488652) | `models/unifi-g5-ptz-soffit-mount/unifi-g5-ptz-soffit-mount.scad` | three carriers and ceiling flange |
 | [Tesla trunk hook with M6 nut trap](https://makerworld.com/en/models/3237225-tesla-trunk-hook-with-captured-m6-nut) | `models/tesla-hook/tesla-hook.scad` | nut-retained trunk hook |
-| Flush tablet wall mount | `models/tablet-mount/tablet-mount.scad` | round-channel housing, flat-channel housing, and shared cleat |
+| [Flush tablet wall mount](https://makerworld.com/en/models/1693448-super-minimal-frameless-tablet-ipad-wall-mount#profileId-1795300) | `models/tablet-mount/tablet-mount.scad` | legacy, Australian, and European/UK housings with round/flat cable channels and matching cleats |
 
 Open an entry point in OpenSCAD to use the Customizer. For numbered designs, choose `assembled` for previewing or export `panel` and `labels` separately for aligned multi-material parts.
 

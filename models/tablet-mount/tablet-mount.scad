@@ -8,13 +8,16 @@
  */
 
 /* [Part] */
-part = "round_housing"; // [round_housing,flat_housing,cleat,assembly]
+part = "round_housing"; // [round_housing,flat_housing,australian_round_housing,australian_flat_housing,australian_vertical_round_housing,australian_vertical_flat_housing,european_uk_round_housing,european_uk_flat_housing,cleat,vertical_cleat,assembly,vertical_assembly]
 
 /* [Legacy-compatible cleat] */
 cleat_width = 100;
 cleat_height = 70;
 cleat_depth = 5;
 cleat_side_inset = 5;
+
+vertical_cleat_width = 70;
+vertical_cleat_height = 100;
 
 /* [Housing] */
 housing_width = 110;
@@ -34,11 +37,31 @@ entry_notch_bottom = 50;
 entry_notch_corner_radius = 3;
 
 /* [Fasteners] */
-screw_centres = [[30, 30], [70, 30]];
-screw_shaft_diameter = 5;
-screw_countersink_diameter = 10;
-screw_straight_height = 2.5;
-screw_countersink_height = 2.5;
+legacy_screw_centres = [[30, 30], [70, 30]];
+legacy_screw_shaft_diameter = 5;
+legacy_screw_countersink_diameter = 10;
+legacy_screw_straight_height = 2.5;
+legacy_screw_countersink_height = 2.5;
+
+// Australian electrical-box fixing pattern. The nominal M3.5 dome-head screw
+// envelope is 7.35 mm diameter by 1.93 mm high. Diametral and depth clearance
+// keep the head below the cleat pocket despite ordinary FDM variation.
+australian_screw_spacing = 84;
+australian_screw_y = housing_bottom + housing_height / 2;
+australian_screw_nominal_diameter = 3.5;
+australian_screw_diametral_clearance = 0.5;
+australian_head_nominal_diameter = 7.35;
+australian_head_diametral_clearance = 0.5;
+australian_head_nominal_depth = 1.93;
+australian_head_bore_depth = 3;
+
+// BS 4662 uses 60.3 mm centres. Continental European device boxes commonly
+// use 60.0 mm centres with smaller M3 screws; the 4.00 mm bore used here has
+// ample clearance for their 0.15 mm-per-side offset from this shared pattern.
+european_uk_screw_spacing = 60.3;
+
+vertical_housing_width = vertical_cleat_width + 10;
+vertical_housing_height = vertical_cleat_height + 10;
 
 /* [Cable routing] */
 cable_reservoir_centre = [50, 15.597899];
@@ -84,10 +107,30 @@ module cleat() {
     extrude_xz(profile, 0, cleat_height);
 }
 
+module vertical_cleat() {
+    profile = [
+        [0, 0],
+        [vertical_cleat_width, 0],
+        [vertical_cleat_width - cleat_side_inset, cleat_depth],
+        [cleat_side_inset, cleat_depth]
+    ];
+
+    extrude_xz(profile, 0, vertical_cleat_height);
+}
+
 module housing_blank() {
     translate([housing_left, housing_bottom, housing_back_z])
         rounded_rectangle_prism(
             [housing_width, housing_height],
+            housing_corner_radius,
+            housing_depth
+        );
+}
+
+module vertical_housing_blank() {
+    translate([housing_left, housing_bottom, housing_back_z])
+        rounded_rectangle_prism(
+            [vertical_housing_width, vertical_housing_height],
             housing_corner_radius,
             housing_depth
         );
@@ -114,38 +157,74 @@ module dovetail_pocket() {
     extrude_xz(pocket_transition_profile(1), 65, housing_height);
 }
 
-function pocket_transition_profile(amount) = [
+function pocket_transition_profile(amount, pocket_width = cleat_width) = [
     [-diagonal_clearance, pocket_floor_z],
-    [cleat_width + diagonal_clearance, pocket_floor_z],
-    [cleat_width + diagonal_clearance, 0],
-    [cleat_width - (1 - amount) * housing_front_z
+    [pocket_width + diagonal_clearance, pocket_floor_z],
+    [pocket_width + diagonal_clearance, 0],
+    [pocket_width - (1 - amount) * housing_front_z
         + diagonal_clearance, housing_front_z],
     [(1 - amount) * housing_front_z
         - diagonal_clearance, housing_front_z],
     [-diagonal_clearance, 0]
 ];
 
-module ruled_pocket_transition(y_start, y_end) {
+module ruled_pocket_transition(
+    y_start,
+    y_end,
+    pocket_width = cleat_width
+) {
     transition_steps = 256;
     transition_skin = 0.00005;
 
     for (step = [0 : transition_steps - 1])
         hull() {
             extrude_xz(
-                pocket_transition_profile(step / transition_steps),
+                pocket_transition_profile(
+                    step / transition_steps,
+                    pocket_width
+                ),
                 y_start + (y_end - y_start) * step / transition_steps
                     - transition_skin,
                 y_start + (y_end - y_start) * step / transition_steps
                     + transition_skin
             );
             extrude_xz(
-                pocket_transition_profile((step + 1) / transition_steps),
+                pocket_transition_profile(
+                    (step + 1) / transition_steps,
+                    pocket_width
+                ),
                 y_start + (y_end - y_start) * (step + 1)
                     / transition_steps - transition_skin,
                 y_start + (y_end - y_start) * (step + 1)
                     / transition_steps + transition_skin
             );
         }
+}
+
+module vertical_dovetail_pocket() {
+    captured_end_y = vertical_cleat_height - 10;
+    transition_end_y = captured_end_y + 5;
+    profile = [
+        [-diagonal_clearance, pocket_floor_z],
+        [vertical_cleat_width + diagonal_clearance, pocket_floor_z],
+        [vertical_cleat_width + diagonal_clearance, 0],
+        [vertical_cleat_width - housing_front_z + diagonal_clearance,
+         housing_front_z],
+        [housing_front_z - diagonal_clearance, housing_front_z],
+        [-diagonal_clearance, 0]
+    ];
+
+    extrude_xz(profile, 0, captured_end_y);
+    ruled_pocket_transition(
+        captured_end_y,
+        transition_end_y,
+        vertical_cleat_width
+    );
+    extrude_xz(
+        pocket_transition_profile(1, vertical_cleat_width),
+        transition_end_y,
+        vertical_housing_height
+    );
 }
 
 module entry_notch() {
@@ -186,18 +265,48 @@ module entry_notch() {
 module countersunk_screw_void(position) {
     translate([position[0], position[1], housing_back_z - epsilon]) {
         cylinder(
-            d = screw_shaft_diameter,
-            h = screw_straight_height + epsilon,
+            d = legacy_screw_shaft_diameter,
+            h = legacy_screw_straight_height + epsilon,
             $fn = 48
         );
-        translate([0, 0, screw_straight_height])
+        translate([0, 0, legacy_screw_straight_height])
             cylinder(
-                d1 = screw_shaft_diameter,
-                d2 = screw_countersink_diameter,
-                h = screw_countersink_height + epsilon,
+                d1 = legacy_screw_shaft_diameter,
+                d2 = legacy_screw_countersink_diameter,
+                h = legacy_screw_countersink_height + epsilon,
                 $fn = 48
             );
     }
+}
+
+module australian_counterbored_screw_void(position) {
+    shaft_diameter = australian_screw_nominal_diameter
+        + australian_screw_diametral_clearance;
+    head_diameter = australian_head_nominal_diameter
+        + australian_head_diametral_clearance;
+    head_depth = australian_head_bore_depth;
+    back_plate_depth = pocket_floor_z - housing_back_z;
+
+    // The shaft passes through the complete back plate. A flat-bottomed bore
+    // opens from the pocket side to house the dome head without imposing a
+    // countersink angle or allowing the head to interfere with the cleat.
+    translate([position[0], position[1], housing_back_z - epsilon])
+        cylinder(
+            d = shaft_diameter,
+            h = back_plate_depth + 2 * epsilon,
+            $fn = 48
+        );
+
+    translate([
+        position[0],
+        position[1],
+        pocket_floor_z - head_depth
+    ])
+        cylinder(
+            d = head_diameter,
+            h = head_depth + epsilon,
+            $fn = 48
+        );
 }
 
 module cable_void(channel_width) {
@@ -229,20 +338,88 @@ module cable_void(channel_width) {
             }
 }
 
-module housing(channel_width) {
+module mounting_screw_voids(mounting_pattern) {
+    if (mounting_pattern == "australian_horizontal") {
+        for (x = [
+            cleat_width / 2 - australian_screw_spacing / 2,
+            cleat_width / 2 + australian_screw_spacing / 2
+        ])
+            australian_counterbored_screw_void([x, australian_screw_y]);
+    } else if (mounting_pattern == "european_uk_horizontal") {
+        for (x = [
+            cleat_width / 2 - european_uk_screw_spacing / 2,
+            cleat_width / 2 + european_uk_screw_spacing / 2
+        ])
+            australian_counterbored_screw_void([x, australian_screw_y]);
+    } else {
+        for (position = legacy_screw_centres)
+            countersunk_screw_void(position);
+    }
+}
+
+module vertical_australian_mounting_screw_voids() {
+    plate_centre_x = housing_left + vertical_housing_width / 2;
+    plate_centre_y = housing_bottom + vertical_housing_height / 2;
+
+    for (y = [
+        plate_centre_y - australian_screw_spacing / 2,
+        plate_centre_y + australian_screw_spacing / 2
+    ])
+        australian_counterbored_screw_void([plate_centre_x, y]);
+}
+
+module housing(
+    channel_width,
+    mounting_pattern = "legacy",
+    full_back_plate = false
+) {
     difference() {
         housing_blank();
         dovetail_pocket();
-        entry_notch();
+        if (!full_back_plate)
+            entry_notch();
         cable_void(channel_width);
-        for (position = screw_centres)
-            countersunk_screw_void(position);
+        mounting_screw_voids(mounting_pattern);
+    }
+}
+
+module vertical_australian_housing(channel_width) {
+    plate_centre = [
+        housing_left + vertical_housing_width / 2,
+        housing_bottom + vertical_housing_height / 2
+    ];
+    cable_translation = [
+        plate_centre[0] - cable_reservoir_centre[0],
+        plate_centre[1] - cable_reservoir_centre[1],
+        0
+    ];
+
+    difference() {
+        vertical_housing_blank();
+        vertical_dovetail_pocket();
+        translate(cable_translation)
+            cable_void(channel_width);
+        vertical_australian_mounting_screw_voids();
     }
 }
 
 module selected_part() {
     if (part == "cleat") {
         cleat();
+    } else if (part == "vertical_cleat") {
+        vertical_cleat();
+    } else if (part == "australian_vertical_round_housing") {
+        vertical_australian_housing(round_channel_width);
+    } else if (part == "australian_vertical_flat_housing") {
+        vertical_australian_housing(flat_channel_width);
+    } else if (part == "australian_round_housing") {
+        housing(round_channel_width, "australian_horizontal", true);
+    } else if (part == "australian_flat_housing") {
+        housing(flat_channel_width, "australian_horizontal", true);
+    } else if (part == "european_uk_round_housing") {
+        housing(round_channel_width, "european_uk_horizontal", true);
+    } else if (part == "european_uk_flat_housing") {
+        housing(flat_channel_width, "european_uk_horizontal", true);
     } else if (part == "flat_housing") {
         housing(flat_channel_width);
     } else if (part == "assembly") {
@@ -250,6 +427,11 @@ module selected_part() {
         color("black", 0.65)
             translate([0, 0, pocket_floor_z + pocket_face_clearance])
                 cleat();
+    } else if (part == "vertical_assembly") {
+        vertical_australian_housing(round_channel_width);
+        color("black", 0.65)
+            translate([0, 0, pocket_floor_z + pocket_face_clearance])
+                vertical_cleat();
     } else {
         housing(round_channel_width);
     }
