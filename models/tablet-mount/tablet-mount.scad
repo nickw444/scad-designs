@@ -8,7 +8,7 @@
  */
 
 /* [Part] */
-part = "round_housing"; // [round_housing,flat_housing,australian_round_housing,australian_flat_housing,australian_vertical_round_housing,australian_vertical_flat_housing,european_uk_round_housing,european_uk_flat_housing,cleat,vertical_cleat,assembly,vertical_assembly]
+part = "round_housing"; // [round_housing,flat_housing,australian_round_housing,australian_flat_housing,australian_vertical_round_housing,australian_vertical_flat_housing,european_uk_round_housing,european_uk_flat_housing,us_vertical_round_housing,us_vertical_flat_housing,cleat,vertical_cleat,assembly,vertical_assembly,us_vertical_assembly]
 
 /* [Legacy-compatible cleat] */
 cleat_width = 100;
@@ -59,6 +59,17 @@ australian_head_bore_depth = 3;
 // use 60.0 mm centres with smaller M3 screws; the 4.00 mm bore used here has
 // ample clearance for their 0.15 mm-per-side offset from this shared pattern.
 european_uk_screw_spacing = 60.3;
+
+// US NEMA box-mount pattern. The standard 3.281 inch pitch converts to
+// 83.3374 mm; 83.34 mm is used here. US device-box screws are #6-32 UNC.
+// The slightly larger through bore accommodates normal FDM variation and the
+// oval-head pocket is deliberately flat so the head cannot enter the cleat.
+us_screw_spacing = 83.34;
+us_screw_nominal_diameter = 3.5052; // #6 major diameter, 0.1380 in
+us_screw_diametral_clearance = 0.5;
+us_head_nominal_diameter = 6.65; // #6 oval head, 0.262 in maximum
+us_head_diametral_clearance = 0.5;
+us_head_bore_depth = 3.5;
 
 vertical_housing_width = vertical_cleat_width + 10;
 vertical_housing_height = vertical_cleat_height + 10;
@@ -357,6 +368,34 @@ module mounting_screw_voids(mounting_pattern) {
     }
 }
 
+module us_counterbored_screw_void(position) {
+    shaft_diameter = us_screw_nominal_diameter
+        + us_screw_diametral_clearance;
+    head_diameter = us_head_nominal_diameter
+        + us_head_diametral_clearance;
+    back_plate_depth = pocket_floor_z - housing_back_z;
+
+    // The shaft passes through the complete back plate. A flat-bottomed bore
+    // houses the #6-32 oval head below the cleat pocket.
+    translate([position[0], position[1], housing_back_z - epsilon])
+        cylinder(
+            d = shaft_diameter,
+            h = back_plate_depth + 2 * epsilon,
+            $fn = 48
+        );
+
+    translate([
+        position[0],
+        position[1],
+        pocket_floor_z - us_head_bore_depth
+    ])
+        cylinder(
+            d = head_diameter,
+            h = us_head_bore_depth + epsilon,
+            $fn = 48
+        );
+}
+
 module vertical_australian_mounting_screw_voids() {
     plate_centre_x = housing_left + vertical_housing_width / 2;
     plate_centre_y = housing_bottom + vertical_housing_height / 2;
@@ -366,6 +405,17 @@ module vertical_australian_mounting_screw_voids() {
         plate_centre_y + australian_screw_spacing / 2
     ])
         australian_counterbored_screw_void([plate_centre_x, y]);
+}
+
+module vertical_us_mounting_screw_voids() {
+    plate_centre_x = housing_left + vertical_housing_width / 2;
+    plate_centre_y = housing_bottom + vertical_housing_height / 2;
+
+    for (y = [
+        plate_centre_y - us_screw_spacing / 2,
+        plate_centre_y + us_screw_spacing / 2
+    ])
+        us_counterbored_screw_void([plate_centre_x, y]);
 }
 
 module housing(
@@ -384,6 +434,14 @@ module housing(
 }
 
 module vertical_australian_housing(channel_width) {
+    vertical_box_housing(channel_width, "australian");
+}
+
+module vertical_us_housing(channel_width) {
+    vertical_box_housing(channel_width, "us");
+}
+
+module vertical_box_housing(channel_width, mounting_pattern) {
     plate_centre = [
         housing_left + vertical_housing_width / 2,
         housing_bottom + vertical_housing_height / 2
@@ -399,7 +457,10 @@ module vertical_australian_housing(channel_width) {
         vertical_dovetail_pocket();
         translate(cable_translation)
             cable_void(channel_width);
-        vertical_australian_mounting_screw_voids();
+        if (mounting_pattern == "us")
+            vertical_us_mounting_screw_voids();
+        else
+            vertical_australian_mounting_screw_voids();
     }
 }
 
@@ -412,6 +473,10 @@ module selected_part() {
         vertical_australian_housing(round_channel_width);
     } else if (part == "australian_vertical_flat_housing") {
         vertical_australian_housing(flat_channel_width);
+    } else if (part == "us_vertical_round_housing") {
+        vertical_us_housing(round_channel_width);
+    } else if (part == "us_vertical_flat_housing") {
+        vertical_us_housing(flat_channel_width);
     } else if (part == "australian_round_housing") {
         housing(round_channel_width, "australian_horizontal", true);
     } else if (part == "australian_flat_housing") {
@@ -429,6 +494,11 @@ module selected_part() {
                 cleat();
     } else if (part == "vertical_assembly") {
         vertical_australian_housing(round_channel_width);
+        color("black", 0.65)
+            translate([0, 0, pocket_floor_z + pocket_face_clearance])
+                vertical_cleat();
+    } else if (part == "us_vertical_assembly") {
+        vertical_us_housing(round_channel_width);
         color("black", 0.65)
             translate([0, 0, pocket_floor_z + pocket_face_clearance])
                 vertical_cleat();

@@ -2,7 +2,7 @@
 
 This project reproduces the legacy flush tablet mount in `../../tablet-mount/`
 as editable OpenSCAD geometry. It contains a shared tablet-side sliding cleat
-and eight wall-housing variants formed from cable-routing and wall-box options:
+and ten wall-housing variants formed from cable-routing and wall-box options:
 
 - `round_housing` and `australian_round_housing` have a 4 mm power-cable
   channel.
@@ -17,6 +17,9 @@ and eight wall-housing variants formed from cable-routing and wall-box options:
   vertical 84 mm centres and use a dedicated 70 × 100 mm vertical cleat.
 - The combined European/UK housings use horizontal 60.3 mm fixing centres and
   retain the original horizontal cleat.
+- The US housings use vertical 83.34 mm fixing centres for a standard US
+  single-gang box, #6-32 screw clearance, and the same dedicated vertical
+  cleat as the portrait Australian housings.
 
 The defaults preserve the legacy STL coordinate system, overall dimensions,
 fastener locations, cable reservoir, and mating geometry. The cleat is a
@@ -36,6 +39,8 @@ make models/tablet-mount/build/tablet-mount-australian-vertical-round-housing.st
 make models/tablet-mount/build/tablet-mount-australian-vertical-flat-housing.stl
 make models/tablet-mount/build/tablet-mount-european-uk-round-housing.stl
 make models/tablet-mount/build/tablet-mount-european-uk-flat-housing.stl
+make models/tablet-mount/build/tablet-mount-us-vertical-round-housing.stl
+make models/tablet-mount/build/tablet-mount-us-vertical-flat-housing.stl
 make models/tablet-mount/build/tablet-mount-cleat.stl
 make models/tablet-mount/build/tablet-mount-vertical-cleat.stl
 ```
@@ -78,6 +83,24 @@ clearances, depth, and 5 mm lead-in transition match the legacy cleat system,
 but its portrait dimensions require the separate cleat. The rear cable
 reservoir is centred at X = 35 mm, Y = 50 mm to remain clear of both mounting
 screws, and both round- and flat-channel housing variants are provided.
+
+## US single-gang electrical-box version
+
+The US box-mount pattern is 3.281 in (83.34 mm) between screw centres and is
+normally oriented vertically. The portrait US face plate is 80 × 110 mm, with
+fixing centres at X = 35 mm and Y = 8.33 mm / 91.67 mm. It uses #6-32 UNC
+machine screws, a 4.005 mm through bore, and a 7.15 × 3.50 mm flat-bottomed
+head bore sized around the maximum common #6 oval-head envelope with print
+clearance.
+
+The US housing uses the same 70 × 100 × 5 mm vertical cleat and cable routing
+as the portrait Australian housing. It is a dedicated pattern rather than a
+relabeled Australian version: the Australian variant is 84 mm between centres,
+while the US box pattern is 83.34 mm. Confirm the box and screw type before
+printing, especially for non-standard or retrofit boxes. The 80 × 110 mm face
+plate covers a typical 2¼ × 3¾ in (57.2 × 95.3 mm) single-gang box, leaving
+approximately 11.4 mm of lateral and 7.4 mm of vertical cover beyond the box
+when centred.
 
 ## European and UK electrical-box version
 

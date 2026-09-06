@@ -26,6 +26,7 @@ The updated files add regional electrical-box versions as well as the original w
 | Australian, landscape | Round, 4 mm, or flat, 12 mm | Electrical-box pattern, 84 mm horizontal centres | `tablet-mount-cleat.stl` (100 × 70 × 5 mm) |
 | Australian, portrait | Round, 4 mm, or flat, 12 mm | Electrical-box pattern, 84 mm vertical centres | `tablet-mount-vertical-cleat.stl` (70 × 100 × 5 mm) |
 | European / UK | Round, 4 mm, or flat, 12 mm | Electrical-box pattern, 60.3 mm horizontal centres | `tablet-mount-cleat.stl` (100 × 70 × 5 mm) |
+| US, portrait | Round, 4 mm, or flat, 12 mm | Standard US single-gang box, 83.34 mm vertical centres | `tablet-mount-vertical-cleat.stl` (70 × 100 × 5 mm) |
 
 Every housing retains the separate 3 mm IR-emitter channel. The round and flat
 options only change the power-cable channel.
@@ -36,8 +37,9 @@ options only change the power-cable channel.
 - `tablet-mount-australian-round-housing.stl` and `tablet-mount-australian-flat-housing.stl` — Australian landscape housings.
 - `tablet-mount-australian-vertical-round-housing.stl` and `tablet-mount-australian-vertical-flat-housing.stl` — Australian portrait housings.
 - `tablet-mount-european-uk-round-housing.stl` and `tablet-mount-european-uk-flat-housing.stl` — shared European / UK housings.
+- `tablet-mount-us-vertical-round-housing.stl` and `tablet-mount-us-vertical-flat-housing.stl` — US portrait housings.
 - `tablet-mount-cleat.stl` — horizontal tablet-side cleat for the basic, Australian landscape, and European / UK housings.
-- `tablet-mount-vertical-cleat.stl` — portrait tablet-side cleat for the Australian vertical housings.
+- `tablet-mount-vertical-cleat.stl` — portrait tablet-side cleat for the Australian and US vertical housings.
 
 ## Regional fixing dimensions
 
@@ -49,10 +51,15 @@ All dimensions below are in millimetres and refer to the housing face-plate coor
 | Australian, landscape | X = 8 and 92, Y = 35; 84 mm horizontal spacing | 4.00 mm through bore; 7.85 mm flat-bottomed head bore × 3.00 mm deep |
 | Australian, portrait | X = 35, Y = 8 and 92; 84 mm vertical spacing | 4.00 mm through bore; 7.85 mm flat-bottomed head bore × 3.00 mm deep |
 | European / UK | X = 19.85 and 80.15, Y = 35; 60.3 mm horizontal spacing | 4.00 mm through bore; 7.85 mm flat-bottomed head bore × 3.00 mm deep |
+| US, portrait | X = 35, Y = 8.33 and 91.67; 83.34 mm vertical spacing | 4.005 mm through bore; 7.15 mm flat-bottomed head bore × 3.50 mm deep for #6-32 screws |
 
 The Australian landscape and portrait patterns are intended for M3.5 dome-head screws. The nominal 3.5 mm screw uses a 4.00 mm printed bore, and the nominal 7.35 mm head uses a 7.85 mm counterbore. The portrait plate is 80 × 110 mm and uses the dedicated 70 × 100 mm vertical cleat.
 
 The European / UK pattern is centred on the same 110 × 80 mm housing as the basic mount. It matches the 60.3 mm centres commonly used by UK BS 4662 boxes. Continental European boxes commonly use 60.0 mm centres and M3 screws; the 4.00 mm bores provide the small positional tolerance needed for that 0.15 mm per-side difference. Check the box and screw size in your installation before printing.
+
+The US pattern follows the standard 3.281 in (83.34 mm) box-mount pitch and is vertical on the portrait 80 × 110 mm plate. It uses #6-32 UNC machine screws and the shared 70 × 100 × 5 mm vertical cleat. The larger head-pocket depth accommodates the taller oval-head screw while keeping it below the cleat pocket.
+
+The 80 × 110 mm face plate covers a typical 2¼ × 3¾ in (57.2 × 95.3 mm) US single-gang box, leaving approximately 11.4 mm of lateral and 7.4 mm of vertical cover beyond the box when centred. Measure unusual boxes, oversized openings, or existing wall-plate cut-outs before printing.
 
 The regional housings have a continuous rear face plate over the electrical box. The basic housing retains the original rear entry cut-down and original 40 mm fixing pattern.
 
