@@ -58,6 +58,14 @@ def run():
                                      x,-housing.RETAINER_Y)
         check(overlap(retainers[0],beam_probe)>0.1,
               f'retainer load-bearing beam too thin at x={x}')
+    for x in (-63.5,63.5):
+        end_probe=rectangular_prism(0.5,1,housing.RETAINER_SEAT_DEPTH-0.4,
+                                    housing.RETAINER_SEAT_DEPTH-0.1,
+                                    x,-housing.RETAINER_Y)
+        check(overlap(retainers[0],end_probe)>0.1,
+              f'retainer base does not continue to fixing at x={x}')
+    check(housing.FLANGE_THICKNESS-housing.RETAINER_SEAT_DEPTH>=1.2-1e-6,
+          'flange bridge above retainer slot is too thin')
     check(retainer_dims.RETAINER_HEAD_BORE_DEPTH-retainer_dims.RETAINER_HEAD_HEIGHT>=0.8,
           'M3 cap head does not fully recess in retainer')
     engaged_length = (retainer_dims.RETAINER_HEAD_BORE_DEPTH +

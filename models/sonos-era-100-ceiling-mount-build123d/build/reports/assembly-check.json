@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 136257.09803930498,
+    "volume_mm3": 135850.2981060622,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -96,7 +96,7 @@
     "watertight": true
   },
   "end-retainer": {
-    "volume_mm3": 18193.131682351126,
+    "volume_mm3": 18443.11560007576,
     "bounds_mm": [
       [
         -71.5,
@@ -171,7 +171,7 @@
     "grommet_flange_diameter_mm": 40.0,
     "m2_axes_checked": 8,
     "m3_axes_checked": 4,
-    "retainer_base_thickness_mm": 3.0,
+    "retainer_base_thickness_mm": 4.8,
     "retainer_centre_beam_height_mm": 7.2,
     "retainer_centre_beam_length_mm": 123.0,
     "retainer_bar_width_mm": 14.0,

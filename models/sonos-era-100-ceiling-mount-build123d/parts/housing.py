@@ -17,7 +17,7 @@ ROOF_VERTICAL_WALL = 10.0             # 7.1 mm normal thickness on 45° faces
 ROOF_CENTRE_CLEARANCE = 10.0          # dummy speaker rear apex to inner flat
 FLANGE_RADIUS = 122.5                 # Ø245; preserves 4 mm land beyond cutout
 FLANGE_THICKNESS = 6.0
-RETAINER_SEAT_DEPTH = 3.0             # end tabs seat within the flange, preserving seam contact
+RETAINER_SEAT_DEPTH = 4.8             # full-length beam; 1.2 mm flange bridge preserves seam
 RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
 RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
 RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
@@ -63,7 +63,7 @@ CEILING_SCREWS = [
 RETAINER_Y = 82.0                       # bring end bosses inward for ceiling seal land
 RETAINER_FIXINGS = [(sx * 67.2, sy * RETAINER_Y)
                     for sx in (-1, 1) for sy in (-1, 1)]
-RETAINER_BOSS_X = 10.2                 # local M3 wall outside the speaker opening
+RETAINER_BOSS_X = 10.2                 # M3 seat clears swept speaker envelope
 RETAINER_BOSS_Y = 12.8                 # 1.4 mm wall around full-width socket
 RETAINER_BOSS_OUTWARD_OFFSET = 0.0
 RETAINER_BOSS_RAMP_RISE = 8.0          # rear-down print: <45° outward growth
@@ -91,7 +91,7 @@ JOINT_HEAD_HEIGHT = 1.30
 JOINT_BOLT_UNDER_HEAD_LENGTH = 10.0   # 5.4 mm beyond 6 mm flange
 JOINT_COUNTERBORE_RADIUS = 1.80      # Ø3.6 for measured Ø3.3 round cup head
 JOINT_COUNTERBORE_DEPTH = 1.4       # 0.1 mm recess for ~1.3 mm head
-RETAINER_BAR_LENGTH = 143.0           # ends at the outer edge of each pad socket
+RETAINER_BAR_LENGTH = 143.0           # full-height base reaches both fixing bores
 END_JOINT_FIXINGS = [(sx * 35.0, sy * 96.5)
                      for sx in (-1, 1) for sy in (-1, 1)]
 END_JOINT_BOSS_RADIUS = JOINT_BOSS_RADIUS
