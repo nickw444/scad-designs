@@ -13,7 +13,7 @@ from parts import retainers as retainer_dims
 from parts.grommets import GROMMET_FLANGE_RADIUS, flat_cable_grommet
 from parts.template import ceiling_cutout_profile
 from paths import BUILD, REPORTS
-from speaker import SPEAKER_DEPTH, speaker_mockup
+from speaker import SPEAKER_DEPTH, SPEAKER_FRONT_Z, speaker_mockup
 
 OUT=REPORTS
 
@@ -42,6 +42,9 @@ def run():
     check(overlap(flange,shell)<0.001,'flange/shell overlap')
     house=flange+shell
     check(overlap(house,speaker)<0.001,'speaker/housing overlap')
+    rear_apex = SPEAKER_FRONT_Z + SPEAKER_DEPTH
+    check(abs(housing.INNER_APEX_Z-rear_apex-5.0)<1e-6,
+          'nominal rear apex clearance must be 5 mm')
     for distance in np.linspace(0,SPEAKER_DEPTH,15):
         check(overlap(house,Pos(0,0,-float(distance))*speaker)<0.001,
               f'speaker insertion collision at {distance:.1f} mm')
@@ -125,6 +128,8 @@ def run():
     grommet=direct.get('cable-grommet')
     flat_grommet=grommet_placement()*flat_cable_grommet()
     for item in (grommet, flat_grommet):
+        check(overlap(item,speaker)<0.001,
+              'rear cable grommet intersects nominal speaker envelope')
         bounds=item.bounding_box()
         check(bounds.max.Z>housing.OUTER_APEX_Z+1.4,
               'grommet flange must be on the rear/outside of roof')
@@ -146,6 +151,9 @@ def run():
         'cable_passage_diameter_mm':housing.CABLE_HOLE_DIAMETER,
         'nominal_plug_radial_clearance_mm':(housing.CABLE_HOLE_DIAMETER-housing.ASSUMED_PLUG_DIAMETER)/2,
         'grommet_flange_diameter_mm':2*GROMMET_FLANGE_RADIUS,
+        'speaker_rear_apex_z_mm':rear_apex,
+        'inner_roof_apex_z_mm':housing.INNER_APEX_Z,
+        'rear_apex_clearance_mm':housing.INNER_APEX_Z-rear_apex,
         'm2_axes_checked':len(housing.JOINT_FIXINGS+housing.END_JOINT_FIXINGS),
         'm3_axes_checked':len(housing.RETAINER_FIXINGS),
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,

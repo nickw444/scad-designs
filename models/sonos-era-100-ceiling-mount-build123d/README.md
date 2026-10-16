@@ -29,6 +29,8 @@ Dimensions live with the part that defines the feature. `speaker.py` owns the me
 
 The shell has a Ø32 mm rear cable passage for the factory plug, measured at approximately 30 mm across. Feed the plug through the shell before pressing a split TPU grommet around the cable. Both round- and flat-cable grommets have Ø40 mm rear flanges that cover the passage; their stems press into it. The [annotated cable-passage section](views/drawings/cable_passage.svg) measures the opening from the CAD solid. The plug allowance is based on an approximate measurement, so check its thickest orientation before printing the replacement shell. The optional teal flat seam gasket sits between the shell and ceiling flange.
 
+The prototype shell is 144.5 mm high from the flange interface plane to the rear outside face. Its inner flat roof is 5 mm beyond the modeled speaker rear apex; the physical speaker should be measured before treating this as a guaranteed fit.
+
 ## Rebuild and inspect
 
 From the repository root, create the shared environment and regenerate every declared output:
