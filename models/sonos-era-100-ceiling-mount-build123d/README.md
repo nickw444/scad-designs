@@ -1,0 +1,75 @@
+# Sonos Era 100 ceiling mount — build123d project
+
+This is a parametric [build123d](https://github.com/gumyr/build123d) recreation of `../sonos-era-100-ceiling-mount-2`. The source is Python/build123d algebra mode. STL files are print exports; STEP is available as an optional interchange export. No reference STEP or STL is imported to construct a part. XY is the ceiling plane, +Z points into the cavity, and dimensions are in millimetres.
+
+## Project layout
+
+| Location | Responsibility |
+| --- | --- |
+| `geometry.py` | Import bridge to the shared construction primitives in `../../tools/cad_geometry.py` |
+| `parts/` | Independently editable part builders with their own dimensions; each part imports mating dimensions from the part that owns them |
+| `parts/__init__.py` | Printable part registry |
+| `speaker.py` | Measured/inferred Era 100 dimensions and dummy for fit checks |
+| `assembly.py` | Installed positions and grille, grommet and optional gasket variants; uses shared `tools/cad_assembly.py` containers |
+| `views/assembly/` | One runnable Python camera definition beside each shaded colour PNG |
+| `views/sections/` | One runnable Python cut definition beside each exact section SVG |
+| `views/drawings/` | One runnable annotated dimension drawing beside its SVG |
+| `views/common.py` | Sonos assembly/part selection and colour palette; delegates output to shared `tools/cad_view_helpers.py` |
+| `render_views.py`, `render_sections.py`, `render_drawings.py` | Commands to regenerate all or selected views |
+| `regenerate.toml` | Build123d artifact stages used by the repository-root `uv run regen` command |
+| `build.py` | Individual part STL exports, with optional STEP export |
+| `export_assembly.py` | Selected installed assembly as a multi-solid STEP |
+| `validate.py` | Assembly clearance and export checks |
+| `validate_replication.py` | Optional reproduction comparison when the prior project is available beside this one |
+| `paths.py` | Project output paths |
+
+`assembly.make_assembly()` returns separate placed build123d solids as an `Assembly`. Its `compound()` method is suitable for rendering or inspection; it does not fuse the printed parts. The ceiling cutout template is a tool, so it is in the part registry but is not installed in the assembly.
+
+Dimensions live with the part that defines the feature. `speaker.py` owns the measured speaker envelope; `parts/housing.py` owns the shared shell/flange seats and fixing locations; the grille, retainers, grommets, gasket and cutout template define their own sizes and import only the mating dimensions they need. There is no global dimensions module.
+
+The shell has a Ø32 mm rear cable passage for the factory plug, measured at approximately 30 mm across. Feed the plug through the shell before pressing a split TPU grommet around the cable. Both round- and flat-cable grommets have Ø40 mm rear flanges that cover the passage; their stems press into it. The [annotated cable-passage section](views/drawings/cable_passage.svg) measures the opening from the CAD solid. The plug allowance is based on an approximate measurement, so check its thickest orientation before printing the replacement shell. The optional teal flat seam gasket sits between the shell and ceiling flange.
+
+## Rebuild and inspect
+
+From the repository root, create the shared environment and regenerate every declared output:
+
+```sh
+uv sync
+uv run regen sonos-era-100-ceiling-mount-build123d
+```
+
+Use `uv run regen sonos-era-100-ceiling-mount-build123d --only build`, `--only checks`, or `--only views` for one stage. For individual scripts, run from this model directory with the root environment:
+
+```sh
+../../.venv/bin/python build.py
+../../.venv/bin/python validate.py
+../../.venv/bin/python render_views.py
+../../.venv/bin/python render_sections.py
+../../.venv/bin/python render_drawings.py
+../../.venv/bin/python views/assembly/rear_assembly.py
+../../.venv/bin/python views/sections/flange_joint.py
+../../.venv/bin/python views/drawings/shell_insertion.py
+```
+
+Select a part or camera view by name:
+
+```sh
+../../.venv/bin/python build.py housing-shell end-retainer
+../../.venv/bin/python render_views.py exploded_assembly rear_with_gasket
+../../.venv/bin/python render_sections.py shell_centre_xz flange_joint
+../../.venv/bin/python render_drawings.py shell_insertion flange_fixings
+../../.venv/bin/python build.py housing-shell --step
+../../.venv/bin/python export_assembly.py --grille fine-hex-grille --gasket
+```
+
+Add a new printable part in `parts/`, then register its builder in `parts/__init__.py`. Copy a view script under `views/assembly/`, `views/sections/` or `views/drawings/` and set its camera, cut plane or measurement spans. Run that script directly to regenerate its adjacent image. The repository's [`tools/`](../../tools/README.md) directory has reusable native assembly rendering, measured drawing, exact STEP comparison, mesh comparison, and section helpers.
+
+The ten printable STL exports are in `build/`. Optional STEP exports go in `build/step/`. Generated views live beside their scripts under `views/`, while rerunnable audit reports go in `build/reports/`. The Python model is authoritative; STEP is useful only when passing editable solids to another CAD application.
+
+## Validation and source
+
+The assembly check covers the speaker dummy at 15 insertion positions, direct and optional flat-gasket builds, retainers, screw axes, a Ø30 mm plug passage, and cable grommet compression. The replication check confirms the unchanged parts against the prior project and proves that the shell differs from the prior STEP only by the enlarged cable cut. The two resized TPU grommets are checked as closed STL solids and by the assembly checks. For both hex grilles it compares every mesh vertex in both directions and checks face counts. The model's prior lineage credits the [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
+
+The replication check needs the older `../sonos-era-100-ceiling-mount-2` STEP and STL exports, which are not part of this checkpoint. When those files are available, run `../../.venv/bin/python validate_replication.py` from this directory. The standard `uv run regen` command runs the self-contained assembly check.
+
+The dummy's front and rear curves are based on owner measurements, not a manufacturer CAD model. Physical insertion, cable fit and grille pull-off force still require print testing.

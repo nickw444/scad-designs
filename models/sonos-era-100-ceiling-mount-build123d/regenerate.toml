@@ -1,0 +1,7 @@
+[project]
+type = "build123d"
+
+[stages]
+build = ["build.py"]
+checks = ["validate.py"]
+views = ["render_views.py", "render_sections.py", "render_drawings.py"]
