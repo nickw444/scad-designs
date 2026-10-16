@@ -21,9 +21,9 @@ RETAINER_SEAT_DEPTH = FLANGE_THICKNESS  # open channel: retainer passes through 
 RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
 RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
 RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
-RETAINER_CAPTURE_PAD_X = 13.65        # 3 mm past the outer end of the 143 mm bar
-RETAINER_CAPTURE_PAD_Y = 20.0         # 3 mm shoulder each side of the 14 mm bar
-RETAINER_CAPTURE_PAD_HEIGHT = 2.0    # flat bearing shoulder; flange pocket uses supports
+RETAINER_CAPTURE_OVERHANG = 3.0       # outer-end flange bearing, beyond the bar
+RETAINER_CAPTURE_ROOT = 0.5          # overlap into bar for a single solid
+RETAINER_CAPTURE_PAD_HEIGHT = 2.0    # flat bearing tab; flange pocket uses supports
 RETAINER_CAPTURE_XY_CLEARANCE = 0.2
 CLIP_LIP_TOP_Z = 0.68
 CLIP_SHOULDER_TOP_Z = 0.78
@@ -113,11 +113,12 @@ def retainer_pad_xy(x, y):
 
 
 def retainer_capture_pocket(x, y):
-    cx,cy=retainer_pad_xy(x,y)
+    sign=1 if x>0 else -1
+    cx=sign*(RETAINER_BAR_LENGTH/2+RETAINER_CAPTURE_OVERHANG/2)
     return rectangular_prism(
-        RETAINER_CAPTURE_PAD_X+2*RETAINER_CAPTURE_XY_CLEARANCE,
-        RETAINER_CAPTURE_PAD_Y+2*RETAINER_CAPTURE_XY_CLEARANCE,
-        -0.1,RETAINER_CAPTURE_PAD_HEIGHT,cx,cy)
+        RETAINER_CAPTURE_OVERHANG+2*RETAINER_CAPTURE_XY_CLEARANCE,
+        RETAINER_BAR_WIDTH+2*RETAINER_CAPTURE_XY_CLEARANCE,
+        -0.1,RETAINER_CAPTURE_PAD_HEIGHT,cx,y)
 
 
 def boss_wall_ramp(x, y, radius, shoulder_z, rise):

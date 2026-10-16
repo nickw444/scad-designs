@@ -71,15 +71,21 @@ def run():
           'retainer channel must pass all the way through the flange')
     for i,stop in enumerate(retainers):
         check(overlap(flange,Pos(0,0,0.5)*stop)>0.1,
-              f'retainer {i} shoulder does not capture flange')
-    capture_side_overlap=(housing.RETAINER_CAPTURE_PAD_Y-housing.RETAINER_BAR_WIDTH)/2
-    capture_outer_overlap=(abs(housing.RETAINER_FIXINGS[0][0])+
-                           housing.RETAINER_PAD_OUTWARD_OFFSET+
-                           housing.RETAINER_CAPTURE_PAD_X/2-
-                           housing.RETAINER_BAR_LENGTH/2)
-    check(abs(capture_side_overlap-3.0)<0.01 and
-          abs(capture_outer_overlap-3.0)<0.01,
-          'retainer shoulders must capture 3 mm of flange at sides and outer end')
+              f'retainer {i} outer tabs do not capture flange')
+        for sx in (-1,1):
+            tip=rectangular_prism(0.5,housing.RETAINER_BAR_WIDTH-1,0.3,1.7,
+                                  sx*(housing.RETAINER_BAR_LENGTH/2+1.5),
+                                  -housing.RETAINER_Y if i==0 else housing.RETAINER_Y)
+            check(overlap(stop,tip)>1 and overlap(flange,tip)<0.001,
+                  f'retainer {i} outer tab {sx} is missing or pocket is blocked')
+    capture_outer_overlap=housing.RETAINER_CAPTURE_OVERHANG
+    check(abs(capture_outer_overlap-3.0)<0.01,
+          'retainer tab must capture 3 mm of flange at each outer end')
+    for i,stop in enumerate(retainers):
+        side= -housing.RETAINER_Y if i==0 else housing.RETAINER_Y
+        check(overlap(stop,rectangular_prism(140,0.5,0.1,1.9,0,
+                                             side+housing.RETAINER_BAR_WIDTH/2+0.4))<0.001,
+              f'retainer {i} has an unwanted side shoulder')
     check(retainer_dims.RETAINER_HEAD_BORE_DEPTH-retainer_dims.RETAINER_HEAD_HEIGHT>=0.8,
           'M3 cap head does not fully recess in retainer')
     engaged_length = (retainer_dims.RETAINER_HEAD_BORE_DEPTH +
@@ -147,8 +153,14 @@ def run():
     check(overlap(gasket,raised)<0.001,'gasket/raised shell overlap')
     check(overlap(raised,flange)<0.001,'raised shell/flange overlap')
     check(overlap(raised,speaker)<0.001,'raised shell/speaker overlap')
+    check(overlap(gasket,Pos(0,0,0.05)*flange)>1,
+          'gasket does not contact flange')
+    check(overlap(gasket,Pos(0,0,-0.05)*raised)>1,
+          'gasket does not contact raised shell')
     for i,stop in enumerate(retainers):
         check(overlap(raised,stop)<0.001,f'raised shell/retainer {i} overlap')
+        check(overlap(gasket,Pos(0,0,0.05)*stop)>1,
+              f'gasket does not contact retainer {i}')
     cutout=ceiling_cutout_profile(-1,160)
     upper=shell & cylinder(0,0,housing.FLANGE_RADIUS+1,housing.FLANGE_THICKNESS,160)
     check((upper-cutout).volume<0.001,'shell exceeds ceiling cutout')
@@ -200,7 +212,6 @@ def run():
         'joint_head_counterbore_depth_mm':housing.JOINT_COUNTERBORE_DEPTH,
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
         'retainer_capture_shoulder_height_mm':housing.RETAINER_CAPTURE_PAD_HEIGHT,
-        'retainer_capture_side_overlap_mm':capture_side_overlap,
         'retainer_capture_outer_overlap_mm':capture_outer_overlap,
         'retainer_centre_beam_height_mm':housing.RETAINER_CENTRE_HEIGHT,
         'retainer_centre_beam_length_mm':housing.RETAINER_CENTRE_LENGTH,
