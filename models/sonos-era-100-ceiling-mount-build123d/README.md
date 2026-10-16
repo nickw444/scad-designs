@@ -31,6 +31,13 @@ The shell has a Ø32 mm rear cable passage for the factory plug, measured at app
 
 The prototype shell is 144.5 mm high from the flange interface plane to the rear outside face. Its inner flat roof is 5 mm beyond the modeled speaker rear apex; the physical speaker should be measured before treating this as a guaranteed fit.
 
+## Prototype fasteners
+
+- Four M3 × 10 mm cap-head bolts join the ceiling flange to the shell: two at the side midpoints and one at each end midpoint. Four more M3 × 10 mm cap-head bolts secure the two end retainers.
+- All eight cap heads are designed for Ø5.5 mm heads, 3.0 mm head height, and Ø5.8 × 4.0 mm counterbores. The M3 insert pilots are Ø4.0 mm for the measured Ø4.4 mm heat-set inserts.
+- The four joint bolts extend 8.0 mm past the flange into the insert pilots, or 7.4 mm with the optional 0.6 mm gasket. The retainer bolts extend 6.3 mm past their pad interface, or 5.7 mm with the gasket. The 20 mm bolts are too long for these pilots.
+- The six existing ceiling-mount screw holes remain sized for 6g screws.
+
 ## Rebuild and inspect
 
 From the repository root, create the shared environment and regenerate every declared output:
@@ -70,7 +77,7 @@ The ten printable STL exports are in `build/`. Optional STEP exports go in `buil
 
 ## Validation and source
 
-The assembly check covers the speaker dummy at 15 insertion positions, direct and optional flat-gasket builds, retainers, screw axes, a Ø30 mm plug passage, and cable grommet compression. The replication check confirms the unchanged parts against the prior project and proves that the shell differs from the prior STEP only by the enlarged cable cut. The two resized TPU grommets are checked as closed STL solids and by the assembly checks. For both hex grilles it compares every mesh vertex in both directions and checks face counts. The model's prior lineage credits the [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
+The assembly check covers the speaker dummy at 15 insertion positions, direct and optional flat-gasket builds, retainers, screw axes, a Ø30 mm plug passage, and cable grommet compression. The optional replication check confirms the three unchanged grille variants against the prior project; it records the seven intentionally revised parts as closed meshes. For both hex grilles it compares every mesh vertex in both directions and checks face counts. The model's prior lineage credits the [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
 
 The replication check needs the older `../sonos-era-100-ceiling-mount-2` STEP and STL exports, which are not part of this checkpoint. When those files are available, run `../../.venv/bin/python validate_replication.py` from this directory. The standard `uv run regen` command runs the self-contained assembly check.
 

@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 135850.2981060622,
+    "volume_mm3": 135613.42553148148,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -16,32 +16,32 @@
     "watertight": true
   },
   "housing-shell": {
-    "volume_mm3": 544258.0289623383,
+    "volume_mm3": 544196.5109518397,
     "bounds_mm": [
       [
         -72.30000305175781,
-        -99.69999694824219,
+        -100.5,
         6.0
       ],
       [
         72.30000305175781,
-        99.69999694824219,
+        100.5,
         150.5
       ]
     ],
     "watertight": true
   },
   "flat-seam-gasket": {
-    "volume_mm3": 1717.6934220693402,
+    "volume_mm3": 1715.505103642002,
     "bounds_mm": [
       [
         -72.30000305175781,
-        -99.69999694824219,
+        -100.5,
         6.0
       ],
       [
         72.30000305175781,
-        99.69999694824219,
+        100.5,
         6.599999904632568
       ]
     ],
@@ -144,16 +144,16 @@
     "watertight": true
   },
   "ceiling-cutout-template": {
-    "volume_mm3": 6363.703432718789,
+    "volume_mm3": 6335.375192426301,
     "bounds_mm": [
       [
         -73.30000305175781,
-        -100.6951904296875,
+        -101.4942398071289,
         0.0
       ],
       [
         73.30000305175781,
-        100.6951904296875,
+        101.4942398071289,
         1.5
       ]
     ],
@@ -172,14 +172,18 @@
     "speaker_rear_apex_z_mm": 138.5,
     "inner_roof_apex_z_mm": 143.5,
     "rear_apex_clearance_mm": 5.0,
-    "m2_axes_checked": 8,
-    "m3_axes_checked": 4,
+    "joint_m3_axes_checked": 4,
+    "retainer_m3_axes_checked": 4,
+    "joint_m3_10mm_insert_engagement_mm": 8.0,
+    "joint_m3_10mm_gasket_engagement_mm": 7.4,
+    "joint_head_counterbore_depth_mm": 4.0,
     "retainer_base_thickness_mm": 4.8,
     "retainer_centre_beam_height_mm": 7.2,
     "retainer_centre_beam_length_mm": 123.0,
     "retainer_bar_width_mm": 14.0,
     "retainer_head_bore_depth_mm": 4.0,
     "retainer_m3_10mm_insert_engagement_mm": 6.3,
+    "retainer_m3_10mm_gasket_engagement_mm": 5.7,
     "ceiling_screws_checked": 6,
     "speaker_mockup_note": "Rear/front curves inferred from owner measurements; physical fit remains to be tested."
   }

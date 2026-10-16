@@ -1,12 +1,9 @@
 {
   "ceiling-flange": {
-    "mesh": {
-      "reference": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/build/era-100-ceiling-flange.stl",
-      "candidate": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-build123d/build/era-100-ceiling-flange.stl",
-      "reference_volume_mm3": 136801.89796977377,
-      "candidate_volume_mm3": 136801.8979695914,
-      "relative_volume_error": 1.3330560785215614e-12,
-      "reference_bounds_mm": [
+    "intentional_change": "deeper retainer seats and four M3 joint holes",
+    "candidate_mesh": {
+      "watertight": true,
+      "bounds_mm": [
         [
           -122.34772491455078,
           -122.46192169189453,
@@ -18,113 +15,45 @@
           6.0
         ]
       ],
-      "candidate_bounds_mm": [
-        [
-          -122.34772491455078,
-          -122.46192169189453,
-          0.0
-        ],
-        [
-          122.5,
-          122.46192169189453,
-          6.0
-        ]
-      ],
-      "maximum_bounds_error_mm": 0.0,
-      "reference_watertight": true,
-      "candidate_watertight": true,
-      "surface_rms_mm": 3.059862436246419e-08,
-      "surface_p99_mm": 1.7179559888025562e-10,
-      "surface_max_mm": 3.931500688028252e-06,
-      "samples_each_direction": 12000
-    },
-    "brep": {
-      "reference_step": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/era-100-ceiling-flange.step",
-      "candidate": "native build123d part",
-      "reference_volume_mm3": 137261.46244163532,
-      "candidate_volume_mm3": 137261.46244162967,
-      "missing_volume_mm3": 0,
-      "extra_volume_mm3": 0,
-      "symmetric_difference_mm3": 0,
-      "reference_valid": true,
-      "candidate_valid": true
+      "volume_mm3": 135613.42553148148
     }
   },
   "housing-shell": {
-    "intentional_change": "\u00d832 factory-plug passage and matching split TPU grommet",
+    "intentional_change": "shorter roof, \u00d832 cable passage and four M3 joint bosses",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
         [
           -72.30000305175781,
-          -99.69999694824219,
+          -100.5,
           6.0
         ],
         [
           72.30000305175781,
-          99.69999694824219,
-          155.5
+          100.5,
+          150.5
         ]
       ],
-      "volume_mm3": 552643.0289623382
-    },
-    "brep": {
-      "reference_step": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/era-100-housing-shell.step",
-      "expected": "reference shell minus \u00d832 cable cylinder",
-      "missing_volume_mm3": 0,
-      "extra_volume_mm3": 0,
-      "symmetric_difference_mm3": 0
+      "volume_mm3": 544196.5109518397
     }
   },
   "flat-seam-gasket": {
-    "mesh": {
-      "reference": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/build/era-100-flat-seam-gasket.stl",
-      "candidate": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-build123d/build/era-100-flat-seam-gasket.stl",
-      "reference_volume_mm3": 1717.693422069339,
-      "candidate_volume_mm3": 1717.6934220693402,
-      "relative_volume_error": 6.618575600333572e-16,
-      "reference_bounds_mm": [
+    "intentional_change": "joint interface follows the revised shell and flange",
+    "candidate_mesh": {
+      "watertight": true,
+      "bounds_mm": [
         [
           -72.30000305175781,
-          -99.69999694824219,
+          -100.5,
           6.0
         ],
         [
           72.30000305175781,
-          99.69999694824219,
+          100.5,
           6.599999904632568
         ]
       ],
-      "candidate_bounds_mm": [
-        [
-          -72.30000305175781,
-          -99.69999694824219,
-          6.0
-        ],
-        [
-          72.30000305175781,
-          99.69999694824219,
-          6.599999904632568
-        ]
-      ],
-      "maximum_bounds_error_mm": 0.0,
-      "reference_watertight": true,
-      "candidate_watertight": true,
-      "surface_rms_mm": 4.369795662219031e-08,
-      "surface_p99_mm": 1.849042888370507e-09,
-      "surface_max_mm": 6.666033722386598e-06,
-      "samples_each_direction": 12000
-    },
-    "brep": {
-      "reference_step": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/era-100-flat-seam-gasket.step",
-      "candidate": "native build123d part",
-      "reference_volume_mm3": 1717.8533606074668,
-      "candidate_volume_mm3": 1717.8533606077447,
-      "missing_volume_mm3": 0,
-      "extra_volume_mm3": 0,
-      "symmetric_difference_mm3": 0,
-      "reference_valid": true,
-      "candidate_valid": true
+      "volume_mm3": 1715.505103642002
     }
   },
   "grille": {
@@ -161,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.9884018351970725e-08,
-      "surface_p99_mm": 3.8392034376769567e-13,
-      "surface_max_mm": 3.006713719845654e-06,
+      "surface_rms_mm": 3.915245681402421e-08,
+      "surface_p99_mm": 4.407848198815363e-13,
+      "surface_max_mm": 2.269895732223885e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -212,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 4.193600053248955e-08,
+      "surface_rms_mm": 2.8030835081253976e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 3.161176889297878e-06,
+      "surface_max_mm": 1.7928319825148527e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -257,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 4.097389280936545e-08,
-      "surface_p99_mm": 1.4321941550975665e-14,
-      "surface_max_mm": 3.3756315751611575e-06,
+      "surface_rms_mm": 3.2035955325048045e-08,
+      "surface_p99_mm": 1.432144669219779e-14,
+      "surface_max_mm": 2.6660317344575203e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -269,58 +198,26 @@
     }
   },
   "end-retainer": {
-    "mesh": {
-      "reference": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/build/era-100-end-retainer.stl",
-      "candidate": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-build123d/build/era-100-end-retainer.stl",
-      "reference_volume_mm3": 10711.849997713873,
-      "candidate_volume_mm3": 10711.849997713874,
-      "relative_volume_error": 1.6981094805603755e-16,
-      "reference_bounds_mm": [
+    "intentional_change": "wider, thicker load-bearing beam and M3 head recess",
+    "candidate_mesh": {
+      "watertight": true,
+      "bounds_mm": [
         [
           -71.5,
-          -87.0,
+          -89.0,
           0.0
         ],
         [
           71.5,
-          -77.0,
+          -75.0,
           19.75437355041504
         ]
       ],
-      "candidate_bounds_mm": [
-        [
-          -71.5,
-          -87.0,
-          0.0
-        ],
-        [
-          71.5,
-          -77.0,
-          19.75437355041504
-        ]
-      ],
-      "maximum_bounds_error_mm": 0.0,
-      "reference_watertight": true,
-      "candidate_watertight": true,
-      "surface_rms_mm": 1.4830634366442204e-10,
-      "surface_p99_mm": 6.340258190421719e-10,
-      "surface_max_mm": 5.978564822976448e-09,
-      "samples_each_direction": 12000
-    },
-    "brep": {
-      "reference_step": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/era-100-end-retainer.step",
-      "candidate": "native build123d part",
-      "reference_volume_mm3": 10667.914159217366,
-      "candidate_volume_mm3": 10667.914159214155,
-      "missing_volume_mm3": 0,
-      "extra_volume_mm3": 0,
-      "symmetric_difference_mm3": 0,
-      "reference_valid": true,
-      "candidate_valid": true
+      "volume_mm3": 18443.11560007576
     }
   },
   "round-cable-grommet": {
-    "intentional_change": "\u00d832 factory-plug passage and matching split TPU grommet",
+    "intentional_change": "resized for \u00d832 cable passage",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -339,7 +236,7 @@
     }
   },
   "flat-cable-grommet": {
-    "intentional_change": "\u00d832 factory-plug passage and matching split TPU grommet",
+    "intentional_change": "resized for \u00d832 cable passage",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -358,54 +255,22 @@
     }
   },
   "ceiling-cutout-template": {
-    "mesh": {
-      "reference": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/build/era-100-ceiling-cutout-template.stl",
-      "candidate": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-build123d/build/era-100-ceiling-cutout-template.stl",
-      "reference_volume_mm3": 6363.703432718789,
-      "candidate_volume_mm3": 6363.703432718789,
-      "relative_volume_error": 0.0,
-      "reference_bounds_mm": [
+    "intentional_change": "follows the revised shell bosses",
+    "candidate_mesh": {
+      "watertight": true,
+      "bounds_mm": [
         [
           -73.30000305175781,
-          -100.6951904296875,
+          -101.4942398071289,
           0.0
         ],
         [
           73.30000305175781,
-          100.6951904296875,
+          101.4942398071289,
           1.5
         ]
       ],
-      "candidate_bounds_mm": [
-        [
-          -73.30000305175781,
-          -100.6951904296875,
-          0.0
-        ],
-        [
-          73.30000305175781,
-          100.6951904296875,
-          1.5
-        ]
-      ],
-      "maximum_bounds_error_mm": 0.0,
-      "reference_watertight": true,
-      "candidate_watertight": true,
-      "surface_rms_mm": 1.811270547205719e-11,
-      "surface_p99_mm": 3.797518991530259e-11,
-      "surface_max_mm": 1.0669053622289134e-09,
-      "samples_each_direction": 12000
-    },
-    "brep": {
-      "reference_step": "/Users/nickw/repos/scad-designs/models/sonos-era-100-ceiling-mount-2/era-100-ceiling-cutout-template.step",
-      "candidate": "native build123d part",
-      "reference_volume_mm3": 6364.5415997882155,
-      "candidate_volume_mm3": 6364.541599789181,
-      "missing_volume_mm3": 0,
-      "extra_volume_mm3": 0,
-      "symmetric_difference_mm3": 0,
-      "reference_valid": true,
-      "candidate_valid": true
+      "volume_mm3": 6335.375192426301
     }
   }
 }

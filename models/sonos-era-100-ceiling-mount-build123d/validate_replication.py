@@ -1,4 +1,7 @@
-"""Reproduce the reference CAD comparison and fail on geometry drift."""
+"""Compare unchanged grille variants with the prior CAD project.
+
+The first printed prototype intentionally changes the other seven parts.
+"""
 from __future__ import annotations
 import json
 import sys
@@ -13,13 +16,19 @@ sys.path.insert(0,str(ROOT/'tools'))
 from cad_compare import compare as mesh_compare
 from build123d import import_step
 from parts import PARTS as BUILDERS
-from parts.housing import CABLE_EXIT_Y, CABLE_HOLE_DIAMETER, INNER_APEX_Z, OUTER_APEX_Z
-from geometry import cylinder
 from paths import REPORTS
 
 REFERENCE=HERE.parent/'sonos-era-100-ceiling-mount-2'
 HEX={'hex-grille','fine-hex-grille'}
-PLUG_ADAPTED={'housing-shell','round-cable-grommet','flat-cable-grommet'}
+ADAPTED={
+    'ceiling-flange':'deeper retainer seats and four M3 joint holes',
+    'housing-shell':'shorter roof, Ø32 cable passage and four M3 joint bosses',
+    'flat-seam-gasket':'joint interface follows the revised shell and flange',
+    'end-retainer':'wider, thicker load-bearing beam and M3 head recess',
+    'round-cable-grommet':'resized for Ø32 cable passage',
+    'flat-cable-grommet':'resized for Ø32 cable passage',
+    'ceiling-cutout-template':'follows the revised shell bosses',
+}
 PARTS=['ceiling-flange','housing-shell','flat-seam-gasket','grille',
        'hex-grille','fine-hex-grille','end-retainer',
        'round-cable-grommet','flat-cable-grommet','ceiling-cutout-template']
@@ -29,28 +38,14 @@ def run():
     rows={}
     for name in PARTS:
         print(f'Comparing {name}...',flush=True)
-        if name in PLUG_ADAPTED:
+        if name in ADAPTED:
             candidate=trimesh.load_mesh(HERE/'build'/f'era-100-{name}.stl')
             if not candidate.is_watertight or len(candidate.split())!=1:
                 raise AssertionError(f'{name}: adapted STL not one closed solid')
-            row={'intentional_change':'Ø32 factory-plug passage and matching split TPU grommet',
-                 'candidate_mesh':{'watertight':True,'bounds_mm':candidate.bounds.tolist(),
-                                   'volume_mm3':float(candidate.volume)}}
-            if name=='housing-shell':
-                reference_step=REFERENCE/f'era-100-{name}.step'
-                original=import_step(str(reference_step))
-                expected=original-cylinder(0,CABLE_EXIT_Y,CABLE_HOLE_DIAMETER/2,
-                                           INNER_APEX_Z-5,OUTER_APEX_Z+2)
-                actual=BUILDERS[name]()
-                missing=(expected-actual).volume
-                extra=(actual-expected).volume
-                if missing+extra>0.001:
-                    raise AssertionError('housing-shell: geometry changed outside plug passage')
-                row['brep']={'reference_step':str(reference_step),
-                             'expected':'reference shell minus Ø32 cable cylinder',
-                             'missing_volume_mm3':missing,'extra_volume_mm3':extra,
-                             'symmetric_difference_mm3':missing+extra}
-            rows[name]=row
+            rows[name]={'intentional_change':ADAPTED[name],
+                        'candidate_mesh':{'watertight':True,
+                                          'bounds_mm':candidate.bounds.tolist(),
+                                          'volume_mm3':float(candidate.volume)}}
             continue
         mesh=mesh_compare(REFERENCE/'build'/f'era-100-{name}.stl',
                           HERE/'build'/f'era-100-{name}.stl',12000)
@@ -93,8 +88,7 @@ def run():
     out=REPORTS/'replication-validation.json'
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(rows,indent=2)+'\n')
-    print(f'PASS: seven unchanged STL comparisons, two complete hex mesh comparisons, '
-          f'five unchanged STEP/native B-rep comparisons, one exact shell-only plug cut, '
-          f'and two adapted grommet mesh checks; {out}')
+    print(f'PASS: three unchanged grille STL comparisons, two complete hex mesh comparisons, '
+          f'one exact STEP/native grille comparison, and seven adapted closed meshes; {out}')
 
 if __name__=='__main__':run()

@@ -2,7 +2,7 @@
 from __future__ import annotations
 from build123d import Pos
 from parts.housing import (OUTER_X, OUTER_Y, OUTER_R, RETAINER_FIXINGS,
-    RETAINER_BOSS_X, RETAINER_BOSS_Y, JOINT_FIXINGS, END_JOINT_FIXINGS,
+    RETAINER_BOSS_X, RETAINER_BOSS_Y, JOINT_FIXINGS,
     JOINT_BOSS_RADIUS, retainer_boss_xy)
 from geometry import cylinder, rounded_prism
 
@@ -20,7 +20,7 @@ def ceiling_cutout_profile(z0,z1):
         opening += Pos(*retainer_boss_xy(x,y),0)*rounded_prism(
             RETAINER_BOSS_X+2*CEILING_CUTOUT_BOSS_CLEARANCE,
             RETAINER_BOSS_Y+2*CEILING_CUTOUT_BOSS_CLEARANCE,2,z0,z1)
-    for x,y in JOINT_FIXINGS+END_JOINT_FIXINGS:
+    for x,y in JOINT_FIXINGS:
         opening += cylinder(x,y,JOINT_BOSS_RADIUS+CEILING_CUTOUT_BOSS_CLEARANCE,z0,z1)
     return opening.clean()
 

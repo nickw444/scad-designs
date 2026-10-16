@@ -75,6 +75,9 @@ def run():
                       retainer_dims.RETAINER_BOLT_UNDER_HEAD_LENGTH -
                       housing.RETAINER_PAD_TOP_Z)
     check(engaged_length>=6.0,'10 mm M3 retainer bolt has insufficient insert engagement')
+    gasket_retainer_engagement=engaged_length-gasket.bounding_box().size.Z
+    check(gasket_retainer_engagement>=5.5,
+          '10 mm M3 retainer bolt has insufficient engagement with optional gasket')
     for x,y in housing.RETAINER_FIXINGS:
         if y > 0:
             continue
@@ -90,11 +93,36 @@ def run():
                             retainer_dims.RETAINER_HEAD_BORE_DEPTH+0.30))
         check(overlap(retainers[0],head_seat)>0.1,
               f'M3 head lacks bearing seat at {x,y}')
-    for x,y in housing.JOINT_FIXINGS+housing.END_JOINT_FIXINGS:
+    check(len(housing.JOINT_FIXINGS)==4 and len(housing.RETAINER_FIXINGS)==4,
+          'expected four shell joins and four retainer bolts')
+    joint_engagement = (housing.JOINT_COUNTERBORE_DEPTH +
+                        housing.JOINT_BOLT_UNDER_HEAD_LENGTH -
+                        housing.FLANGE_THICKNESS)
+    gasket_joint_engagement = joint_engagement - gasket.bounding_box().size.Z
+    check(joint_engagement>=8.0 and
+          joint_engagement<housing.JOINT_INSERT_DEPTH,
+          '10 mm M3 joint bolt does not seat safely in the insert pilot')
+    check(gasket_joint_engagement>=7.0,
+          '10 mm M3 joint bolt has insufficient engagement with optional gasket')
+    for x,y in housing.JOINT_FIXINGS:
         check(overlap(flange,cylinder(x,y,housing.JOINT_BOLT_CLEARANCE_RADIUS,0.1,5.9))<0.001,
-              f'M2 flange bore blocked at {x,y}')
-        check(overlap(shell,cylinder(x,y,housing.JOINT_INSERT_HOLE_RADIUS,6.1,12.9))<0.001,
-              f'M2 insert bore blocked at {x,y}')
+              f'M3 flange bore blocked at {x,y}')
+        check(overlap(shell,cylinder(x,y,housing.JOINT_INSERT_HOLE_RADIUS,
+                                     housing.FLANGE_THICKNESS+0.1,
+                                     housing.FLANGE_THICKNESS+housing.JOINT_INSERT_DEPTH-0.1))<0.001,
+              f'M3 insert bore blocked at {x,y}')
+        head_clearance=cylinder(x,y,housing.M3_HEAD_RADIUS,-0.01,
+                                housing.JOINT_COUNTERBORE_DEPTH-0.01)
+        check(overlap(flange,head_clearance)<0.001,
+              f'M3 joint head recess blocked at {x,y}')
+        head_seat=(cylinder(x,y,housing.M3_HEAD_RADIUS,
+                            housing.JOINT_COUNTERBORE_DEPTH+0.05,
+                            housing.JOINT_COUNTERBORE_DEPTH+0.25) -
+                   cylinder(x,y,housing.JOINT_BOLT_CLEARANCE_RADIUS,
+                            housing.JOINT_COUNTERBORE_DEPTH,
+                            housing.JOINT_COUNTERBORE_DEPTH+0.30))
+        check(overlap(flange,head_seat)>0.1,
+              f'M3 joint head lacks bearing seat at {x,y}')
     for x,y in housing.RETAINER_FIXINGS:
         check(overlap(shell,cylinder(x,y,housing.RETAINER_INSERT_PILOT_RADIUS,
                                        housing.RETAINER_PAD_TOP_Z+0.1,
@@ -154,14 +182,18 @@ def run():
         'speaker_rear_apex_z_mm':rear_apex,
         'inner_roof_apex_z_mm':housing.INNER_APEX_Z,
         'rear_apex_clearance_mm':housing.INNER_APEX_Z-rear_apex,
-        'm2_axes_checked':len(housing.JOINT_FIXINGS+housing.END_JOINT_FIXINGS),
-        'm3_axes_checked':len(housing.RETAINER_FIXINGS),
+        'joint_m3_axes_checked':len(housing.JOINT_FIXINGS),
+        'retainer_m3_axes_checked':len(housing.RETAINER_FIXINGS),
+        'joint_m3_10mm_insert_engagement_mm':joint_engagement,
+        'joint_m3_10mm_gasket_engagement_mm':gasket_joint_engagement,
+        'joint_head_counterbore_depth_mm':housing.JOINT_COUNTERBORE_DEPTH,
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
         'retainer_centre_beam_height_mm':housing.RETAINER_CENTRE_HEIGHT,
         'retainer_centre_beam_length_mm':housing.RETAINER_CENTRE_LENGTH,
         'retainer_bar_width_mm':housing.RETAINER_BAR_WIDTH,
         'retainer_head_bore_depth_mm':retainer_dims.RETAINER_HEAD_BORE_DEPTH,
         'retainer_m3_10mm_insert_engagement_mm':engaged_length,
+        'retainer_m3_10mm_gasket_engagement_mm':gasket_retainer_engagement,
         'ceiling_screws_checked':len(housing.CEILING_SCREWS),
         'speaker_mockup_note':'Rear/front curves inferred from owner measurements; physical fit remains to be tested.'
     }

@@ -75,30 +75,27 @@ RETAINER_INSERT_BODY_RADIUS = 2.2      # measured Ø4.4 M3 insert
 RETAINER_INSERT_TIP_RADIUS = 1.95      # measured Ø3.9 lead-in
 RETAINER_INSERT_PILOT_RADIUS = 2.0     # Ø4.0 heat-set pilot
 RETAINER_INSERT_PILOT_DEPTH = 9.0     # clears 10 mm bolt measured under head
-JOINT_FIXINGS = [(sx * 66.2, sy * 45.0)
-                 for sx in (-1, 1) for sy in (-1, 1)]
-JOINT_BOSS_RADIUS = 3.2
-JOINT_BOSS_TOP_Z = FLANGE_THICKNESS + 9.0
+M3_THREAD_RADIUS = 1.45               # measured Ø2.9 thread
+M3_HEAD_RADIUS = 2.75                 # inventory Ø5.5 cap head
+M3_HEAD_HEIGHT = 3.0
+M3_BOLT_UNDER_HEAD_LENGTH = 10.0
+M3_CLEARANCE_RADIUS = 1.65           # Ø3.3 through-hole
+M3_COUNTERBORE_RADIUS = 2.9          # Ø5.8 for head clearance
+JOINT_SIDE_FIXINGS = [(sx * 66.2, 0.0) for sx in (-1, 1)]
+JOINT_END_FIXINGS = [(0.0, sy * 96.5) for sy in (-1, 1)]
+JOINT_FIXINGS = JOINT_SIDE_FIXINGS + JOINT_END_FIXINGS
+JOINT_BOSS_RADIUS = 4.0               # 2 mm wall around Ø4 insert pilot
+JOINT_BOSS_TOP_Z = FLANGE_THICKNESS + 10.0
 JOINT_BOSS_RAMP_RISE = 8.5             # rear-down print: <45° outward growth
-JOINT_INSERT_BODY_RADIUS = 1.70      # measured Ø3.4 heat-set insert
-JOINT_INSERT_TIP_RADIUS = 1.50       # measured Ø3.0 lead-in tip
-JOINT_INSERT_HOLE_RADIUS = 1.55      # Ø3.1 pilot; measured Ø3.4 body, Ø3.0 tip
-JOINT_INSERT_DEPTH = 7.0
-JOINT_BOLT_RADIUS = 0.95             # approximately Ø1.9 measured thread
-JOINT_BOLT_CLEARANCE_RADIUS = 1.10   # Ø2.2 clearance for ~Ø1.9 thread
-JOINT_HEAD_RADIUS = 1.65             # measured Ø3.3 round cup head
-JOINT_HEAD_HEIGHT = 1.30
-JOINT_BOLT_UNDER_HEAD_LENGTH = 10.0   # 5.4 mm beyond 6 mm flange
-JOINT_COUNTERBORE_RADIUS = 1.80      # Ø3.6 for measured Ø3.3 round cup head
-JOINT_COUNTERBORE_DEPTH = 1.4       # 0.1 mm recess for ~1.3 mm head
+JOINT_INSERT_BODY_RADIUS = RETAINER_INSERT_BODY_RADIUS
+JOINT_INSERT_TIP_RADIUS = RETAINER_INSERT_TIP_RADIUS
+JOINT_INSERT_HOLE_RADIUS = RETAINER_INSERT_PILOT_RADIUS
+JOINT_INSERT_DEPTH = 9.0
+JOINT_BOLT_CLEARANCE_RADIUS = M3_CLEARANCE_RADIUS
+JOINT_BOLT_UNDER_HEAD_LENGTH = M3_BOLT_UNDER_HEAD_LENGTH
+JOINT_COUNTERBORE_RADIUS = M3_COUNTERBORE_RADIUS
+JOINT_COUNTERBORE_DEPTH = 4.0         # 1 mm recess for the 3 mm cap head
 RETAINER_BAR_LENGTH = 143.0           # full-height base reaches both fixing bores
-END_JOINT_FIXINGS = [(sx * 35.0, sy * 96.5)
-                     for sx in (-1, 1) for sy in (-1, 1)]
-END_JOINT_BOSS_RADIUS = JOINT_BOSS_RADIUS
-END_JOINT_INSERT_DEPTH = JOINT_INSERT_DEPTH
-END_JOINT_BOSS_TOP_Z = JOINT_BOSS_TOP_Z
-END_JOINT_RAMP_RISE = JOINT_BOSS_RAMP_RISE
-END_JOINT_COUNTERBORE_DEPTH = JOINT_COUNTERBORE_DEPTH
 
 
 def retainer_boss_xy(x, y):
@@ -127,8 +124,8 @@ def retainer_boss_ramp(x, y):
 
 def end_joint_ramp(x, y):
     top_y = (1 if y > 0 else -1) * (OUTER_Y / 2 - 1.3)
-    lower = Pos(x, y, END_JOINT_BOSS_TOP_Z) * Circle(END_JOINT_BOSS_RADIUS)
-    upper = Pos(x, top_y, END_JOINT_BOSS_TOP_Z + END_JOINT_RAMP_RISE) * Circle(1)
+    lower = Pos(x, y, JOINT_BOSS_TOP_Z) * Circle(JOINT_BOSS_RADIUS)
+    upper = Pos(x, top_y, JOINT_BOSS_TOP_Z + JOINT_BOSS_RAMP_RISE) * Circle(1)
     return loft([lower, upper], ruled=True)
 
 def roof_limit(shoulder_apex, cap_z, half_width, bottom):
@@ -177,7 +174,7 @@ def monolithic_housing():
 
 def ceiling_flange():
     part = monolithic_housing() & cylinder(0,0,FLANGE_RADIUS+1,-0.1,FLANGE_THICKNESS)
-    for x,y in JOINT_FIXINGS + END_JOINT_FIXINGS:
+    for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_BOLT_CLEARANCE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         part -= cylinder(x,y,JOINT_COUNTERBORE_RADIUS,-0.1,JOINT_COUNTERBORE_DEPTH)
     return part.clean()
@@ -185,16 +182,16 @@ def ceiling_flange():
 def housing_shell():
     part = monolithic_housing() & cylinder(0,0,FLANGE_RADIUS+1,
                                            FLANGE_THICKNESS,OUTER_APEX_Z+0.1)
-    for x,y in JOINT_FIXINGS + END_JOINT_FIXINGS:
+    for x,y in JOINT_FIXINGS:
         part += cylinder(x,y,JOINT_BOSS_RADIUS,FLANGE_THICKNESS,JOINT_BOSS_TOP_Z)
     for x,y in RETAINER_FIXINGS:
         part += retainer_boss_ramp(*retainer_boss_xy(x,y))
-    for x,y in JOINT_FIXINGS:
+    for x,y in JOINT_SIDE_FIXINGS:
         part += boss_wall_ramp(x,y,JOINT_BOSS_RADIUS,JOINT_BOSS_TOP_Z,
                                JOINT_BOSS_RAMP_RISE)
-    for x,y in END_JOINT_FIXINGS:
+    for x,y in JOINT_END_FIXINGS:
         part += end_joint_ramp(x,y)
-    for x,y in JOINT_FIXINGS + END_JOINT_FIXINGS:
+    for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_INSERT_HOLE_RADIUS,FLANGE_THICKNESS-0.1,
                           FLANGE_THICKNESS+JOINT_INSERT_DEPTH)
     return part.clean()
