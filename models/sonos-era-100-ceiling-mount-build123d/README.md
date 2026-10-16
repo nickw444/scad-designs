@@ -31,6 +31,8 @@ The shell has a Ø32 mm rear cable passage for the factory plug, measured at app
 
 The prototype shell is 144.5 mm high from the flange interface plane to the rear outside face. Its inner flat roof is 5 mm beyond the modeled speaker rear apex; the physical speaker should be measured before treating this as a guaranteed fit.
 
+The retainer's 6 mm base passes through the flange without a bridge over the slot. Four flat 2 mm thick shoulders around its M3 fixing pads extend approximately 3 mm to each side and toward the outer flange edge. They seat in matching underside pockets, so the installed retainers hold the flange against the shell. Print the flange pockets with supports. The optional flat TPU gasket remains one piece and bridges the retainer contact areas.
+
 ## Prototype fasteners
 
 - Four M3 × 10 mm cap-head bolts join the ceiling flange to the shell: two at the side midpoints and one at each end midpoint. Four more M3 × 10 mm cap-head bolts secure the two end retainers.

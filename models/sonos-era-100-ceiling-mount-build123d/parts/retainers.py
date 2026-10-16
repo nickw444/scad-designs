@@ -6,7 +6,9 @@ from speaker import SPEAKER_FRONT_Z, SPEAKER_FRONT_RADIUS
 from parts.housing import (RETAINER_SEAT_DEPTH, RETAINER_CENTRE_HEIGHT,
     RETAINER_CENTRE_LENGTH, RETAINER_BAR_LENGTH, RETAINER_BAR_WIDTH, RETAINER_Y,
     RETAINER_FIXINGS, RETAINER_PAD_TOP_Z, RETAINER_PAD_CLEARANCE_WIDTH,
-    RETAINER_PAD_CLEARANCE_LENGTH, M3_THREAD_RADIUS, M3_CLEARANCE_RADIUS,
+    RETAINER_PAD_CLEARANCE_LENGTH, RETAINER_CAPTURE_PAD_X,
+    RETAINER_CAPTURE_PAD_Y, RETAINER_CAPTURE_PAD_HEIGHT,
+    M3_THREAD_RADIUS, M3_CLEARANCE_RADIUS,
     M3_HEAD_RADIUS, M3_HEAD_HEIGHT, M3_BOLT_UNDER_HEAD_LENGTH,
     M3_COUNTERBORE_RADIUS, retainer_pad_xy)
 from geometry import cylinder, rectangular_prism
@@ -42,6 +44,12 @@ def curved_front_beam(y):
 def end_retainer_base(z0=0, z1=RETAINER_SEAT_DEPTH):
     return rectangular_prism(RETAINER_BAR_LENGTH,RETAINER_BAR_WIDTH,z0,z1,0,-RETAINER_Y)
 
+
+def capture_pad(x,y):
+    cx,cy=retainer_pad_xy(x,y)
+    return rectangular_prism(RETAINER_CAPTURE_PAD_X,RETAINER_CAPTURE_PAD_Y,
+                             0,RETAINER_CAPTURE_PAD_HEIGHT,cx,cy)
+
 def end_retainer():
     part = end_retainer_base()
     part += rectangular_prism(RETAINER_CENTRE_LENGTH,RETAINER_BAR_WIDTH,
@@ -50,6 +58,7 @@ def end_retainer():
     part += curved_front_beam(-RETAINER_Y)
     for sx in (-1,1):
         x,y=sx*abs(RETAINER_FIXINGS[0][0]),-RETAINER_Y
+        part += capture_pad(x,y)
         part += rectangular_prism(RETAINER_PAD_WIDTH,RETAINER_PAD_LENGTH,
                                    RETAINER_SEAT_DEPTH,RETAINER_PAD_TOP_Z,
                                    *retainer_pad_xy(x,y))

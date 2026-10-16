@@ -67,8 +67,19 @@ def run():
                                     x,-housing.RETAINER_Y)
         check(overlap(retainers[0],end_probe)>0.1,
               f'retainer base does not continue to fixing at x={x}')
-    check(housing.FLANGE_THICKNESS-housing.RETAINER_SEAT_DEPTH>=1.2-1e-6,
-          'flange bridge above retainer slot is too thin')
+    check(abs(housing.FLANGE_THICKNESS-housing.RETAINER_SEAT_DEPTH)<1e-6,
+          'retainer channel must pass all the way through the flange')
+    for i,stop in enumerate(retainers):
+        check(overlap(flange,Pos(0,0,0.5)*stop)>0.1,
+              f'retainer {i} shoulder does not capture flange')
+    capture_side_overlap=(housing.RETAINER_CAPTURE_PAD_Y-housing.RETAINER_BAR_WIDTH)/2
+    capture_outer_overlap=(abs(housing.RETAINER_FIXINGS[0][0])+
+                           housing.RETAINER_PAD_OUTWARD_OFFSET+
+                           housing.RETAINER_CAPTURE_PAD_X/2-
+                           housing.RETAINER_BAR_LENGTH/2)
+    check(abs(capture_side_overlap-3.0)<0.01 and
+          abs(capture_outer_overlap-3.0)<0.01,
+          'retainer shoulders must capture 3 mm of flange at sides and outer end')
     check(retainer_dims.RETAINER_HEAD_BORE_DEPTH-retainer_dims.RETAINER_HEAD_HEIGHT>=0.8,
           'M3 cap head does not fully recess in retainer')
     engaged_length = (retainer_dims.RETAINER_HEAD_BORE_DEPTH +
@@ -188,6 +199,9 @@ def run():
         'joint_m3_10mm_gasket_engagement_mm':gasket_joint_engagement,
         'joint_head_counterbore_depth_mm':housing.JOINT_COUNTERBORE_DEPTH,
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
+        'retainer_capture_shoulder_height_mm':housing.RETAINER_CAPTURE_PAD_HEIGHT,
+        'retainer_capture_side_overlap_mm':capture_side_overlap,
+        'retainer_capture_outer_overlap_mm':capture_outer_overlap,
         'retainer_centre_beam_height_mm':housing.RETAINER_CENTRE_HEIGHT,
         'retainer_centre_beam_length_mm':housing.RETAINER_CENTRE_LENGTH,
         'retainer_bar_width_mm':housing.RETAINER_BAR_WIDTH,

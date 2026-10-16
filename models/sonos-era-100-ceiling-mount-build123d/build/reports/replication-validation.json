@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "intentional_change": "deeper retainer seats and four M3 joint holes",
+    "intentional_change": "open retainer slots, flat capture pockets and four M3 joint holes",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -15,7 +15,7 @@
           6.0
         ]
       ],
-      "volume_mm3": 135613.42553148148
+      "volume_mm3": 134332.97912102984
     }
   },
   "housing-shell": {
@@ -34,11 +34,11 @@
           150.5
         ]
       ],
-      "volume_mm3": 544196.5109518397
+      "volume_mm3": 544196.5109518393
     }
   },
   "flat-seam-gasket": {
-    "intentional_change": "joint interface follows the revised shell and flange",
+    "intentional_change": "one-piece joint interface includes the retainer contact areas",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -53,7 +53,7 @@
           6.599999904632568
         ]
       ],
-      "volume_mm3": 1715.505103642002
+      "volume_mm3": 1715.5051036420045
     }
   },
   "grille": {
@@ -90,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.915245681402421e-08,
-      "surface_p99_mm": 4.407848198815363e-13,
-      "surface_max_mm": 2.269895732223885e-06,
+      "surface_rms_mm": 4.795534397800145e-08,
+      "surface_p99_mm": 3.839214310404738e-13,
+      "surface_max_mm": 3.147248622664616e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -141,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 2.8030835081253976e-08,
+      "surface_rms_mm": 2.440828793375961e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 1.7928319825148527e-06,
+      "surface_max_mm": 1.445575953997169e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -186,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.2035955325048045e-08,
+      "surface_rms_mm": 2.2634567674123464e-08,
       "surface_p99_mm": 1.432144669219779e-14,
-      "surface_max_mm": 2.6660317344575203e-06,
+      "surface_max_mm": 1.5022871393055274e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -198,22 +198,22 @@
     }
   },
   "end-retainer": {
-    "intentional_change": "wider, thicker load-bearing beam and M3 head recess",
+    "intentional_change": "full-depth base, flat capture shoulders and M3 head recess",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
         [
-          -71.5,
-          -89.0,
+          -74.5,
+          -92.0,
           0.0
         ],
         [
-          71.5,
-          -75.0,
+          74.5,
+          -72.0,
           19.75437355041504
         ]
       ],
-      "volume_mm3": 18443.11560007576
+      "volume_mm3": 19105.37153769786
     }
   },
   "round-cable-grommet": {

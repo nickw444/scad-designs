@@ -17,10 +17,14 @@ ROOF_VERTICAL_WALL = 10.0             # 7.1 mm normal thickness on 45° faces
 ROOF_CENTRE_CLEARANCE = 5.0           # dummy speaker rear apex to inner flat
 FLANGE_RADIUS = 122.5                 # Ø245; preserves 4 mm land beyond cutout
 FLANGE_THICKNESS = 6.0
-RETAINER_SEAT_DEPTH = 4.8             # full-length beam; 1.2 mm flange bridge preserves seam
+RETAINER_SEAT_DEPTH = FLANGE_THICKNESS  # open channel: retainer passes through the flange
 RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
 RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
 RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
+RETAINER_CAPTURE_PAD_X = 13.65        # 3 mm past the outer end of the 143 mm bar
+RETAINER_CAPTURE_PAD_Y = 20.0         # 3 mm shoulder each side of the 14 mm bar
+RETAINER_CAPTURE_PAD_HEIGHT = 2.0    # flat bearing shoulder; flange pocket uses supports
+RETAINER_CAPTURE_XY_CLEARANCE = 0.2
 CLIP_LIP_TOP_Z = 0.68
 CLIP_SHOULDER_TOP_Z = 0.78
 CLIP_RECESS = 0.7
@@ -108,6 +112,14 @@ def retainer_pad_xy(x, y):
                 -RETAINER_PAD_OUTWARD_OFFSET), y
 
 
+def retainer_capture_pocket(x, y):
+    cx,cy=retainer_pad_xy(x,y)
+    return rectangular_prism(
+        RETAINER_CAPTURE_PAD_X+2*RETAINER_CAPTURE_XY_CLEARANCE,
+        RETAINER_CAPTURE_PAD_Y+2*RETAINER_CAPTURE_XY_CLEARANCE,
+        -0.1,RETAINER_CAPTURE_PAD_HEIGHT,cx,cy)
+
+
 def boss_wall_ramp(x, y, radius, shoulder_z, rise):
     top_radius = 1.0
     top_x = (1 if x > 0 else -1) * (OUTER_X / 2 - top_radius - 0.3)
@@ -174,6 +186,8 @@ def monolithic_housing():
 
 def ceiling_flange():
     part = monolithic_housing() & cylinder(0,0,FLANGE_RADIUS+1,-0.1,FLANGE_THICKNESS)
+    for x,y in RETAINER_FIXINGS:
+        part -= retainer_capture_pocket(x,y)
     for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_BOLT_CLEARANCE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         part -= cylinder(x,y,JOINT_COUNTERBORE_RADIUS,-0.1,JOINT_COUNTERBORE_DEPTH)
