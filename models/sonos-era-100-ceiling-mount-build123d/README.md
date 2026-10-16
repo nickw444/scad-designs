@@ -33,6 +33,8 @@ The prototype shell is 144.5 mm high from the flange interface plane to the rear
 
 The retainer's 6 mm base passes through the flange without a bridge over the slot. A flat 2 mm thick tab at each outer end extends 3 mm past the retainer bar. The tabs seat in matching underside pockets and hold the flange against the shell. Print the flange pockets with supports. The optional flat TPU gasket remains one piece across the shell/flange seam and retainer contact areas.
 
+The grille uses the perimeter clips; the ceiling flange has no magnet pockets.
+
 ## Prototype fasteners
 
 - Four M3 × 10 mm cap-head bolts join the ceiling flange to the shell: two at the side midpoints and one at each end midpoint. Four more M3 × 10 mm cap-head bolts secure the two end retainers.

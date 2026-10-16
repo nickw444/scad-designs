@@ -28,8 +28,6 @@ RETAINER_CAPTURE_XY_CLEARANCE = 0.2
 CLIP_LIP_TOP_Z = 0.68
 CLIP_SHOULDER_TOP_Z = 0.78
 CLIP_RECESS = 0.7
-MAGNET_DIAMETER = 10.2                 # 0.2 mm diameter clearance for Ø10 magnets
-MAGNET_POCKET_DEPTH = 1.80            # 1.7 mm magnet + 0.1 mm adhesive; 2.2 mm roof
 ASSUMED_PLUG_DIAMETER = 30.0           # owner estimate; measure factory plug before final print
 CABLE_HOLE_DIAMETER = 32.0             # 1 mm radial clearance around estimated plug
 CABLE_EXIT_Y = -69.0                   # provisional; check power-port location
@@ -50,11 +48,6 @@ INNER_FLAT_HALF_WIDTH = (ROOF_SHOULDER_HALF_WIDTH +
                          INNER_SHOULDER_APEX_Z - INNER_APEX_Z)
 OUTER_FLAT_HALF_WIDTH = (ROOF_SHOULDER_HALF_WIDTH +
                          OUTER_SHOULDER_APEX_Z - OUTER_APEX_Z)
-MAGNETS = [
-    (sx * 94.0, sy * 36.0) for sx in (-1, 1) for sy in (-1, 1)
-] + [
-    (sx * 18.0, sy * 112.0) for sx in (-1, 1) for sy in (-1, 1)
-]
 CEILING_SCREW_RADIUS = 110.5
 CEILING_SCREW_HOLE_RADIUS = 2.0       # Ø4.0 clearance for nominal Ø3.5 6g thread
 CEILING_COUNTERSINK_RADIUS = 3.8     # Ø7.6 fits heads up to about Ø7.1
@@ -160,8 +153,6 @@ def monolithic_housing():
     blank -= cavity
     blank -= cylinder(0,CABLE_EXIT_Y,CABLE_HOLE_DIAMETER/2,
                       INNER_APEX_Z-5,OUTER_APEX_Z+2)
-    for x,y in MAGNETS:
-        blank -= cylinder(x,y,MAGNET_DIAMETER/2,-0.1,MAGNET_POCKET_DEPTH)
     for x,y in CEILING_SCREWS:
         blank -= cylinder(x,y,CEILING_SCREW_HOLE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         blank -= cone(x,y,CEILING_COUNTERSINK_RADIUS,CEILING_SCREW_HOLE_RADIUS,

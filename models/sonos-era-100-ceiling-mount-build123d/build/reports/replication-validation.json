@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "intentional_change": "open retainer slots, outer-end tab pockets and four M3 joint holes",
+    "intentional_change": "open retainer slots, outer-end tab pockets, no magnet pockets and four M3 joint holes",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -15,7 +15,7 @@
           6.0
         ]
       ],
-      "volume_mm3": 134972.94617517325
+      "volume_mm3": 136147.66102695107
     }
   },
   "housing-shell": {
@@ -90,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 4.0036112504458735e-08,
-      "surface_p99_mm": 3.5653724778025794e-13,
-      "surface_max_mm": 1.7405863536121442e-06,
+      "surface_rms_mm": 6.860126182218398e-08,
+      "surface_p99_mm": 4.1266705138887645e-13,
+      "surface_max_mm": 3.521791812259454e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -141,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.43424852109506e-08,
+      "surface_rms_mm": 3.105209317393664e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 2.474868755871089e-06,
+      "surface_max_mm": 1.998164946062869e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -186,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 2.527560982663392e-08,
-      "surface_p99_mm": 1.4348978683917967e-14,
-      "surface_max_mm": 2.1055900345910116e-06,
+      "surface_rms_mm": 4.241978785552864e-08,
+      "surface_p99_mm": 1.432144669219779e-14,
+      "surface_max_mm": 2.7365473277959067e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
