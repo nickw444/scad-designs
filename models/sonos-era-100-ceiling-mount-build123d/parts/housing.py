@@ -17,7 +17,10 @@ ROOF_VERTICAL_WALL = 10.0             # 7.1 mm normal thickness on 45° faces
 ROOF_CENTRE_CLEARANCE = 10.0          # dummy speaker rear apex to inner flat
 FLANGE_RADIUS = 122.5                 # Ø245; preserves 4 mm land beyond cutout
 FLANGE_THICKNESS = 6.0
-RETAINER_SEAT_DEPTH = 1.8             # closed roof except local screw pads
+RETAINER_SEAT_DEPTH = 3.0             # end tabs seat within the flange, preserving seam contact
+RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
+RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
+RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
 CLIP_LIP_TOP_Z = 0.68
 CLIP_SHOULDER_TOP_Z = 0.78
 CLIP_RECESS = 0.7
@@ -65,7 +68,7 @@ RETAINER_BOSS_Y = 12.8                 # 1.4 mm wall around full-width socket
 RETAINER_BOSS_OUTWARD_OFFSET = 0.0
 RETAINER_BOSS_RAMP_RISE = 8.0          # rear-down print: <45° outward growth
 RETAINER_PAD_CLEARANCE_WIDTH = 7.65   # outer edge meets the seat end; no bridge island
-RETAINER_PAD_CLEARANCE_LENGTH = 10.0  # exactly flush with both seat walls
+RETAINER_PAD_CLEARANCE_LENGTH = 10.0  # local fixing pad is narrower than the full beam
 RETAINER_PAD_OUTWARD_OFFSET = 0.475   # preserves gasket clearance at inner edge
 RETAINER_PAD_TOP_Z = FLANGE_THICKNESS + 1.7
 RETAINER_INSERT_BODY_RADIUS = 2.2      # measured Ø4.4 M3 insert
@@ -153,7 +156,7 @@ def monolithic_housing():
         blank -= cylinder(x,y,CEILING_SCREW_HOLE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         blank -= cone(x,y,CEILING_COUNTERSINK_RADIUS,CEILING_SCREW_HOLE_RADIUS,
                       0,CEILING_COUNTERSINK_DEPTH)
-    seat = rectangular_prism(RETAINER_BAR_LENGTH,10,-0.1,RETAINER_SEAT_DEPTH,
+    seat = rectangular_prism(RETAINER_BAR_LENGTH,RETAINER_BAR_WIDTH,-0.1,RETAINER_SEAT_DEPTH,
                              0,-RETAINER_Y)
     blank -= seat
     blank -= Rot(Z=180)*seat

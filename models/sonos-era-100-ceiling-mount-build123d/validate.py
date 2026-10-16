@@ -9,6 +9,7 @@ from assembly import make_assembly, grommet_placement
 from geometry import cylinder, rectangular_prism
 from parts import PARTS
 from parts import housing
+from parts import retainers as retainer_dims
 from parts.grommets import GROMMET_FLANGE_RADIUS, flat_cable_grommet
 from parts.template import ceiling_cutout_profile
 from paths import BUILD, REPORTS
@@ -51,6 +52,33 @@ def run():
         check(overlap(stop,speaker)<0.001,f'retainer {i}/speaker overlap')
         check(overlap(stop,grille)<0.001,f'retainer {i}/grille overlap')
         check(overlap(stop,Pos(0,0,-1)*speaker)>1,f'retainer {i} fails to capture speaker')
+    for x in (-58,0,58):
+        beam_probe=rectangular_prism(1,1,housing.RETAINER_CENTRE_HEIGHT-0.3,
+                                     housing.RETAINER_CENTRE_HEIGHT-0.1,
+                                     x,-housing.RETAINER_Y)
+        check(overlap(retainers[0],beam_probe)>0.1,
+              f'retainer load-bearing beam too thin at x={x}')
+    check(retainer_dims.RETAINER_HEAD_BORE_DEPTH-retainer_dims.RETAINER_HEAD_HEIGHT>=0.8,
+          'M3 cap head does not fully recess in retainer')
+    engaged_length = (retainer_dims.RETAINER_HEAD_BORE_DEPTH +
+                      retainer_dims.RETAINER_BOLT_UNDER_HEAD_LENGTH -
+                      housing.RETAINER_PAD_TOP_Z)
+    check(engaged_length>=6.0,'10 mm M3 retainer bolt has insufficient insert engagement')
+    for x,y in housing.RETAINER_FIXINGS:
+        if y > 0:
+            continue
+        head_clearance=cylinder(x,y,retainer_dims.RETAINER_HEAD_RADIUS,-0.01,
+                                retainer_dims.RETAINER_HEAD_BORE_DEPTH-0.01)
+        check(overlap(retainers[0],head_clearance)<0.001,
+              f'M3 head recess blocked at {x,y}')
+        head_seat=(cylinder(x,y,retainer_dims.RETAINER_HEAD_RADIUS,
+                            retainer_dims.RETAINER_HEAD_BORE_DEPTH+0.05,
+                            retainer_dims.RETAINER_HEAD_BORE_DEPTH+0.25) -
+                   cylinder(x,y,retainer_dims.RETAINER_BOLT_CLEARANCE_RADIUS,
+                            retainer_dims.RETAINER_HEAD_BORE_DEPTH,
+                            retainer_dims.RETAINER_HEAD_BORE_DEPTH+0.30))
+        check(overlap(retainers[0],head_seat)>0.1,
+              f'M3 head lacks bearing seat at {x,y}')
     for x,y in housing.JOINT_FIXINGS+housing.END_JOINT_FIXINGS:
         check(overlap(flange,cylinder(x,y,housing.JOINT_BOLT_CLEARANCE_RADIUS,0.1,5.9))<0.001,
               f'M2 flange bore blocked at {x,y}')
@@ -112,6 +140,12 @@ def run():
         'grommet_flange_diameter_mm':2*GROMMET_FLANGE_RADIUS,
         'm2_axes_checked':len(housing.JOINT_FIXINGS+housing.END_JOINT_FIXINGS),
         'm3_axes_checked':len(housing.RETAINER_FIXINGS),
+        'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
+        'retainer_centre_beam_height_mm':housing.RETAINER_CENTRE_HEIGHT,
+        'retainer_centre_beam_length_mm':housing.RETAINER_CENTRE_LENGTH,
+        'retainer_bar_width_mm':housing.RETAINER_BAR_WIDTH,
+        'retainer_head_bore_depth_mm':retainer_dims.RETAINER_HEAD_BORE_DEPTH,
+        'retainer_m3_10mm_insert_engagement_mm':engaged_length,
         'ceiling_screws_checked':len(housing.CEILING_SCREWS),
         'speaker_mockup_note':'Rear/front curves inferred from owner measurements; physical fit remains to be tested.'
     }
