@@ -16,7 +16,7 @@
     "watertight": true
   },
   "housing-shell": {
-    "volume_mm3": 544196.5109518393,
+    "volume_mm3": 480184.1586827074,
     "bounds_mm": [
       [
         -72.30000305175781,
@@ -26,7 +26,7 @@
       [
         72.30000305175781,
         100.5,
-        150.5
+        148.5
       ]
     ],
     "watertight": true
@@ -112,7 +112,7 @@
     "watertight": true
   },
   "round-cable-grommet": {
-    "volume_mm3": 8252.676175470393,
+    "volume_mm3": 6702.4405913672845,
     "bounds_mm": [
       [
         -19.97553253173828,
@@ -122,13 +122,13 @@
       [
         19.993749618530273,
         19.986135482788086,
-        9.800000190734863
+        7.800000190734863
       ]
     ],
     "watertight": true
   },
   "flat-cable-grommet": {
-    "volume_mm3": 8376.786527865515,
+    "volume_mm3": 6801.698797141245,
     "bounds_mm": [
       [
         -19.97537612915039,
@@ -138,7 +138,7 @@
       [
         19.99774932861328,
         19.989559173583984,
-        9.800000190734863
+        7.800000190734863
       ]
     ],
     "watertight": true
@@ -163,8 +163,8 @@
     "insertion_positions_checked": 15,
     "direct_assembly_collisions_mm3": 0,
     "optional_flat_gasket_assembly_collisions_mm3": 0,
-    "round_grommet_compression_mm3": 69.89147365205122,
-    "flat_grommet_compression_mm3": 70.17156246579714,
+    "round_grommet_compression_mm3": 49.922481180035376,
+    "flat_grommet_compression_mm3": 50.12254461842588,
     "nominal_factory_plug_diameter_mm": 30.0,
     "cable_passage_diameter_mm": 32.0,
     "nominal_plug_radial_clearance_mm": 1.0,
@@ -172,6 +172,9 @@
     "speaker_rear_apex_z_mm": 138.5,
     "inner_roof_apex_z_mm": 143.5,
     "rear_apex_clearance_mm": 5.0,
+    "side_wall_mm": 4.5,
+    "roof_flat_wall_mm": 5.0,
+    "roof_slope_normal_wall_mm": 4.949747468305833,
     "joint_m3_axes_checked": 4,
     "retainer_m3_axes_checked": 4,
     "joint_m3_10mm_insert_engagement_mm": 8.0,

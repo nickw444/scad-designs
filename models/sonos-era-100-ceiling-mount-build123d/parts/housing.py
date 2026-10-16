@@ -1,7 +1,7 @@
 """Ceiling flange and separate speaker shell."""
 from __future__ import annotations
 from math import ceil, cos, radians, sin, sqrt
-from build123d import Circle, Pos, Rectangle, Rot, loft
+from build123d import Circle, Pos, Rectangle, Rot, chamfer, fillet, loft
 from speaker import (SPEAKER_X, SPEAKER_Y, SPEAKER_DEPTH, SPEAKER_FRONT_Z,
                      SPEAKER_REAR_RADIUS, CURVE_CENTRE_Z)
 from geometry import cylinder, cone, rectangular_prism, rounded_prism, polygon_xz, radial_profile
@@ -11,9 +11,11 @@ from geometry import cylinder, cone, rectangular_prism, rounded_prism, polygon_x
 PLAN_CLEARANCE = 2.0
 REAR_CLEARANCE = 8.0
 SIDE_WALL = 4.5
-ROOF_WALL = 7.0
+ROOF_WALL = 5.0                      # near the 4.5 mm straight side walls
 ROOF_SHOULDER_HALF_WIDTH = 10.0       # virtual apex before the flat truncation
-ROOF_VERTICAL_WALL = 10.0             # 7.1 mm normal thickness on 45° faces
+ROOF_VERTICAL_WALL = 7.0              # 4.95 mm normal thickness on 45° faces
+ROOF_EDGE_FILLET = 3.0                # lower shoulder ridges and sloped end edges
+ROOF_TOP_CHAMFER = 1.0               # build-plate face stays broad and flat
 ROOF_CENTRE_CLEARANCE = 5.0           # dummy speaker rear apex to inner flat
 FLANGE_RADIUS = 122.5                 # Ø245; preserves 4 mm land beyond cutout
 FLANGE_THICKNESS = 6.0
@@ -141,9 +143,40 @@ def roof_limit(shoulder_apex, cap_z, half_width, bottom):
                        (half_width,side),(flat,cap_z),(-flat,cap_z),
                        (-half_width,side)])
 
+def rounded_outer_roof(shell):
+    side_z=(OUTER_SHOULDER_APEX_Z-
+            (OUTER_X/2-ROOF_SHOULDER_HALF_WIDTH))
+    shoulder_edges=[]
+    for edge in shell.edges():
+        centre=edge.center()
+        span=edge.bounding_box().size
+        lower_ridge=(span.Y>OUTER_Y*0.85 and span.X<1e-5 and
+                     abs(centre.Z-side_z)<1e-5)
+        sloped_end=(span.Y<1e-5 and
+                    abs(abs(centre.Y)-OUTER_Y/2)<1e-5 and
+                    span.X>5 and side_z+1<centre.Z<OUTER_APEX_Z-1)
+        if lower_ridge or sloped_end:
+            shoulder_edges.append(edge)
+    if len(shoulder_edges)!=6:
+        raise ValueError(f'Expected 6 shoulder edges, found {len(shoulder_edges)}')
+    shell=fillet(shoulder_edges,ROOF_EDGE_FILLET)
+    top_edges=[]
+    for edge in shell.edges():
+        centre=edge.center()
+        span=edge.bounding_box().size
+        flat_ridge=(span.Y>OUTER_Y*0.85 and span.X<1e-5)
+        flat_end=(span.Y<1e-5 and abs(abs(centre.Y)-OUTER_Y/2)<1e-5 and
+                  span.X>5)
+        if abs(centre.Z-OUTER_APEX_Z)<1e-5 and (flat_ridge or flat_end):
+            top_edges.append(edge)
+    if len(top_edges)!=4:
+        raise ValueError(f'Expected 4 flat-roof edges, found {len(top_edges)}')
+    return chamfer(top_edges,ROOF_TOP_CHAMFER)
+
 def monolithic_housing():
     shell = rounded_prism(OUTER_X,OUTER_Y,OUTER_R,0,OUTER_APEX_Z)
     shell &= roof_limit(OUTER_SHOULDER_APEX_Z,OUTER_APEX_Z,OUTER_X/2,-1)
+    shell = rounded_outer_roof(shell)
     blank = shell + cylinder(0,0,FLANGE_RADIUS,0,FLANGE_THICKNESS)
     for x,y in RETAINER_FIXINGS:
         blank += rectangular_prism(RETAINER_BOSS_X,RETAINER_BOSS_Y,

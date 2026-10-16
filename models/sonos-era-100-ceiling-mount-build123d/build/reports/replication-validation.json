@@ -19,7 +19,7 @@
     }
   },
   "housing-shell": {
-    "intentional_change": "shorter roof, \u00d832 cable passage and four M3 joint bosses",
+    "intentional_change": "uniform-thickness roof, \u00d832 cable passage and four M3 joint bosses",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -31,10 +31,10 @@
         [
           72.30000305175781,
           100.5,
-          150.5
+          148.5
         ]
       ],
-      "volume_mm3": 544196.5109518393
+      "volume_mm3": 480184.1586827074
     }
   },
   "flat-seam-gasket": {
@@ -90,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 6.860126182218398e-08,
-      "surface_p99_mm": 4.1266705138887645e-13,
-      "surface_max_mm": 3.521791812259454e-06,
+      "surface_rms_mm": 5.373343675512266e-08,
+      "surface_p99_mm": 3.977090933993814e-13,
+      "surface_max_mm": 3.5274756727587517e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -141,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.105209317393664e-08,
+      "surface_rms_mm": 3.602164080050461e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 1.998164946062869e-06,
+      "surface_max_mm": 2.590558665168218e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -186,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 4.241978785552864e-08,
-      "surface_p99_mm": 1.432144669219779e-14,
-      "surface_max_mm": 2.7365473277959067e-06,
+      "surface_rms_mm": 3.78691974574315e-08,
+      "surface_p99_mm": 1.4419228562316118e-14,
+      "surface_max_mm": 2.2727797638770527e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -229,10 +229,10 @@
         [
           19.993749618530273,
           19.986135482788086,
-          9.800000190734863
+          7.800000190734863
         ]
       ],
-      "volume_mm3": 8252.676175470393
+      "volume_mm3": 6702.4405913672845
     }
   },
   "flat-cable-grommet": {
@@ -248,10 +248,10 @@
         [
           19.99774932861328,
           19.989559173583984,
-          9.800000190734863
+          7.800000190734863
         ]
       ],
-      "volume_mm3": 8376.786527865515
+      "volume_mm3": 6801.698797141245
     }
   },
   "ceiling-cutout-template": {

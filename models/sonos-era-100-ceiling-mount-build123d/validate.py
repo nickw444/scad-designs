@@ -1,6 +1,7 @@
 """Check the build123d assembly at nominal and optional-gasket placements."""
 from __future__ import annotations
 import json
+from math import sqrt
 from pathlib import Path
 import numpy as np
 import trimesh
@@ -45,6 +46,12 @@ def run():
     rear_apex = SPEAKER_FRONT_Z + SPEAKER_DEPTH
     check(abs(housing.INNER_APEX_Z-rear_apex-5.0)<1e-6,
           'nominal rear apex clearance must be 5 mm')
+    roof_flat_wall=housing.OUTER_APEX_Z-housing.INNER_APEX_Z
+    roof_slope_wall=(housing.OUTER_SHOULDER_APEX_Z-
+                     housing.INNER_SHOULDER_APEX_Z)/sqrt(2)
+    check(abs(roof_flat_wall-housing.SIDE_WALL)<=0.6 and
+          abs(roof_slope_wall-housing.SIDE_WALL)<=0.6,
+          'roof walls differ too much from straight shell walls')
     for distance in np.linspace(0,SPEAKER_DEPTH,15):
         check(overlap(house,Pos(0,0,-float(distance))*speaker)<0.001,
               f'speaker insertion collision at {distance:.1f} mm')
@@ -205,6 +212,9 @@ def run():
         'speaker_rear_apex_z_mm':rear_apex,
         'inner_roof_apex_z_mm':housing.INNER_APEX_Z,
         'rear_apex_clearance_mm':housing.INNER_APEX_Z-rear_apex,
+        'side_wall_mm':housing.SIDE_WALL,
+        'roof_flat_wall_mm':roof_flat_wall,
+        'roof_slope_normal_wall_mm':roof_slope_wall,
         'joint_m3_axes_checked':len(housing.JOINT_FIXINGS),
         'retainer_m3_axes_checked':len(housing.RETAINER_FIXINGS),
         'joint_m3_10mm_insert_engagement_mm':joint_engagement,
