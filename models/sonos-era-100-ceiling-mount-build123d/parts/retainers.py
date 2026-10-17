@@ -75,7 +75,7 @@ def capture_pad(x,y):
     cx=sign*(RETAINER_BAR_LENGTH/2+
              (RETAINER_CAPTURE_OVERHANG-RETAINER_CAPTURE_ROOT)/2)
     return rectangular_prism(RETAINER_CAPTURE_OVERHANG+RETAINER_CAPTURE_ROOT,
-                             RETAINER_BAR_WIDTH,0,RETAINER_CAPTURE_PAD_HEIGHT,cx,y)
+                             RETAINER_TAIL_WIDTH,0,RETAINER_CAPTURE_PAD_HEIGHT,cx,y)
 
 def end_retainer():
     part = end_retainer_base()

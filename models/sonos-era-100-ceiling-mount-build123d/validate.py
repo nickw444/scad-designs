@@ -141,7 +141,7 @@ def run():
         check(overlap(flange,Pos(0,0,0.5)*stop)>0.1,
               f'retainer {i} outer tabs do not capture flange')
         for sx in (-1,1):
-            tip=rectangular_prism(0.5,housing.RETAINER_BAR_WIDTH-1,0.3,1.7,
+            tip=rectangular_prism(0.5,housing.RETAINER_TAIL_WIDTH-1,0.3,1.7,
                                   sx*(housing.RETAINER_BAR_LENGTH/2+1.5),
                                   -housing.RETAINER_Y if i==0 else housing.RETAINER_Y)
             check(overlap(stop,tip)>1 and overlap(flange,tip)<0.001,
@@ -150,6 +150,8 @@ def run():
     actual_capture=capture_outer_overlap-housing.RETAINER_SEAT_XY_CLEARANCE
     check(actual_capture>=2.5,
           'retainer tab has insufficient flange overlap after adding slot clearance')
+    check(housing.RETAINER_TAIL_WIDTH>=2*housing.M3_COUNTERBORE_RADIUS+4.0,
+          'narrowed retainer tail lacks material beside the M3 head')
     check(housing.RETAINER_SEAT_XY_CLEARANCE>=0.3,
           'retainer main slot has insufficient insertion clearance')
     for i,stop in enumerate(retainers):
@@ -272,6 +274,7 @@ def run():
         'seam_outer_flank_clearance_mm':housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH,
         'retainer_boss_span_mm':[housing.RETAINER_BOSS_X,housing.RETAINER_BOSS_Y],
         'retainer_tail_width_mm':housing.RETAINER_TAIL_WIDTH,
+        'retainer_capture_tab_width_mm':housing.RETAINER_TAIL_WIDTH,
         'round_grommet_compression_mm3':round_compression,
         'flat_grommet_compression_mm3':flat_compression,
         'nominal_factory_plug_diameter_mm':housing.ASSUMED_PLUG_DIAMETER,

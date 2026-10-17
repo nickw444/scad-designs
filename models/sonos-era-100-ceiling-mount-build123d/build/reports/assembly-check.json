@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 137662.90521732494,
+    "volume_mm3": 137770.42503666092,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -80,7 +80,7 @@
     "watertight": true
   },
   "end-retainer": {
-    "volume_mm3": 23794.35091958955,
+    "volume_mm3": 23749.55096231416,
     "bounds_mm": [
       [
         -74.5,
@@ -156,6 +156,7 @@
       14.5
     ],
     "retainer_tail_width_mm": 10.8,
+    "retainer_capture_tab_width_mm": 10.8,
     "round_grommet_compression_mm3": 49.922481180035376,
     "flat_grommet_compression_mm3": 50.12254461842588,
     "nominal_factory_plug_diameter_mm": 30.0,

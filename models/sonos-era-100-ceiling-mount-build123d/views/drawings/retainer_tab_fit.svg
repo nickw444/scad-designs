@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1350" height="850" viewBox="0 0 1350 850">
+<rect width="1350" height="850" fill="#f8fafc"/>
+<style>.title{font:700 28px Arial;fill:#17324d}.text{font:18px Arial;fill:#334b63}.dim{font:700 19px Arial;fill:#087b83}.part{stroke:#27445c;stroke-width:1.5;fill-rule:evenodd}</style>
+<text x="65" y="55" class="title">Retainer capture tab · XY section at Z = 1 mm</text>
+<path d="M 220.00,120.00 L 220.00,247.50 L 605.50,247.50 L 605.50,592.50 L 220.00,592.50 L 220.00,697.50 L 215.62,720.00 L 640.00,720.00 L 640.00,120.00 L 220.00,120.00 Z" class="part" fill="#e9bd67"/>
+<path d="M 205.00,210.00 L 100.00,210.00 L 100.00,630.00 L 205.00,630.00 L 205.00,582.00 L 595.00,582.00 L 595.00,258.00 L 205.00,258.00 L 205.00,210.00 Z M 463.00,420.00 L 456.54,452.91 L 438.11,480.93 L 410.45,499.89 L 377.67,506.98 L 344.64,501.15 L 316.28,483.26 L 296.78,455.97 L 289.06,423.34 L 294.26,390.20 L 311.60,361.50 L 338.52,341.49 L 371.00,333.14 L 404.22,337.70 L 433.25,354.49 L 453.78,381.02 L 463.00,420.00 Z" class="part" fill="#e78d69"/>
+<text x="710" y="190" class="text">Gold: ceiling flange</text>
+<text x="710" y="225" class="text">Orange: one installed retainer</text>
+<text x="710" y="300" class="dim">Tail and outer tab: 10.80 mm wide</text>
+<text x="710" y="338" class="dim">Underside pocket: 11.50 mm wide</text>
+<text x="710" y="376" class="text">Pocket clearance: 0.35 mm per side</text>
+<text x="710" y="448" class="text">Left: 14 mm central beam.</text>
+<text x="710" y="480" class="text">Right: outer ear with no side wings.</text>
+<text x="65" y="810" class="text">The flange closes around the narrower tail; the tab seats in a 2 mm deep underside pocket.</text>
+</svg>
