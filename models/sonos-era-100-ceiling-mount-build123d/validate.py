@@ -14,7 +14,8 @@ from parts import retainers as retainer_dims
 from parts.grommets import GROMMET_FLANGE_RADIUS, flat_cable_grommet
 from parts.template import ceiling_cutout_profile
 from paths import BUILD, REPORTS
-from speaker import SPEAKER_DEPTH, SPEAKER_FRONT_RADIUS, SPEAKER_FRONT_Z, speaker_mockup
+from speaker import (MEASURED_SPEAKER_DEPTH, SPEAKER_DEPTH, SPEAKER_FRONT_RADIUS,
+                     SPEAKER_FRONT_Z, speaker_mockup)
 
 OUT=REPORTS
 
@@ -57,6 +58,22 @@ def run():
               f'speaker insertion collision at {distance:.1f} mm')
     check(overlap(grille,house)<0.001,'grille/housing overlap')
     check(overlap(grille,speaker)<0.001,'grille/speaker overlap')
+    seated_speaker = Pos(0,0,housing.RETAINER_CENTRE_HEIGHT-SPEAKER_FRONT_Z) * speaker_mockup(
+        depth=MEASURED_SPEAKER_DEPTH)
+    for name,part in [('shell',shell),('flange',flange),('grille',grille),
+                      ('south retainer',direct.get('retainer-south')),
+                      ('north retainer',direct.get('retainer-north'))]:
+        check(overlap(part,seated_speaker)<0.001,
+              f'130.7 mm seated speaker overlaps {name}')
+    centre_probe=rectangular_prism(0.02,0.02,0,200,0,housing.RETAINER_Y)
+    retainer_contact_z=(direct.get('retainer-north') & centre_probe).bounding_box().max.Z
+    measured_rear_z=(seated_speaker & centre_probe).bounding_box().max.Z
+    roof_inner_z=(shell & centre_probe).bounding_box().min.Z
+    seated_available=roof_inner_z-retainer_contact_z
+    seated_rear_gap=roof_inner_z-measured_rear_z
+    check(abs(seated_available-MEASURED_SPEAKER_DEPTH-seated_rear_gap)<0.01 and
+          seated_rear_gap>=5.0,
+          '130.7 mm seated speaker lacks rear roof clearance')
     for i,stop in enumerate(retainers):
         check(overlap(stop,house)<0.001,f'retainer {i}/housing overlap')
         check(overlap(stop,speaker)<0.001,f'retainer {i}/speaker overlap')
@@ -233,6 +250,9 @@ def run():
         'speaker_rear_apex_z_mm':rear_apex,
         'inner_roof_apex_z_mm':housing.INNER_APEX_Z,
         'rear_apex_clearance_mm':housing.INNER_APEX_Z-rear_apex,
+        'measured_speaker_depth_mm':MEASURED_SPEAKER_DEPTH,
+        'seated_retainer_to_roof_mm':round(seated_available,3),
+        'seated_measured_rear_gap_mm':round(seated_rear_gap,3),
         'side_wall_mm':housing.SIDE_WALL,
         'roof_flat_wall_mm':roof_flat_wall,
         'roof_slope_normal_wall_mm':roof_slope_wall,

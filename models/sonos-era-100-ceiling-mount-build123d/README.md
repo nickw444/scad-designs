@@ -34,6 +34,8 @@ The retainer's 6 mm base passes through the flange without a bridge over the slo
 
 The retainer has a provisional 60 mm front-contact radius, also used by the speaker dummy. Its top slopes from the curved contact toward each fixing area within the 14 mm bar width. The flange seat and outer tab pockets have 0.35 mm insertion clearance on each side; the fixing pads have 0.3 mm per side. The [retainer profile drawing](views/drawings/retainer_profile.svg) shows the current section. Physical fit and loaded deflection still need a print test.
 
+The [seated assembly depth section](views/drawings/assembly_depth.svg) measures 136.3 mm from the retainer's centre contact to the shell's inner rear roof. With a 130.7 mm measured speaker depth seated on the retainer, the centreline rear gap is 5.6 mm. The 130.5 mm default dummy was used when sizing the existing shell; the measured-depth envelope is checked separately without moving the shell roof.
+
 The grille uses the perimeter clips; the ceiling flange has no magnet pockets.
 
 ## Prototype fasteners
