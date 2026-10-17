@@ -49,15 +49,22 @@ def run():
     check(housing.RETAINER_BOSS_Y/2 >=
           housing.RETAINER_BAR_WIDTH/2+housing.RETAINER_SEAT_XY_CLEARANCE+2,
           'retainer boss does not extend 2 mm past both flange slot sides')
-    check(abs((housing.SEAM_GROOVE_WIDTH-housing.SEAM_TONGUE_WIDTH)/2-0.25)<1e-6 and
-          abs(housing.SEAM_GROOVE_DEPTH-housing.SEAM_TONGUE_HEIGHT-0.3)<1e-6,
-          'locating tongue/groove clearance changed')
-    seam_x=(housing.OUTER_X+housing.CAVITY_X)/4
+    check(abs(housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH-0.25)<1e-6 and
+          abs(housing.SEAM_REBATE_DEPTH-housing.SEAM_LIP_HEIGHT-0.3)<1e-6,
+          'locating lip/rebate clearance changed')
+    check(housing.SIDE_WALL-housing.SEAM_REBATE_WIDTH>=2.9,
+          'rebate leaves too little continuous outer wall')
+    seam_x=housing.CAVITY_X/2+housing.SEAM_LIP_WIDTH/2
     for y in (-50,0,50):
         tongue_probe=rectangular_prism(0.2,0.2,housing.FLANGE_THICKNESS+0.1,
-                    housing.FLANGE_THICKNESS+housing.SEAM_TONGUE_HEIGHT-0.1,seam_x,y)
+                    housing.FLANGE_THICKNESS+housing.SEAM_LIP_HEIGHT-0.1,seam_x,y)
         check(overlap(flange,tongue_probe)>0.01 and overlap(shell,tongue_probe)<0.001,
-              f'locating tongue/groove missing at y={y}')
+              f'locating lip/rebate missing at y={y}')
+        outer_wall_probe=rectangular_prism(0.2,0.2,housing.FLANGE_THICKNESS+0.1,
+                          housing.FLANGE_THICKNESS+housing.SEAM_REBATE_DEPTH-0.1,
+                          housing.OUTER_X/2-0.7,y)
+        check(overlap(shell,outer_wall_probe)>0.01,
+              f'continuous outer shell wall missing at y={y}')
     for sy in (-1,1):
         for x in (-70,70):
             for dy in (-housing.RETAINER_BAR_WIDTH/2-
@@ -248,11 +255,11 @@ def run():
     reports['assembly']={
         'insertion_positions_checked':15,
         'direct_assembly_collisions_mm3':0,
-        'seam_tongue_width_mm':housing.SEAM_TONGUE_WIDTH,
-        'seam_tongue_height_mm':housing.SEAM_TONGUE_HEIGHT,
-        'seam_groove_width_mm':housing.SEAM_GROOVE_WIDTH,
-        'seam_groove_depth_mm':housing.SEAM_GROOVE_DEPTH,
-        'seam_radial_clearance_each_side_mm':(housing.SEAM_GROOVE_WIDTH-housing.SEAM_TONGUE_WIDTH)/2,
+        'seam_lip_width_mm':housing.SEAM_LIP_WIDTH,
+        'seam_lip_height_mm':housing.SEAM_LIP_HEIGHT,
+        'seam_rebate_width_mm':housing.SEAM_REBATE_WIDTH,
+        'seam_rebate_depth_mm':housing.SEAM_REBATE_DEPTH,
+        'seam_outer_flank_clearance_mm':housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH,
         'retainer_boss_span_mm':[housing.RETAINER_BOSS_X,housing.RETAINER_BOSS_Y],
         'round_grommet_compression_mm3':round_compression,
         'flat_grommet_compression_mm3':flat_compression,

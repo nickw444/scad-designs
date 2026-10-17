@@ -96,20 +96,18 @@ JOINT_BOLT_UNDER_HEAD_LENGTH = M3_BOLT_UNDER_HEAD_LENGTH
 JOINT_COUNTERBORE_RADIUS = M3_COUNTERBORE_RADIUS
 JOINT_COUNTERBORE_DEPTH = 4.0         # 1 mm recess for the 3 mm cap head
 RETAINER_BAR_LENGTH = 143.0           # full-height base reaches both fixing bores
-SEAM_TONGUE_WIDTH = 1.3
-SEAM_TONGUE_HEIGHT = 1.5
-SEAM_GROOVE_WIDTH = 1.8                # 0.25 mm clearance on each side
-SEAM_GROOVE_DEPTH = 1.8                # 0.3 mm tip clearance; faces meet at Z=6
+SEAM_LIP_WIDTH = 1.3
+SEAM_LIP_HEIGHT = 1.5
+SEAM_REBATE_WIDTH = 1.55               # 0.25 mm clearance at the outer flank
+SEAM_REBATE_DEPTH = 1.8                # 0.3 mm tip clearance; faces meet at Z=6
 SEAM_RETAINER_BREAK_HALF_LENGTH = 10.0
 
 
-def seam_band(width, z0, z1):
-    """Rounded, centred wall band; interrupted at the removable retainers."""
-    cx = (OUTER_X + CAVITY_X) / 4
-    cy = (OUTER_Y + CAVITY_Y) / 4
-    cr = (OUTER_R + CAVITY_R) / 2
-    ring = (rounded_prism(2*(cx+width/2),2*(cy+width/2),cr+width/2,z0,z1)
-            - rounded_prism(2*(cx-width/2),2*(cy-width/2),cr-width/2,z0-0.1,z1+0.1))
+def seam_inner_band(width, z0, z1):
+    """Band from the cavity edge into the wall, broken at the retainer slots."""
+    ring = (rounded_prism(CAVITY_X+2*width,CAVITY_Y+2*width,
+                          CAVITY_R+width,z0,z1)
+            - rounded_prism(CAVITY_X,CAVITY_Y,CAVITY_R,z0-0.1,z1+0.1))
     for sy in (-1,1):
         ring -= rectangular_prism(OUTER_X+2,2*SEAM_RETAINER_BREAK_HALF_LENGTH,
                                   z0-0.1,z1+0.1,0,sy*RETAINER_Y)
@@ -237,8 +235,8 @@ def ceiling_flange():
     for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_BOLT_CLEARANCE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         part -= cylinder(x,y,JOINT_COUNTERBORE_RADIUS,-0.1,JOINT_COUNTERBORE_DEPTH)
-    part += seam_band(SEAM_TONGUE_WIDTH,FLANGE_THICKNESS,
-                      FLANGE_THICKNESS+SEAM_TONGUE_HEIGHT)
+    part += seam_inner_band(SEAM_LIP_WIDTH,FLANGE_THICKNESS,
+                            FLANGE_THICKNESS+SEAM_LIP_HEIGHT)
     return part.clean()
 
 def housing_shell():
@@ -256,6 +254,6 @@ def housing_shell():
     for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_INSERT_HOLE_RADIUS,FLANGE_THICKNESS-0.1,
                           FLANGE_THICKNESS+JOINT_INSERT_DEPTH)
-    part -= seam_band(SEAM_GROOVE_WIDTH,FLANGE_THICKNESS-0.1,
-                      FLANGE_THICKNESS+SEAM_GROOVE_DEPTH)
+    part -= seam_inner_band(SEAM_REBATE_WIDTH,FLANGE_THICKNESS-0.1,
+                            FLANGE_THICKNESS+SEAM_REBATE_DEPTH)
     return part.clean()

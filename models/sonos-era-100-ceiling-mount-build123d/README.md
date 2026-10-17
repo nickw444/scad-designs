@@ -28,7 +28,7 @@ Dimensions live with the part that defines the feature. `speaker.py` owns the me
 
 The shell has a Ø32 mm rear cable passage for the factory plug, measured at approximately 30 mm across. Feed the plug through the shell before pressing a split TPU grommet around the cable. Both round- and flat-cable grommets have Ø40 mm rear flanges that cover the passage; their stems press into it. The [annotated cable-passage section](views/drawings/cable_passage.svg) measures the opening from the CAD solid. The plug allowance is based on an approximate measurement, so check its thickest orientation before printing the replacement shell.
 
-The flange has a 1.3 mm wide, 1.5 mm tall locating tongue along its shell contact wall. The shell has a matching 1.8 mm wide, 1.8 mm deep groove. This gives 0.25 mm clearance on each side and 0.3 mm at the tip, so the PETG face surfaces meet at Z = 6 mm. The [joint section](views/drawings/seam_joint.svg) shows the fit. The tongue stops at the retainer openings; widened shell bosses cover the full width of those openings and extend at least 2 mm beyond each side. Both flange and shell must be printed as the mating pair for this revision.
+The flange has a 1.3 mm wide, 1.5 mm tall locating lip along the cavity edge. The shell has a 1.55 mm wide, 1.8 mm deep rebate cut from its inner edge, leaving 2.95 mm of continuous outer wall. This gives 0.25 mm clearance at the outer flank and 0.3 mm at the tip, so the PETG face surfaces meet at Z = 6 mm. The [joint section](views/drawings/seam_joint.svg) shows the fit. The lip stops at the retainer openings; widened shell bosses cover the full width of those openings and extend at least 2 mm beyond each side. Both flange and shell must be printed as the mating pair for this revision.
 
 The shell is 142.5 mm high from the flange interface to its rear face. Its straight walls are 4.5 mm thick, flat rear roof is 5.0 mm thick, and 45° shoulders are approximately 4.95 mm thick measured normal to their faces. The lower shoulder ridges and sloped end edges have 3 mm fillets; the flat rear build-plate face has a 1 mm perimeter chamfer. The cavity's flat roof is 5 mm beyond the modeled speaker rear apex; the physical speaker should be measured before treating this as a guaranteed fit.
 
@@ -87,6 +87,6 @@ The nine printable STL exports are in `build/`. Optional STEP exports go in `bui
 
 ## Validation and source
 
-The assembly check covers the speaker dummy at 15 insertion positions, the tongue/groove and retainer boss coverage, screw axes, a Ø30 mm plug passage, and cable grommet compression. Design credit: [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
+The assembly check covers the speaker dummy at 15 insertion positions, the locating rebate and retainer boss coverage, screw axes, a Ø30 mm plug passage, and cable grommet compression. Design credit: [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
 
 The dummy's front and rear curves are based on owner measurements, not a manufacturer CAD model. Physical insertion, cable fit and grille pull-off force still require print testing.

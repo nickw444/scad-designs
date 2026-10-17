@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="780" viewBox="0 0 1600 780">
 <rect width="1600" height="780" fill="#f8fafc"/>
 <style>.title{font:700 27px Arial;fill:#17324d}.body{font:17px Arial;fill:#334b63}.dim{font:700 18px Arial;fill:#087b83}.shape{stroke:#27445c;stroke-width:1.7;fill-rule:evenodd}</style>
-<text x="60" y="55" class="title">Flange–shell locating joint · XZ section at Y = 0</text>
-<path d="M 399.50,430.00 L 287.50,430.00 L 287.50,640.00 L 539.50,640.00 L 539.50,570.00 L 627.00,570.00 L 627.00,430.00 L 490.50,430.00 L 490.50,325.00 L 399.50,325.00 L 399.50,430.00 Z" class="shape" fill="#e9bd67"/>
-<path d="M 287.50,150.00 L 287.50,430.00 L 382.00,430.00 L 382.00,304.00 L 508.00,304.00 L 508.00,430.00 L 602.50,430.00 L 602.50,150.00 L 287.50,150.00 Z" class="shape" fill="#6b95c8"/>
+<text x="60" y="55" class="title">Inner-edge rebate · XZ section at Y = 0</text>
+<path d="M 627.00,430.00 L 378.50,430.00 L 378.50,325.00 L 287.50,325.00 L 287.50,640.00 L 539.50,640.00 L 539.50,570.00 L 627.00,570.00 L 627.00,430.00 Z" class="shape" fill="#e9bd67"/>
+<path d="M 396.00,304.00 L 396.00,430.00 L 602.50,430.00 L 602.50,150.00 L 287.50,150.00 L 287.50,304.00 L 396.00,304.00 Z" class="shape" fill="#6b95c8"/>
 <line x1="60" y1="430.0" x2="790" y2="430.0" stroke="#087b83" stroke-dasharray="5 5"/>
 <text x="810" y="460.0" class="dim">PETG faces meet · Z = 6</text>
-<text x="810" y="205" class="body">Gold: flange tongue</text>
-<text x="810" y="235" class="body">Blue: shell groove</text>
-<text x="810" y="290" class="dim">Tongue: 1.3 wide × 1.5 high</text>
-<text x="810" y="322" class="dim">Groove: 1.8 wide × 1.8 deep</text>
-<text x="810" y="354" class="body">Side clearance: 0.25 each</text>
-<text x="810" y="382" class="body">Tip clearance: 0.30</text>
-<text x="60" y="735" class="body">The locating band is interrupted at the two retainer slots; widened shell bosses cover those openings.</text>
+<text x="810" y="205" class="body">Gold: flange locating lip</text>
+<text x="810" y="235" class="body">Blue: shell inner-edge rebate</text>
+<text x="810" y="290" class="dim">Lip: 1.30 wide × 1.5 high</text>
+<text x="810" y="322" class="dim">Rebate: 1.55 into wall × 1.8 deep</text>
+<text x="810" y="354" class="body">Outer-flank clearance: 0.25</text>
+<text x="810" y="382" class="body">Tip clearance: 0.30; outer wall retained: 2.95</text>
+<text x="60" y="735" class="body">The inner-edge lip stops at the two retainer slots; widened shell bosses cover those openings.</text>
 </svg>

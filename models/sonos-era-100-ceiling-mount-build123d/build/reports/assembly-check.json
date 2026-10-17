@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 136956.78615536416,
+    "volume_mm3": 136937.14594852604,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -16,7 +16,7 @@
     "watertight": true
   },
   "housing-shell": {
-    "volume_mm3": 483129.40793385153,
+    "volume_mm3": 483403.56461780466,
     "bounds_mm": [
       [
         -73.30000305175781,
@@ -146,11 +146,11 @@
   "assembly": {
     "insertion_positions_checked": 15,
     "direct_assembly_collisions_mm3": 0,
-    "seam_tongue_width_mm": 1.3,
-    "seam_tongue_height_mm": 1.5,
-    "seam_groove_width_mm": 1.8,
-    "seam_groove_depth_mm": 1.8,
-    "seam_radial_clearance_each_side_mm": 0.25,
+    "seam_lip_width_mm": 1.3,
+    "seam_lip_height_mm": 1.5,
+    "seam_rebate_width_mm": 1.55,
+    "seam_rebate_depth_mm": 1.8,
+    "seam_outer_flank_clearance_mm": 0.25,
     "retainer_boss_span_mm": [
       12.2,
       20.0

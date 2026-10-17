@@ -1,4 +1,4 @@
-"""Zoomed XZ section of the PETG flange-to-shell locating joint."""
+"""Zoomed XZ section of the inner-edge PETG locating rebate."""
 from pathlib import Path
 import sys
 
@@ -31,23 +31,23 @@ def render():
 
     flange = cut_path(housing.ceiling_flange())
     shell = cut_path(housing.housing_shell())
-    tongue_top = housing.FLANGE_THICKNESS + housing.SEAM_TONGUE_HEIGHT
-    groove_top = housing.FLANGE_THICKNESS + housing.SEAM_GROOVE_DEPTH
+    lip_top = housing.FLANGE_THICKNESS + housing.SEAM_LIP_HEIGHT
+    rebate_top = housing.FLANGE_THICKNESS + housing.SEAM_REBATE_DEPTH
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="780" viewBox="0 0 1600 780">
 <rect width="1600" height="780" fill="#f8fafc"/>
 <style>.title{{font:700 27px Arial;fill:#17324d}}.body{{font:17px Arial;fill:#334b63}}.dim{{font:700 18px Arial;fill:#087b83}}.shape{{stroke:#27445c;stroke-width:1.7;fill-rule:evenodd}}</style>
-<text x="60" y="55" class="title">Flange–shell locating joint · XZ section at Y = 0</text>
+<text x="60" y="55" class="title">Inner-edge rebate · XZ section at Y = 0</text>
 <path d="{flange}" class="shape" fill="#e9bd67"/>
 <path d="{shell}" class="shape" fill="#6b95c8"/>
 <line x1="60" y1="{py(housing.FLANGE_THICKNESS):.1f}" x2="790" y2="{py(housing.FLANGE_THICKNESS):.1f}" stroke="#087b83" stroke-dasharray="5 5"/>
 <text x="810" y="{py(housing.FLANGE_THICKNESS)+30:.1f}" class="dim">PETG faces meet · Z = 6</text>
-<text x="810" y="205" class="body">Gold: flange tongue</text>
-<text x="810" y="235" class="body">Blue: shell groove</text>
-<text x="810" y="290" class="dim">Tongue: {housing.SEAM_TONGUE_WIDTH:.1f} wide × {housing.SEAM_TONGUE_HEIGHT:.1f} high</text>
-<text x="810" y="322" class="dim">Groove: {housing.SEAM_GROOVE_WIDTH:.1f} wide × {housing.SEAM_GROOVE_DEPTH:.1f} deep</text>
-<text x="810" y="354" class="body">Side clearance: {(housing.SEAM_GROOVE_WIDTH-housing.SEAM_TONGUE_WIDTH)/2:.2f} each</text>
-<text x="810" y="382" class="body">Tip clearance: {groove_top-tongue_top:.2f}</text>
-<text x="60" y="735" class="body">The locating band is interrupted at the two retainer slots; widened shell bosses cover those openings.</text>
+<text x="810" y="205" class="body">Gold: flange locating lip</text>
+<text x="810" y="235" class="body">Blue: shell inner-edge rebate</text>
+<text x="810" y="290" class="dim">Lip: {housing.SEAM_LIP_WIDTH:.2f} wide × {housing.SEAM_LIP_HEIGHT:.1f} high</text>
+<text x="810" y="322" class="dim">Rebate: {housing.SEAM_REBATE_WIDTH:.2f} into wall × {housing.SEAM_REBATE_DEPTH:.1f} deep</text>
+<text x="810" y="354" class="body">Outer-flank clearance: {housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH:.2f}</text>
+<text x="810" y="382" class="body">Tip clearance: {rebate_top-lip_top:.2f}; outer wall retained: {housing.SIDE_WALL-housing.SEAM_REBATE_WIDTH:.2f}</text>
+<text x="60" y="735" class="body">The inner-edge lip stops at the two retainer slots; widened shell bosses cover those openings.</text>
 </svg>'''
     Path(__file__).with_suffix('.svg').write_text(svg + '\n')
 
