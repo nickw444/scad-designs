@@ -22,7 +22,7 @@
 <polygon fill="#147c82" points="803.77,891.21 807.77,881.21 799.77,881.21"/>
 <polygon fill="#147c82" points="803.77,151.88 807.77,161.88 799.77,161.88"/>
 <text class="dimtext" text-anchor="middle" transform="translate(795.77 521.55) rotate(-90)">Insertion depth 137.50 mm</text>
-<text class="note" x="90" y="1028">Overall shell height: 142.50 mm; maximum XY width: 146.60 mm.</text>
+<text class="note" x="90" y="1028">Overall shell height: 142.50 mm; maximum XY width: 145.00 mm.</text>
 <text class="note" x="90" y="1056">Shell mouth to inner roof: 137.50 mm. From nominal speaker front: 135.50 mm.</text>
 <text class="note" x="90" y="1084">Nominal speaker depth: 130.50 mm; rear clearance at this position: 5.00 mm.</text>
 <text class="note" x="90" y="1112">Profile is the exact cut through Y = 0; its width differs from the maximum shell width.</text>

@@ -4,7 +4,8 @@ from math import sqrt
 from build123d import Edge, Face, Wire, extrude
 from speaker import SPEAKER_FRONT_Z, SPEAKER_FRONT_RADIUS
 from parts.housing import (RETAINER_SEAT_DEPTH, RETAINER_CENTRE_HEIGHT,
-    RETAINER_CENTRE_LENGTH, RETAINER_BAR_LENGTH, RETAINER_BAR_WIDTH, RETAINER_Y,
+    RETAINER_CENTRE_LENGTH, RETAINER_BAR_LENGTH, RETAINER_BAR_WIDTH,
+    RETAINER_TAIL_WIDTH, RETAINER_Y,
     RETAINER_FIXINGS, RETAINER_PAD_TOP_Z, RETAINER_PAD_CLEARANCE_WIDTH,
     RETAINER_PAD_CLEARANCE_LENGTH, RETAINER_CAPTURE_OVERHANG,
     RETAINER_CAPTURE_ROOT, RETAINER_CAPTURE_PAD_HEIGHT,
@@ -42,7 +43,14 @@ def curved_front_beam(y):
     return extrude(Face(Wire(edges)), amount=RETAINER_BAR_WIDTH, dir=(0,1,0))
 
 def end_retainer_base(z0=0, z1=RETAINER_SEAT_DEPTH):
-    return rectangular_prism(RETAINER_BAR_LENGTH,RETAINER_BAR_WIDTH,z0,z1,0,-RETAINER_Y)
+    base=rectangular_prism(RETAINER_CENTRE_LENGTH,RETAINER_BAR_WIDTH,
+                           z0,z1,0,-RETAINER_Y)
+    tail_start=RETAINER_CENTRE_LENGTH/2-0.5
+    tail_end=RETAINER_BAR_LENGTH/2
+    for sx in (-1,1):
+        base += rectangular_prism(tail_end-tail_start,RETAINER_TAIL_WIDTH,
+                                  z0,z1,sx*(tail_start+tail_end)/2,-RETAINER_Y)
+    return base
 
 
 def contact_shoulder(sign):

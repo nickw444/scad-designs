@@ -6,7 +6,9 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from views.common import dimensioned_view
 from cad_dimension_drawing import Leader, SectionDrawing, span_dimension
-from parts.housing import ceiling_flange
+from parts.housing import (ceiling_flange, RETAINER_BAR_WIDTH,
+                           RETAINER_TAIL_WIDTH, RETAINER_BOSS_X, RETAINER_BOSS_Y,
+                           FLANGE_THICKNESS, SEAM_LIP_HEIGHT)
 
 
 def render():
@@ -32,8 +34,10 @@ def render():
         ],
         notes=[
             f'Overall flange OD: Ø{overall.width:.2f} mm; screw pitch circle: Ø{pcd:.2f} mm.',
-            f'Flange thickness: {drawing.shape.bounding_box().size.Z:.2f} mm.',
+            f'Flange base: {FLANGE_THICKNESS:.2f} mm; locating lip rises {SEAM_LIP_HEIGHT:.2f} mm.',
             'Four M3 × 10 mm cap bolts: Ø5.8 × 4.0 mm head counterbores.',
+            f'Retainer slots narrow from {RETAINER_BAR_WIDTH:.1f} mm centre to {RETAINER_TAIL_WIDTH:.1f} mm tails.',
+            f'Shell retainer bosses: {RETAINER_BOSS_X:.1f} × {RETAINER_BOSS_Y:.1f} mm.',
             'The section outline is slightly inset from the overall OD by the grille clip relief.',
         ],
     )

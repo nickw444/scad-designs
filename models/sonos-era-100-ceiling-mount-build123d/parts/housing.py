@@ -23,6 +23,7 @@ RETAINER_SEAT_DEPTH = FLANGE_THICKNESS  # open channel: retainer passes through 
 RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
 RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
 RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
+RETAINER_TAIL_WIDTH = 10.8            # narrower only beyond the full-width centre beam
 RETAINER_SEAT_XY_CLEARANCE = 0.35     # insertion clearance on each side
 RETAINER_CAPTURE_OVERHANG = 3.0       # outer-end flange bearing, beyond the bar
 RETAINER_CAPTURE_ROOT = 0.5          # overlap into bar for a single solid
@@ -63,8 +64,8 @@ CEILING_SCREWS = [
 RETAINER_Y = 82.0                       # bring end bosses inward for ceiling seal land
 RETAINER_FIXINGS = [(sx * 67.2, sy * RETAINER_Y)
                     for sx in (-1, 1) for sy in (-1, 1)]
-RETAINER_BOSS_X = 12.2                 # covers the full retainer slot at the shell edge
-RETAINER_BOSS_Y = 20.0                 # 2.65 mm land beyond both slot sides
+RETAINER_BOSS_X = 10.2                 # original M3 boss footprint
+RETAINER_BOSS_Y = 14.5                 # 1.5 mm land beyond narrowed tail slot sides
 RETAINER_BOSS_OUTWARD_OFFSET = 0.0
 RETAINER_BOSS_RAMP_RISE = 8.0          # rear-down print: <45° outward growth
 RETAINER_PAD_CLEARANCE_WIDTH = 7.65   # outer edge meets the seat end; no bridge island
@@ -126,9 +127,11 @@ def retainer_pad_xy(x, y):
 
 def retainer_capture_pocket(x, y):
     sign=1 if x>0 else -1
-    cx=sign*(RETAINER_BAR_LENGTH/2+RETAINER_CAPTURE_OVERHANG/2)
+    cx=sign*(RETAINER_BAR_LENGTH/2+
+             (RETAINER_CAPTURE_OVERHANG-RETAINER_CAPTURE_ROOT)/2)
     return rectangular_prism(
-        RETAINER_CAPTURE_OVERHANG+2*RETAINER_CAPTURE_XY_CLEARANCE,
+        RETAINER_CAPTURE_OVERHANG+RETAINER_CAPTURE_ROOT+
+        2*RETAINER_CAPTURE_XY_CLEARANCE,
         RETAINER_BAR_WIDTH+2*RETAINER_CAPTURE_XY_CLEARANCE,
         -0.1,RETAINER_CAPTURE_PAD_HEIGHT,cx,y)
 
@@ -207,12 +210,20 @@ def monolithic_housing():
         blank -= cylinder(x,y,CEILING_SCREW_HOLE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         blank -= cone(x,y,CEILING_COUNTERSINK_RADIUS,CEILING_SCREW_HOLE_RADIUS,
                       0,CEILING_COUNTERSINK_DEPTH)
-    seat = rectangular_prism(RETAINER_BAR_LENGTH+2*RETAINER_SEAT_XY_CLEARANCE,
+    seat = rectangular_prism(RETAINER_CENTRE_LENGTH+2*RETAINER_SEAT_XY_CLEARANCE,
                              RETAINER_BAR_WIDTH+2*RETAINER_SEAT_XY_CLEARANCE,
                              -0.1,RETAINER_SEAT_DEPTH,
                              0,-RETAINER_Y)
     blank -= seat
     blank -= Rot(Z=180)*seat
+    tail_start=RETAINER_CENTRE_LENGTH/2-0.5
+    tail_end=RETAINER_BAR_LENGTH/2+RETAINER_SEAT_XY_CLEARANCE
+    for sx in (-1,1):
+        for sy in (-1,1):
+            blank -= rectangular_prism(tail_end-tail_start,
+                        RETAINER_TAIL_WIDTH+2*RETAINER_SEAT_XY_CLEARANCE,
+                        -0.1,RETAINER_SEAT_DEPTH,
+                        sx*(tail_start+tail_end)/2,sy*RETAINER_Y)
     for x,y in RETAINER_FIXINGS:
         blank -= rectangular_prism(RETAINER_PAD_CLEARANCE_WIDTH,
                                    RETAINER_PAD_CLEARANCE_LENGTH,

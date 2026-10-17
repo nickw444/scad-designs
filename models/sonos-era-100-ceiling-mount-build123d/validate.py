@@ -47,8 +47,8 @@ def run():
           housing.RETAINER_BAR_LENGTH/2+housing.RETAINER_SEAT_XY_CLEARANCE,
           'retainer boss does not cover the outer end of the flange slot')
     check(housing.RETAINER_BOSS_Y/2 >=
-          housing.RETAINER_BAR_WIDTH/2+housing.RETAINER_SEAT_XY_CLEARANCE+2,
-          'retainer boss does not extend 2 mm past both flange slot sides')
+          housing.RETAINER_TAIL_WIDTH/2+housing.RETAINER_SEAT_XY_CLEARANCE+1.4,
+          'retainer boss does not cover the narrowed flange tail slot')
     check(abs(housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH-0.25)<1e-6 and
           abs(housing.SEAM_REBATE_DEPTH-housing.SEAM_LIP_HEIGHT-0.3)<1e-6,
           'locating lip/rebate clearance changed')
@@ -67,15 +67,25 @@ def run():
               f'continuous outer shell wall missing at y={y}')
     for sy in (-1,1):
         for x in (-70,70):
-            for dy in (-housing.RETAINER_BAR_WIDTH/2-
+            for dy in (-housing.RETAINER_TAIL_WIDTH/2-
                        housing.RETAINER_SEAT_XY_CLEARANCE+0.3,
-                       housing.RETAINER_BAR_WIDTH/2+
+                       housing.RETAINER_TAIL_WIDTH/2+
                        housing.RETAINER_SEAT_XY_CLEARANCE-0.3):
                 seal_probe=rectangular_prism(0.3,0.3,housing.FLANGE_THICKNESS+0.1,
                                             housing.FLANGE_THICKNESS+0.5,
                                             x,sy*housing.RETAINER_Y+dy)
                 check(overlap(shell,seal_probe)>0.01,
                       'retainer boss leaves uncovered flange-slot edge')
+    for sy in (-1,1):
+        for sx in (-1,1):
+            flange_land=rectangular_prism(0.3,0.3,2.5,3.5,
+                           sx*65,sy*housing.RETAINER_Y+6.3)
+            check(overlap(flange,flange_land)>0.01,
+                  'flange is not closed beside narrowed retainer tail')
+            tab_roof=rectangular_prism(0.5,0.5,2.5,3.5,
+                         sx*73,sy*housing.RETAINER_Y)
+            check(overlap(flange,tab_roof)>0.1,
+                  'flange lacks a roof above the retainer capture tab')
     house=flange+shell
     check(overlap(house,speaker)<0.001,'speaker/housing overlap')
     rear_apex = SPEAKER_FRONT_Z + SPEAKER_DEPTH
@@ -261,6 +271,7 @@ def run():
         'seam_rebate_depth_mm':housing.SEAM_REBATE_DEPTH,
         'seam_outer_flank_clearance_mm':housing.SEAM_REBATE_WIDTH-housing.SEAM_LIP_WIDTH,
         'retainer_boss_span_mm':[housing.RETAINER_BOSS_X,housing.RETAINER_BOSS_Y],
+        'retainer_tail_width_mm':housing.RETAINER_TAIL_WIDTH,
         'round_grommet_compression_mm3':round_compression,
         'flat_grommet_compression_mm3':flat_compression,
         'nominal_factory_plug_diameter_mm':housing.ASSUMED_PLUG_DIAMETER,

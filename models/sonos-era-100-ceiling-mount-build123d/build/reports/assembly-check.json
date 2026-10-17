@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 136937.14594852604,
+    "volume_mm3": 137662.90521732494,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -16,15 +16,15 @@
     "watertight": true
   },
   "housing-shell": {
-    "volume_mm3": 483403.56461780466,
+    "volume_mm3": 480274.2724547835,
     "bounds_mm": [
       [
-        -73.30000305175781,
+        -72.5,
         -103.49857330322266,
         6.0
       ],
       [
-        73.30000305175781,
+        72.5,
         103.49857330322266,
         148.5
       ]
@@ -80,7 +80,7 @@
     "watertight": true
   },
   "end-retainer": {
-    "volume_mm3": 24171.950559482128,
+    "volume_mm3": 23794.35091958955,
     "bounds_mm": [
       [
         -74.5,
@@ -128,15 +128,15 @@
     "watertight": true
   },
   "ceiling-cutout-template": {
-    "volume_mm3": 6874.5148846304,
+    "volume_mm3": 6550.310085399343,
     "bounds_mm": [
       [
-        -74.30000305175781,
+        -73.5,
         -104.49395751953125,
         0.0
       ],
       [
-        74.30000305175781,
+        73.5,
         104.49395751953125,
         1.5
       ]
@@ -152,9 +152,10 @@
     "seam_rebate_depth_mm": 1.8,
     "seam_outer_flank_clearance_mm": 0.25,
     "retainer_boss_span_mm": [
-      12.2,
-      20.0
+      10.2,
+      14.5
     ],
+    "retainer_tail_width_mm": 10.8,
     "round_grommet_compression_mm3": 49.922481180035376,
     "flat_grommet_compression_mm3": 50.12254461842588,
     "nominal_factory_plug_diameter_mm": 30.0,
