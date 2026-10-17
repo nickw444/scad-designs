@@ -4,7 +4,8 @@ import argparse
 import importlib
 
 DRAWINGS = ('shell_insertion', 'shell_centre_xz', 'flange_fixings',
-            'flange_head_clearance', 'cable_passage')
+            'flange_head_clearance', 'cable_passage', 'retainer_before',
+            'retainer_after_contact', 'retainer_after_shoulder')
 
 
 def render(names):

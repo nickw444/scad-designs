@@ -11,14 +11,14 @@ from parts.housing import (RETAINER_SEAT_DEPTH, RETAINER_CENTRE_HEIGHT,
     M3_THREAD_RADIUS, M3_CLEARANCE_RADIUS,
     M3_HEAD_RADIUS, M3_HEAD_HEIGHT, M3_BOLT_UNDER_HEAD_LENGTH,
     M3_COUNTERBORE_RADIUS, retainer_pad_xy)
-from geometry import cylinder, rectangular_prism
+from geometry import cylinder, polygon_xz, rectangular_prism
 
 
 # Dimensions owned by this part (millimetres).
 RETAINER_PAD_GAP = SPEAKER_FRONT_Z - RETAINER_CENTRE_HEIGHT
 RETAINER_CONTACT_HALF_WIDTH = 40.0    # front contact spans X = -40..40
-RETAINER_PAD_WIDTH = RETAINER_PAD_CLEARANCE_WIDTH - 0.30  # X fit
-RETAINER_PAD_LENGTH = RETAINER_PAD_CLEARANCE_LENGTH - 0.40  # 0.2 mm each Y side
+RETAINER_PAD_WIDTH = RETAINER_PAD_CLEARANCE_WIDTH - 0.60  # 0.3 mm each X side
+RETAINER_PAD_LENGTH = RETAINER_PAD_CLEARANCE_LENGTH - 0.60  # 0.3 mm each Y side
 RETAINER_BOLT_RADIUS = M3_THREAD_RADIUS
 RETAINER_BOLT_CLEARANCE_RADIUS = M3_CLEARANCE_RADIUS
 RETAINER_HEAD_RADIUS = M3_HEAD_RADIUS
@@ -45,6 +45,23 @@ def end_retainer_base(z0=0, z1=RETAINER_SEAT_DEPTH):
     return rectangular_prism(RETAINER_BAR_LENGTH,RETAINER_BAR_WIDTH,z0,z1,0,-RETAINER_Y)
 
 
+def contact_shoulder(sign):
+    """Fill the unused space between the curved contact and each fixing end."""
+    half=RETAINER_CONTACT_HALF_WIDTH
+    start=half-1.0  # 1 mm overlap beneath the curved contact
+    end=RETAINER_CENTRE_LENGTH/2
+    centre_z=SPEAKER_FRONT_Z-RETAINER_PAD_GAP
+    def arc_z(x):
+        return centre_z+SPEAKER_FRONT_RADIUS-sqrt(SPEAKER_FRONT_RADIUS**2-x*x)
+    profile=[(start,RETAINER_SEAT_DEPTH),(end,RETAINER_SEAT_DEPTH),
+             (end,RETAINER_CENTRE_HEIGHT),(half,arc_z(half)-0.2),
+             (start,arc_z(start)-0.2)]
+    if sign<0:
+        profile=[(-x,z) for x,z in reversed(profile)]
+    return polygon_xz(profile,-RETAINER_Y-RETAINER_BAR_WIDTH/2,
+                      -RETAINER_Y+RETAINER_BAR_WIDTH/2)
+
+
 def capture_pad(x,y):
     sign=1 if x>0 else -1
     cx=sign*(RETAINER_BAR_LENGTH/2+
@@ -58,6 +75,8 @@ def end_retainer():
                               RETAINER_SEAT_DEPTH,RETAINER_CENTRE_HEIGHT,
                               0,-RETAINER_Y)
     part += curved_front_beam(-RETAINER_Y)
+    part += contact_shoulder(-1)
+    part += contact_shoulder(1)
     for sx in (-1,1):
         x,y=sx*abs(RETAINER_FIXINGS[0][0]),-RETAINER_Y
         part += capture_pad(x,y)

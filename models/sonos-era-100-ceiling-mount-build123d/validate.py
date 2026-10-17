@@ -14,7 +14,7 @@ from parts import retainers as retainer_dims
 from parts.grommets import GROMMET_FLANGE_RADIUS, flat_cable_grommet
 from parts.template import ceiling_cutout_profile
 from paths import BUILD, REPORTS
-from speaker import SPEAKER_DEPTH, SPEAKER_FRONT_Z, speaker_mockup
+from speaker import SPEAKER_DEPTH, SPEAKER_FRONT_RADIUS, SPEAKER_FRONT_Z, speaker_mockup
 
 OUT=REPORTS
 
@@ -86,13 +86,28 @@ def run():
             check(overlap(stop,tip)>1 and overlap(flange,tip)<0.001,
                   f'retainer {i} outer tab {sx} is missing or pocket is blocked')
     capture_outer_overlap=housing.RETAINER_CAPTURE_OVERHANG
-    check(abs(capture_outer_overlap-3.0)<0.01,
-          'retainer tab must capture 3 mm of flange at each outer end')
+    actual_capture=capture_outer_overlap-housing.RETAINER_SEAT_XY_CLEARANCE
+    check(actual_capture>=2.5,
+          'retainer tab has insufficient flange overlap after adding slot clearance')
+    check(housing.RETAINER_SEAT_XY_CLEARANCE>=0.3,
+          'retainer main slot has insufficient insertion clearance')
     for i,stop in enumerate(retainers):
-        side= -housing.RETAINER_Y if i==0 else housing.RETAINER_Y
-        check(overlap(stop,rectangular_prism(140,0.5,0.1,1.9,0,
-                                             side+housing.RETAINER_BAR_WIDTH/2+0.4))<0.001,
-              f'retainer {i} has an unwanted side shoulder')
+        for dx,dy in ((-0.2,0),(0.2,0),(0,-0.2),(0,0.2)):
+            check(overlap(flange,Pos(dx,dy,0)*stop)<0.001,
+                  f'retainer {i} binds in flange at offset {(dx,dy)}')
+        for x in (-50,50):
+            shoulder_probe=rectangular_prism(1,1,12.0,13.0,x,
+                                              -housing.RETAINER_Y if i==0 else housing.RETAINER_Y)
+            check(overlap(stop,shoulder_probe)>0.5,
+                  f'retainer {i} raised shoulder missing at x={x}')
+    contact_half=retainer_dims.RETAINER_CONTACT_HALF_WIDTH
+    speaker_edge_z=(SPEAKER_FRONT_Z+SPEAKER_FRONT_RADIUS-
+                    sqrt(SPEAKER_FRONT_RADIUS**2-contact_half**2))
+    retainer_edge_z=(housing.RETAINER_CENTRE_HEIGHT+SPEAKER_FRONT_RADIUS-
+                     sqrt(SPEAKER_FRONT_RADIUS**2-contact_half**2))
+    contact_gap=speaker_edge_z-retainer_edge_z
+    check(0.6<=contact_gap<=1.0,
+          'nominal front contact gap outside 0.6–1.0 mm across the retainer')
     check(retainer_dims.RETAINER_HEAD_BORE_DEPTH-retainer_dims.RETAINER_HEAD_HEIGHT>=0.8,
           'M3 cap head does not fully recess in retainer')
     engaged_length = (retainer_dims.RETAINER_HEAD_BORE_DEPTH +
@@ -230,10 +245,15 @@ def run():
         'joint_head_counterbore_depth_mm':housing.JOINT_COUNTERBORE_DEPTH,
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
         'retainer_capture_shoulder_height_mm':housing.RETAINER_CAPTURE_PAD_HEIGHT,
-        'retainer_capture_outer_overlap_mm':capture_outer_overlap,
+        'retainer_capture_outer_overlap_mm':actual_capture,
         'retainer_centre_beam_height_mm':housing.RETAINER_CENTRE_HEIGHT,
         'retainer_centre_beam_length_mm':housing.RETAINER_CENTRE_LENGTH,
         'retainer_bar_width_mm':housing.RETAINER_BAR_WIDTH,
+        'retainer_slot_radial_clearance_mm':housing.RETAINER_SEAT_XY_CLEARANCE,
+        'retainer_shoulder_top_at_50mm_min_z_mm':13.0,
+        'retainer_contact_half_span_mm':contact_half,
+        'retainer_front_radius_mm':SPEAKER_FRONT_RADIUS,
+        'retainer_nominal_contact_gap_mm':contact_gap,
         'retainer_head_bore_depth_mm':retainer_dims.RETAINER_HEAD_BORE_DEPTH,
         'retainer_m3_10mm_insert_engagement_mm':engaged_length,
         'retainer_m3_10mm_gasket_engagement_mm':gasket_retainer_engagement,

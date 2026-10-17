@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "intentional_change": "open retainer slots, outer-end tab pockets and outboard M3 joint holes",
+    "intentional_change": "clearanced retainer slots, outer-end tab pockets and outboard M3 joint holes",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -15,7 +15,7 @@
           6.0
         ]
       ],
-      "volume_mm3": 136147.66108538574
+      "volume_mm3": 135881.06189105
     }
   },
   "housing-shell": {
@@ -53,7 +53,7 @@
           6.599999904632568
         ]
       ],
-      "volume_mm3": 1764.7536665693624
+      "volume_mm3": 1764.7536665693588
     }
   },
   "grille": {
@@ -90,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.870394401677592e-08,
-      "surface_p99_mm": 4.161980908347096e-13,
-      "surface_max_mm": 2.115781416941803e-06,
+      "surface_rms_mm": 4.5855501803428095e-08,
+      "surface_p99_mm": 4.405856552847166e-13,
+      "surface_max_mm": 3.5513522686637342e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -141,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 4.000071532675281e-08,
+      "surface_rms_mm": 3.681234892693954e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 3.016950368263776e-06,
+      "surface_max_mm": 1.986063542791813e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -186,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.048218958879286e-08,
-      "surface_p99_mm": 1.432144669219779e-14,
-      "surface_max_mm": 1.6934593304489823e-06,
+      "surface_rms_mm": 2.914650172295175e-08,
+      "surface_p99_mm": 1.441934818852919e-14,
+      "surface_max_mm": 1.6061266089541334e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -198,7 +198,7 @@
     }
   },
   "end-retainer": {
-    "intentional_change": "full-depth base, outer-end capture tabs and M3 head recess",
+    "intentional_change": "full-depth base, raised end shoulders, R60 contact, outer-end tabs and M3 head recess",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -210,10 +210,10 @@
         [
           74.5,
           -75.0,
-          19.75437355041504
+          22.478639602661133
         ]
       ],
-      "volume_mm3": 18777.771501076768
+      "volume_mm3": 24171.950559482128
     }
   },
   "round-cable-grommet": {

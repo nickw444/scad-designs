@@ -33,6 +33,8 @@ The shell is 142.5 mm high from the flange interface to its rear face. Its strai
 
 The retainer's 6 mm base passes through the flange without a bridge over the slot. A flat 2 mm thick tab at each outer end extends 3 mm past the retainer bar. The tabs seat in matching underside pockets and hold the flange against the shell. Print the flange pockets with supports. The optional flat TPU gasket remains one piece across the shell/flange seam and retainer contact areas.
 
+After the first print showed about 2 mm of loaded retainer deflection and about 3 mm gaps at the contact ends, the front contact radius was tightened from 70 to 60 mm. The speaker dummy uses the same provisional front radius. The retainer's top now slopes from the curved contact out to each fixing area, filling previously unused height while keeping the 14 mm bar width. The flange seat and outer tab pockets have 0.35 mm insertion clearance on each side; the fixing pads have 0.3 mm per side. Compare the [before contact drawing](views/drawings/retainer_before.svg), [revised contact drawing](views/drawings/retainer_after_contact.svg), and [exact raised-shoulder section](views/drawings/retainer_after_shoulder.svg). The radius comes from the reported gap; the revised physical fit and loaded deflection still need a print test. Reprint the two retainers and ceiling flange; the shell geometry is unchanged.
+
 The grille uses the perimeter clips; the ceiling flange has no magnet pockets.
 
 ## Prototype fasteners

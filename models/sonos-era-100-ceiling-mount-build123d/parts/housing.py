@@ -23,10 +23,11 @@ RETAINER_SEAT_DEPTH = FLANGE_THICKNESS  # open channel: retainer passes through 
 RETAINER_CENTRE_HEIGHT = SPEAKER_FRONT_Z - 0.8  # full beam reaches front-contact height
 RETAINER_CENTRE_LENGTH = 123.0         # 0.5 mm clearance each side within 124 mm cavity
 RETAINER_BAR_WIDTH = 14.0             # widened load-bearing span
+RETAINER_SEAT_XY_CLEARANCE = 0.35     # each side; first print bound in the slot
 RETAINER_CAPTURE_OVERHANG = 3.0       # outer-end flange bearing, beyond the bar
 RETAINER_CAPTURE_ROOT = 0.5          # overlap into bar for a single solid
 RETAINER_CAPTURE_PAD_HEIGHT = 2.0    # flat bearing tab; flange pocket uses supports
-RETAINER_CAPTURE_XY_CLEARANCE = 0.2
+RETAINER_CAPTURE_XY_CLEARANCE = 0.35
 CLIP_LIP_TOP_Z = 0.68
 CLIP_SHOULDER_TOP_Z = 0.78
 CLIP_RECESS = 0.7
@@ -190,7 +191,9 @@ def monolithic_housing():
         blank -= cylinder(x,y,CEILING_SCREW_HOLE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         blank -= cone(x,y,CEILING_COUNTERSINK_RADIUS,CEILING_SCREW_HOLE_RADIUS,
                       0,CEILING_COUNTERSINK_DEPTH)
-    seat = rectangular_prism(RETAINER_BAR_LENGTH,RETAINER_BAR_WIDTH,-0.1,RETAINER_SEAT_DEPTH,
+    seat = rectangular_prism(RETAINER_BAR_LENGTH+2*RETAINER_SEAT_XY_CLEARANCE,
+                             RETAINER_BAR_WIDTH+2*RETAINER_SEAT_XY_CLEARANCE,
+                             -0.1,RETAINER_SEAT_DEPTH,
                              0,-RETAINER_Y)
     blank -= seat
     blank -= Rot(Z=180)*seat

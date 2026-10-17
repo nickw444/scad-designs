@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 136147.66108538574,
+    "volume_mm3": 135881.06189105,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -32,7 +32,7 @@
     "watertight": true
   },
   "flat-seam-gasket": {
-    "volume_mm3": 1764.7536665693624,
+    "volume_mm3": 1764.7536665693588,
     "bounds_mm": [
       [
         -72.5,
@@ -96,7 +96,7 @@
     "watertight": true
   },
   "end-retainer": {
-    "volume_mm3": 18777.771501076768,
+    "volume_mm3": 24171.950559482128,
     "bounds_mm": [
       [
         -74.5,
@@ -106,7 +106,7 @@
       [
         74.5,
         -75.0,
-        19.75437355041504
+        22.478639602661133
       ]
     ],
     "watertight": true
@@ -184,10 +184,15 @@
     "joint_head_counterbore_depth_mm": 4.0,
     "retainer_base_thickness_mm": 6.0,
     "retainer_capture_shoulder_height_mm": 2.0,
-    "retainer_capture_outer_overlap_mm": 3.0,
+    "retainer_capture_outer_overlap_mm": 2.65,
     "retainer_centre_beam_height_mm": 7.2,
     "retainer_centre_beam_length_mm": 123.0,
     "retainer_bar_width_mm": 14.0,
+    "retainer_slot_radial_clearance_mm": 0.35,
+    "retainer_shoulder_top_at_50mm_min_z_mm": 13.0,
+    "retainer_contact_half_span_mm": 40.0,
+    "retainer_front_radius_mm": 60.0,
+    "retainer_nominal_contact_gap_mm": 0.7999999999999972,
     "retainer_head_bore_depth_mm": 4.0,
     "retainer_m3_10mm_insert_engagement_mm": 6.3,
     "retainer_m3_10mm_gasket_engagement_mm": 5.7,

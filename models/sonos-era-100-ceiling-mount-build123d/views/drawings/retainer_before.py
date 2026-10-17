@@ -27,7 +27,7 @@ def render():
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="940" height="470" viewBox="0 0 940 470">
 <rect width="940" height="470" fill="#f8fafc"/>
 <text x="48" y="45" font-size="25" font-family="sans-serif" fill="#172554">Retainer · before first fit revision</text>
-<text x="48" y="75" font-size="15" font-family="sans-serif" fill="#475569">X–Z section at Y = 82 mm; dimensions in mm</text>
+<text x="48" y="75" font-size="15" font-family="sans-serif" fill="#475569">X–Z section at Y = -82 mm; dimensions in mm</text>
 <path d="M{point(-71.5,0)} L{point(71.5,0)} L{point(71.5,6)} L{point(40,6)} {retainer_reverse} L{point(-40,6)} L{point(-71.5,6)} Z" fill="#93c5fd" fill-opacity=".65" stroke="#2563eb" stroke-width="2"/>
 <path d="{inferred}" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="8 5"/>
 <path d="M{point(-40,0)} L{point(-40,28)} M{point(40,0)} L{point(40,28)} M{point(0,0)} L{point(0,27)}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4"/>
