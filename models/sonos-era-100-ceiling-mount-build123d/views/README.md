@@ -8,7 +8,7 @@ Each view is defined by a Python script beside its generated image. Run a script
 ../../.venv/bin/python views/drawings/shell_insertion.py
 ```
 
-The assembly scripts set the camera, selected grille, gasket and exploded spacing. `views/common.py` selects Sonos parts and colours, then calls the reusable helpers in `tools/cad_view_helpers.py`. The section scripts set the part, plane and cut location and export exact build123d section SVGs.
+The assembly scripts set the camera, selected grille and exploded spacing. `views/common.py` selects Sonos parts and colours, then calls the reusable helpers in `tools/cad_view_helpers.py`. The section scripts set the part, plane and cut location and export exact build123d section SVGs.
 
 The scripts in `drawings/` make annotated SVGs. Dimension numbers come from the actual build123d section wires or overall part bounds; hole diameters and counts are measured from circular cut wires. They are useful for checking a model before printing. The page is fitted to the image, so it is not a 1:1 cutting template. The drawings do not account for printer shrinkage, fit tolerance or hardware variation.
 

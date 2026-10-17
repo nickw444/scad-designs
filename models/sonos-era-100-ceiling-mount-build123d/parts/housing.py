@@ -63,13 +63,13 @@ CEILING_SCREWS = [
 RETAINER_Y = 82.0                       # bring end bosses inward for ceiling seal land
 RETAINER_FIXINGS = [(sx * 67.2, sy * RETAINER_Y)
                     for sx in (-1, 1) for sy in (-1, 1)]
-RETAINER_BOSS_X = 10.2                 # M3 seat clears swept speaker envelope
-RETAINER_BOSS_Y = 12.8                 # 1.4 mm wall around full-width socket
+RETAINER_BOSS_X = 12.2                 # covers the full retainer slot at the shell edge
+RETAINER_BOSS_Y = 20.0                 # 2.65 mm land beyond both slot sides
 RETAINER_BOSS_OUTWARD_OFFSET = 0.0
 RETAINER_BOSS_RAMP_RISE = 8.0          # rear-down print: <45° outward growth
 RETAINER_PAD_CLEARANCE_WIDTH = 7.65   # outer edge meets the seat end; no bridge island
 RETAINER_PAD_CLEARANCE_LENGTH = 10.0  # local fixing pad is narrower than the full beam
-RETAINER_PAD_OUTWARD_OFFSET = 0.475   # preserves gasket clearance at inner edge
+RETAINER_PAD_OUTWARD_OFFSET = 0.475
 RETAINER_PAD_TOP_Z = FLANGE_THICKNESS + 1.7
 RETAINER_INSERT_BODY_RADIUS = 2.2      # measured Ø4.4 M3 insert
 RETAINER_INSERT_TIP_RADIUS = 1.95      # measured Ø3.9 lead-in
@@ -96,6 +96,24 @@ JOINT_BOLT_UNDER_HEAD_LENGTH = M3_BOLT_UNDER_HEAD_LENGTH
 JOINT_COUNTERBORE_RADIUS = M3_COUNTERBORE_RADIUS
 JOINT_COUNTERBORE_DEPTH = 4.0         # 1 mm recess for the 3 mm cap head
 RETAINER_BAR_LENGTH = 143.0           # full-height base reaches both fixing bores
+SEAM_TONGUE_WIDTH = 1.3
+SEAM_TONGUE_HEIGHT = 1.5
+SEAM_GROOVE_WIDTH = 1.8                # 0.25 mm clearance on each side
+SEAM_GROOVE_DEPTH = 1.8                # 0.3 mm tip clearance; faces meet at Z=6
+SEAM_RETAINER_BREAK_HALF_LENGTH = 10.0
+
+
+def seam_band(width, z0, z1):
+    """Rounded, centred wall band; interrupted at the removable retainers."""
+    cx = (OUTER_X + CAVITY_X) / 4
+    cy = (OUTER_Y + CAVITY_Y) / 4
+    cr = (OUTER_R + CAVITY_R) / 2
+    ring = (rounded_prism(2*(cx+width/2),2*(cy+width/2),cr+width/2,z0,z1)
+            - rounded_prism(2*(cx-width/2),2*(cy-width/2),cr-width/2,z0-0.1,z1+0.1))
+    for sy in (-1,1):
+        ring -= rectangular_prism(OUTER_X+2,2*SEAM_RETAINER_BREAK_HALF_LENGTH,
+                                  z0-0.1,z1+0.1,0,sy*RETAINER_Y)
+    return ring
 
 
 def retainer_boss_xy(x, y):
@@ -219,6 +237,8 @@ def ceiling_flange():
     for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_BOLT_CLEARANCE_RADIUS,-0.1,FLANGE_THICKNESS+0.1)
         part -= cylinder(x,y,JOINT_COUNTERBORE_RADIUS,-0.1,JOINT_COUNTERBORE_DEPTH)
+    part += seam_band(SEAM_TONGUE_WIDTH,FLANGE_THICKNESS,
+                      FLANGE_THICKNESS+SEAM_TONGUE_HEIGHT)
     return part.clean()
 
 def housing_shell():
@@ -236,4 +256,6 @@ def housing_shell():
     for x,y in JOINT_FIXINGS:
         part -= cylinder(x,y,JOINT_INSERT_HOLE_RADIUS,FLANGE_THICKNESS-0.1,
                           FLANGE_THICKNESS+JOINT_INSERT_DEPTH)
+    part -= seam_band(SEAM_GROOVE_WIDTH,FLANGE_THICKNESS-0.1,
+                      FLANGE_THICKNESS+SEAM_GROOVE_DEPTH)
     return part.clean()

@@ -1,4 +1,4 @@
-"""Check the build123d assembly at nominal and optional-gasket placements."""
+"""Check the build123d assembly, locating joint, and printable exports."""
 from __future__ import annotations
 import json
 from math import sqrt
@@ -32,8 +32,6 @@ def run():
     flange=direct.get('ceiling-flange'); shell=direct.get('housing-shell')
     speaker=speaker_mockup(); grille=direct.get('grille')
     retainers=[direct.get('retainer-south'),direct.get('retainer-north')]
-    gasket_assembly=make_assembly(gasket=True)
-    gasket=gasket_assembly.get('flat-seam-gasket')
     reports={}
     for name in PARTS:
         path=BUILD/f'era-100-{name}.stl'
@@ -42,6 +40,35 @@ def run():
         reports[name]={'volume_mm3':float(mesh.volume),'bounds_mm':mesh.bounds.tolist(),
                        'watertight':True}
     check(overlap(flange,shell)<0.001,'flange/shell overlap')
+    for offset in ((0.5,0),(0,0.5)):
+        check(overlap(flange,Pos(offset[0],offset[1],0)*shell)>10,
+              f'locating joint does not constrain {offset} mm offset')
+    check(housing.RETAINER_BOSS_X/2+abs(housing.RETAINER_FIXINGS[0][0]) >=
+          housing.RETAINER_BAR_LENGTH/2+housing.RETAINER_SEAT_XY_CLEARANCE,
+          'retainer boss does not cover the outer end of the flange slot')
+    check(housing.RETAINER_BOSS_Y/2 >=
+          housing.RETAINER_BAR_WIDTH/2+housing.RETAINER_SEAT_XY_CLEARANCE+2,
+          'retainer boss does not extend 2 mm past both flange slot sides')
+    check(abs((housing.SEAM_GROOVE_WIDTH-housing.SEAM_TONGUE_WIDTH)/2-0.25)<1e-6 and
+          abs(housing.SEAM_GROOVE_DEPTH-housing.SEAM_TONGUE_HEIGHT-0.3)<1e-6,
+          'locating tongue/groove clearance changed')
+    seam_x=(housing.OUTER_X+housing.CAVITY_X)/4
+    for y in (-50,0,50):
+        tongue_probe=rectangular_prism(0.2,0.2,housing.FLANGE_THICKNESS+0.1,
+                    housing.FLANGE_THICKNESS+housing.SEAM_TONGUE_HEIGHT-0.1,seam_x,y)
+        check(overlap(flange,tongue_probe)>0.01 and overlap(shell,tongue_probe)<0.001,
+              f'locating tongue/groove missing at y={y}')
+    for sy in (-1,1):
+        for x in (-70,70):
+            for dy in (-housing.RETAINER_BAR_WIDTH/2-
+                       housing.RETAINER_SEAT_XY_CLEARANCE+0.3,
+                       housing.RETAINER_BAR_WIDTH/2+
+                       housing.RETAINER_SEAT_XY_CLEARANCE-0.3):
+                seal_probe=rectangular_prism(0.3,0.3,housing.FLANGE_THICKNESS+0.1,
+                                            housing.FLANGE_THICKNESS+0.5,
+                                            x,sy*housing.RETAINER_Y+dy)
+                check(overlap(shell,seal_probe)>0.01,
+                      'retainer boss leaves uncovered flange-slot edge')
     house=flange+shell
     check(overlap(house,speaker)<0.001,'speaker/housing overlap')
     rear_apex = SPEAKER_FRONT_Z + SPEAKER_DEPTH
@@ -131,9 +158,6 @@ def run():
                       retainer_dims.RETAINER_BOLT_UNDER_HEAD_LENGTH -
                       housing.RETAINER_PAD_TOP_Z)
     check(engaged_length>=6.0,'10 mm M3 retainer bolt has insufficient insert engagement')
-    gasket_retainer_engagement=engaged_length-gasket.bounding_box().size.Z
-    check(gasket_retainer_engagement>=5.5,
-          '10 mm M3 retainer bolt has insufficient engagement with optional gasket')
     for x,y in housing.RETAINER_FIXINGS:
         if y > 0:
             continue
@@ -160,12 +184,9 @@ def run():
     joint_engagement = (housing.JOINT_COUNTERBORE_DEPTH +
                         housing.JOINT_BOLT_UNDER_HEAD_LENGTH -
                         housing.FLANGE_THICKNESS)
-    gasket_joint_engagement = joint_engagement - gasket.bounding_box().size.Z
     check(joint_engagement>=8.0 and
           joint_engagement<housing.JOINT_INSERT_DEPTH,
           '10 mm M3 joint bolt does not seat safely in the insert pilot')
-    check(gasket_joint_engagement>=7.0,
-          '10 mm M3 joint bolt has insufficient engagement with optional gasket')
     for x,y in housing.JOINT_FIXINGS:
         check(overlap(flange,cylinder(x,y,housing.JOINT_BOLT_CLEARANCE_RADIUS,0.1,5.9))<0.001,
               f'M3 flange bore blocked at {x,y}')
@@ -193,19 +214,6 @@ def run():
     for x,y in housing.CEILING_SCREWS:
         check(overlap(flange,cylinder(x,y,housing.CEILING_SCREW_HOLE_RADIUS,0.1,5.9))<0.001,
               f'ceiling screw bore blocked at {x,y}')
-    raised=gasket_assembly.get('housing-shell')
-    check(overlap(gasket,flange)<0.001,'gasket/flange overlap')
-    check(overlap(gasket,raised)<0.001,'gasket/raised shell overlap')
-    check(overlap(raised,flange)<0.001,'raised shell/flange overlap')
-    check(overlap(raised,speaker)<0.001,'raised shell/speaker overlap')
-    check(overlap(gasket,Pos(0,0,0.05)*flange)>1,
-          'gasket does not contact flange')
-    check(overlap(gasket,Pos(0,0,-0.05)*raised)>1,
-          'gasket does not contact raised shell')
-    for i,stop in enumerate(retainers):
-        check(overlap(raised,stop)<0.001,f'raised shell/retainer {i} overlap')
-        check(overlap(gasket,Pos(0,0,0.05)*stop)>1,
-              f'gasket does not contact retainer {i}')
     cutout=ceiling_cutout_profile(-1,160)
     upper=shell & cylinder(0,0,housing.FLANGE_RADIUS+1,housing.FLANGE_THICKNESS,160)
     check((upper-cutout).volume<0.001,'shell exceeds ceiling cutout')
@@ -240,7 +248,12 @@ def run():
     reports['assembly']={
         'insertion_positions_checked':15,
         'direct_assembly_collisions_mm3':0,
-        'optional_flat_gasket_assembly_collisions_mm3':0,
+        'seam_tongue_width_mm':housing.SEAM_TONGUE_WIDTH,
+        'seam_tongue_height_mm':housing.SEAM_TONGUE_HEIGHT,
+        'seam_groove_width_mm':housing.SEAM_GROOVE_WIDTH,
+        'seam_groove_depth_mm':housing.SEAM_GROOVE_DEPTH,
+        'seam_radial_clearance_each_side_mm':(housing.SEAM_GROOVE_WIDTH-housing.SEAM_TONGUE_WIDTH)/2,
+        'retainer_boss_span_mm':[housing.RETAINER_BOSS_X,housing.RETAINER_BOSS_Y],
         'round_grommet_compression_mm3':round_compression,
         'flat_grommet_compression_mm3':flat_compression,
         'nominal_factory_plug_diameter_mm':housing.ASSUMED_PLUG_DIAMETER,
@@ -261,7 +274,6 @@ def run():
         'joint_end_head_inner_land_mm':end_head_land,
         'retainer_m3_axes_checked':len(housing.RETAINER_FIXINGS),
         'joint_m3_10mm_insert_engagement_mm':joint_engagement,
-        'joint_m3_10mm_gasket_engagement_mm':gasket_joint_engagement,
         'joint_head_counterbore_depth_mm':housing.JOINT_COUNTERBORE_DEPTH,
         'retainer_base_thickness_mm':housing.RETAINER_SEAT_DEPTH,
         'retainer_capture_shoulder_height_mm':housing.RETAINER_CAPTURE_PAD_HEIGHT,
@@ -276,12 +288,11 @@ def run():
         'retainer_nominal_contact_gap_mm':contact_gap,
         'retainer_head_bore_depth_mm':retainer_dims.RETAINER_HEAD_BORE_DEPTH,
         'retainer_m3_10mm_insert_engagement_mm':engaged_length,
-        'retainer_m3_10mm_gasket_engagement_mm':gasket_retainer_engagement,
         'ceiling_screws_checked':len(housing.CEILING_SCREWS),
         'speaker_mockup_note':'Rear/front curves inferred from owner measurements; physical fit remains to be tested.'
     }
     out=OUT/'assembly-check.json'; out.write_text(json.dumps(reports,indent=2)+'\n')
-    print(f'PASS: ten watertight STL parts, 15 insertion positions, direct and gasket assemblies; {out}')
+    print(f'PASS: nine watertight STL parts, 15 insertion positions, located assembly; {out}')
 
 if __name__=='__main__':
     run()

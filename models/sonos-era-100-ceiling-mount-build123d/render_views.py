@@ -4,7 +4,7 @@ import argparse
 import importlib
 
 VIEWS = ('rear_assembly', 'room_face', 'exploded_assembly',
-         'room_face_fine_hex', 'rear_with_gasket')
+         'room_face_fine_hex')
 
 def render(names):
     for name in names:

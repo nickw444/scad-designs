@@ -6,7 +6,7 @@ from views.common import assembly_view
 
 
 def render():
-    assembly_view(__file__, camera=(350, -450, 280), title='Exploded assembly', gasket=True, explode=45)
+    assembly_view(__file__, camera=(350, -450, 280), title='Exploded assembly', explode=45)
 
 
 if __name__ == '__main__':

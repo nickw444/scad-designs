@@ -24,7 +24,6 @@ PALETTE = {
     'grille': '#9dcfbd',
     'hex-grille': '#9dcfbd',
     'fine-hex-grille': '#9dcfbd',
-    'flat-seam-gasket': '#4a9e9b',
     'round-cable-grommet': '#756fae',
     'flat-cable-grommet': '#756fae',
     'speaker-dummy': '#d7dce2',
@@ -32,9 +31,9 @@ PALETTE = {
 
 
 def assembly_view(script: str, *, camera, title, look_at=(0, 0, 50),
-                  grille='grille', gasket=False,
+                  grille='grille',
                   grommet='round-cable-grommet', speaker=False, explode=0):
-    assembly = make_assembly(grille=grille, gasket=gasket, grommet=grommet,
+    assembly = make_assembly(grille=grille, grommet=grommet,
                              speaker=speaker, explode=explode)
     return render_assembly_view(script, assembly, camera=camera,
                                 look_at=look_at, title=title, palette=PALETTE)
