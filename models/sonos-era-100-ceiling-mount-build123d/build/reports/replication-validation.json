@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "intentional_change": "open retainer slots, outer-end tab pockets, no magnet pockets and four M3 joint holes",
+    "intentional_change": "open retainer slots, outer-end tab pockets and outboard M3 joint holes",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
@@ -15,26 +15,26 @@
           6.0
         ]
       ],
-      "volume_mm3": 136147.66102695107
+      "volume_mm3": 136147.66108538574
     }
   },
   "housing-shell": {
-    "intentional_change": "uniform-thickness roof, \u00d832 cable passage and four M3 joint bosses",
+    "intentional_change": "uniform-thickness roof, \u00d832 cable passage and outboard M3 joint bosses",
     "candidate_mesh": {
       "watertight": true,
       "bounds_mm": [
         [
-          -72.30000305175781,
-          -100.5,
+          -72.5,
+          -103.49857330322266,
           6.0
         ],
         [
-          72.30000305175781,
-          100.5,
+          72.5,
+          103.49857330322266,
           148.5
         ]
       ],
-      "volume_mm3": 480184.1586827074
+      "volume_mm3": 481211.7218294169
     }
   },
   "flat-seam-gasket": {
@@ -43,17 +43,17 @@
       "watertight": true,
       "bounds_mm": [
         [
-          -72.30000305175781,
-          -100.5,
+          -72.5,
+          -103.49513244628906,
           6.0
         ],
         [
-          72.30000305175781,
-          100.5,
+          72.5,
+          103.49513244628906,
           6.599999904632568
         ]
       ],
-      "volume_mm3": 1715.5051036420045
+      "volume_mm3": 1764.7536665693624
     }
   },
   "grille": {
@@ -90,9 +90,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 5.373343675512266e-08,
-      "surface_p99_mm": 3.977090933993814e-13,
-      "surface_max_mm": 3.5274756727587517e-06,
+      "surface_rms_mm": 3.870394401677592e-08,
+      "surface_p99_mm": 4.161980908347096e-13,
+      "surface_max_mm": 2.115781416941803e-06,
       "samples_each_direction": 12000
     },
     "brep": {
@@ -141,9 +141,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.602164080050461e-08,
+      "surface_rms_mm": 4.000071532675281e-08,
       "surface_p99_mm": 1.464821375527116e-14,
-      "surface_max_mm": 2.590558665168218e-06,
+      "surface_max_mm": 3.016950368263776e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -186,9 +186,9 @@
       "maximum_bounds_error_mm": 0.0,
       "reference_watertight": true,
       "candidate_watertight": true,
-      "surface_rms_mm": 3.78691974574315e-08,
-      "surface_p99_mm": 1.4419228562316118e-14,
-      "surface_max_mm": 2.2727797638770527e-06,
+      "surface_rms_mm": 3.048218958879286e-08,
+      "surface_p99_mm": 1.432144669219779e-14,
+      "surface_max_mm": 1.6934593304489823e-06,
       "samples_each_direction": 12000
     },
     "complete_mesh": {
@@ -260,17 +260,17 @@
       "watertight": true,
       "bounds_mm": [
         [
-          -73.30000305175781,
-          -101.4942398071289,
+          -73.5,
+          -104.49395751953125,
           0.0
         ],
         [
-          73.30000305175781,
-          101.4942398071289,
+          73.5,
+          104.49395751953125,
           1.5
         ]
       ],
-      "volume_mm3": 6335.375192426301
+      "volume_mm3": 6491.150158713489
     }
   }
 }

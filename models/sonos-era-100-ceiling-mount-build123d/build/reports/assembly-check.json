@@ -1,6 +1,6 @@
 {
   "ceiling-flange": {
-    "volume_mm3": 136147.66102695107,
+    "volume_mm3": 136147.66108538574,
     "bounds_mm": [
       [
         -122.34772491455078,
@@ -16,32 +16,32 @@
     "watertight": true
   },
   "housing-shell": {
-    "volume_mm3": 480184.1586827074,
+    "volume_mm3": 481211.7218294169,
     "bounds_mm": [
       [
-        -72.30000305175781,
-        -100.5,
+        -72.5,
+        -103.49857330322266,
         6.0
       ],
       [
-        72.30000305175781,
-        100.5,
+        72.5,
+        103.49857330322266,
         148.5
       ]
     ],
     "watertight": true
   },
   "flat-seam-gasket": {
-    "volume_mm3": 1715.5051036420045,
+    "volume_mm3": 1764.7536665693624,
     "bounds_mm": [
       [
-        -72.30000305175781,
-        -100.5,
+        -72.5,
+        -103.49513244628906,
         6.0
       ],
       [
-        72.30000305175781,
-        100.5,
+        72.5,
+        103.49513244628906,
         6.599999904632568
       ]
     ],
@@ -144,16 +144,16 @@
     "watertight": true
   },
   "ceiling-cutout-template": {
-    "volume_mm3": 6335.375192426301,
+    "volume_mm3": 6491.150158713489,
     "bounds_mm": [
       [
-        -73.30000305175781,
-        -101.4942398071289,
+        -73.5,
+        -104.49395751953125,
         0.0
       ],
       [
-        73.30000305175781,
-        101.4942398071289,
+        73.5,
+        104.49395751953125,
         1.5
       ]
     ],
@@ -176,6 +176,8 @@
     "roof_flat_wall_mm": 5.0,
     "roof_slope_normal_wall_mm": 4.949747468305833,
     "joint_m3_axes_checked": 4,
+    "joint_side_head_inner_land_mm": 3.6,
+    "joint_end_head_inner_land_mm": 3.35,
     "retainer_m3_axes_checked": 4,
     "joint_m3_10mm_insert_engagement_mm": 8.0,
     "joint_m3_10mm_gasket_engagement_mm": 7.4,

@@ -119,6 +119,12 @@ def run():
               f'M3 head lacks bearing seat at {x,y}')
     check(len(housing.JOINT_FIXINGS)==4 and len(housing.RETAINER_FIXINGS)==4,
           'expected four shell joins and four retainer bolts')
+    side_head_land=(abs(housing.JOINT_SIDE_FIXINGS[0][0])-
+                    housing.CAVITY_X/2-housing.JOINT_COUNTERBORE_RADIUS)
+    end_head_land=(abs(housing.JOINT_END_FIXINGS[0][1])-
+                   housing.CAVITY_Y/2-housing.JOINT_COUNTERBORE_RADIUS)
+    check(min(side_head_land,end_head_land)>=3.0,
+          'M3 head counterbore is too close to the flange inner opening')
     joint_engagement = (housing.JOINT_COUNTERBORE_DEPTH +
                         housing.JOINT_BOLT_UNDER_HEAD_LENGTH -
                         housing.FLANGE_THICKNESS)
@@ -216,6 +222,8 @@ def run():
         'roof_flat_wall_mm':roof_flat_wall,
         'roof_slope_normal_wall_mm':roof_slope_wall,
         'joint_m3_axes_checked':len(housing.JOINT_FIXINGS),
+        'joint_side_head_inner_land_mm':side_head_land,
+        'joint_end_head_inner_land_mm':end_head_land,
         'retainer_m3_axes_checked':len(housing.RETAINER_FIXINGS),
         'joint_m3_10mm_insert_engagement_mm':joint_engagement,
         'joint_m3_10mm_gasket_engagement_mm':gasket_joint_engagement,

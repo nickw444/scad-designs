@@ -21,8 +21,8 @@ from paths import REPORTS
 REFERENCE=HERE.parent/'sonos-era-100-ceiling-mount-2'
 HEX={'hex-grille','fine-hex-grille'}
 ADAPTED={
-    'ceiling-flange':'open retainer slots, outer-end tab pockets, no magnet pockets and four M3 joint holes',
-    'housing-shell':'uniform-thickness roof, Ø32 cable passage and four M3 joint bosses',
+    'ceiling-flange':'open retainer slots, outer-end tab pockets and outboard M3 joint holes',
+    'housing-shell':'uniform-thickness roof, Ø32 cable passage and outboard M3 joint bosses',
     'flat-seam-gasket':'one-piece joint interface includes the retainer contact areas',
     'end-retainer':'full-depth base, outer-end capture tabs and M3 head recess',
     'round-cable-grommet':'resized for Ø32 cable passage',

@@ -3,26 +3,26 @@
 <text x="90" y="62" class="title">Housing shell · centreline profile</text>
 <text x="90" y="93" class="subtitle">XZ section at 0 mm · dimensions measured from CAD</text>
 <style>.title{font:700 31px Arial,sans-serif;fill:#17324d}.subtitle{font:17px Arial,sans-serif;fill:#5b7084}.cut{fill:#dceaf4;stroke:#19466c;stroke-width:2;fill-rule:evenodd}.dim{stroke:#147c82;stroke-width:2;fill:none}.ext{stroke:#65a9ad;stroke-width:1.5}.dimtext{font:700 18px Arial,sans-serif;fill:#0b666b}.leader{stroke:#b45d33;stroke-width:2;fill:none}.leadertext{font:700 18px Arial,sans-serif;fill:#9a4923}.note{font:17px Arial,sans-serif;fill:#40566b}</style>
-<path class="cut" d="M 458.57,842.82 L 458.57,891.21 L 470.40,891.21 L 470.40,321.26 L 639.77,151.88 L 967.77,151.88 L 1137.14,321.26 L 1137.14,891.21 L 1148.97,891.21 L 1148.97,842.82 L 1170.48,842.82 L 1170.48,891.21 L 1181.23,891.21 L 1181.23,837.45 L 1161.34,795.17 L 1161.34,314.50 L 1160.11,308.32 L 1156.61,303.09 L 982.32,128.80 L 973.14,125.00 L 634.40,125.00 L 625.22,128.80 L 450.93,303.09 L 447.43,308.32 L 446.20,314.50 L 446.20,795.17 L 426.31,837.45 L 426.31,891.21 L 437.06,891.21 L 437.06,842.82 L 458.57,842.82 Z"/>
-<line class="ext" x1="426.31" y1="891.21" x2="426.31" y2="988.00"/>
-<line class="ext" x1="1181.23" y1="891.21" x2="1181.23" y2="988.00"/>
-<line class="dim" x1="426.31" y1="988.00" x2="1181.23" y2="988.00"/>
-<polygon fill="#147c82" points="426.31,988.00 436.31,992.00 436.31,984.00"/>
-<polygon fill="#147c82" points="1181.23,988.00 1171.23,992.00 1171.23,984.00"/>
-<text class="dimtext" text-anchor="middle" x="803.77" y="979.00">140.40 mm</text>
-<line class="ext" x1="426.31" y1="891.21" x2="318.77" y2="891.21"/>
-<line class="ext" x1="426.31" y1="125.00" x2="318.77" y2="125.00"/>
-<line class="dim" x1="318.77" y1="891.21" x2="318.77" y2="125.00"/>
-<polygon fill="#147c82" points="318.77,891.21 322.77,881.21 314.77,881.21"/>
-<polygon fill="#147c82" points="318.77,125.00 322.77,135.00 314.77,135.00"/>
-<text class="dimtext" text-anchor="middle" transform="translate(310.77 508.11) rotate(-90)">142.50 mm</text>
+<path class="cut" d="M 446.20,842.82 L 446.20,891.21 L 470.40,891.21 L 470.40,321.26 L 639.77,151.88 L 967.77,151.88 L 1137.14,321.26 L 1137.14,891.21 L 1161.34,891.21 L 1161.34,842.82 L 1182.84,842.82 L 1182.84,891.21 L 1193.60,891.21 L 1193.60,837.45 L 1161.34,793.92 L 1161.34,314.50 L 1160.11,308.32 L 1156.61,303.09 L 982.32,128.80 L 973.14,125.00 L 634.40,125.00 L 625.22,128.80 L 450.93,303.09 L 447.43,308.32 L 446.20,314.50 L 446.20,793.92 L 413.94,837.45 L 413.94,891.21 L 424.69,891.21 L 424.69,842.82 L 446.20,842.82 Z"/>
+<line class="ext" x1="413.94" y1="891.21" x2="413.94" y2="988.00"/>
+<line class="ext" x1="1193.60" y1="891.21" x2="1193.60" y2="988.00"/>
+<line class="dim" x1="413.94" y1="988.00" x2="1193.60" y2="988.00"/>
+<polygon fill="#147c82" points="413.94,988.00 423.94,992.00 423.94,984.00"/>
+<polygon fill="#147c82" points="1193.60,988.00 1183.60,992.00 1183.60,984.00"/>
+<text class="dimtext" text-anchor="middle" x="803.77" y="979.00">145.00 mm</text>
+<line class="ext" x1="413.94" y1="891.21" x2="306.40" y2="891.21"/>
+<line class="ext" x1="413.94" y1="125.00" x2="306.40" y2="125.00"/>
+<line class="dim" x1="306.40" y1="891.21" x2="306.40" y2="125.00"/>
+<polygon fill="#147c82" points="306.40,891.21 310.40,881.21 302.40,881.21"/>
+<polygon fill="#147c82" points="306.40,125.00 310.40,135.00 302.40,135.00"/>
+<text class="dimtext" text-anchor="middle" transform="translate(298.40 508.11) rotate(-90)">142.50 mm</text>
 <line class="ext" x1="803.77" y1="891.21" x2="803.77" y2="891.21"/>
 <line class="ext" x1="803.77" y1="151.88" x2="803.77" y2="151.88"/>
 <line class="dim" x1="803.77" y1="891.21" x2="803.77" y2="151.88"/>
 <polygon fill="#147c82" points="803.77,891.21 807.77,881.21 799.77,881.21"/>
 <polygon fill="#147c82" points="803.77,151.88 807.77,161.88 799.77,161.88"/>
 <text class="dimtext" text-anchor="middle" transform="translate(795.77 521.55) rotate(-90)">Insertion depth 137.50 mm</text>
-<text class="note" x="90" y="1028">Overall shell height: 142.50 mm; maximum XY width: 144.60 mm.</text>
+<text class="note" x="90" y="1028">Overall shell height: 142.50 mm; maximum XY width: 145.00 mm.</text>
 <text class="note" x="90" y="1056">Shell mouth to inner roof: 137.50 mm. From nominal speaker front: 135.50 mm.</text>
 <text class="note" x="90" y="1084">Nominal speaker depth: 130.50 mm; rear clearance at this position: 5.00 mm.</text>
 <text class="note" x="90" y="1112">Profile is the exact cut through Y = 0; its width differs from the maximum shell width.</text>

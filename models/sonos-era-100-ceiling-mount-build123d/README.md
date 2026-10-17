@@ -38,6 +38,7 @@ The grille uses the perimeter clips; the ceiling flange has no magnet pockets.
 ## Prototype fasteners
 
 - Four M3 × 10 mm cap-head bolts join the ceiling flange to the shell: two at the side midpoints and one at each end midpoint. Four more M3 × 10 mm cap-head bolts secure the two end retainers.
+- The joint head counterbores leave at least 3 mm of flange material to the inner opening: 3.6 mm at the sides and 3.35 mm at the ends. See the [underside head-clearance drawing](views/drawings/flange_head_clearance.svg).
 - All eight cap heads are designed for Ø5.5 mm heads, 3.0 mm head height, and Ø5.8 × 4.0 mm counterbores. The M3 insert pilots are Ø4.0 mm for the measured Ø4.4 mm heat-set inserts.
 - The four joint bolts extend 8.0 mm past the flange into the insert pilots, or 7.4 mm with the optional 0.6 mm gasket. The retainer bolts extend 6.3 mm past their pad interface, or 5.7 mm with the gasket. The 20 mm bolts are too long for these pilots.
 - The six existing ceiling-mount screw holes remain sized for 6g screws.

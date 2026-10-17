@@ -3,7 +3,8 @@ from __future__ import annotations
 import argparse
 import importlib
 
-DRAWINGS = ('shell_insertion', 'shell_centre_xz', 'flange_fixings', 'cable_passage')
+DRAWINGS = ('shell_insertion', 'shell_centre_xz', 'flange_fixings',
+            'flange_head_clearance', 'cable_passage')
 
 
 def render(names):
