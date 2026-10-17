@@ -10,7 +10,7 @@ SPEAKER_X = 120.0
 SPEAKER_Y = 182.5
 SPEAKER_DEPTH = 130.5
 SPEAKER_FRONT_Z = 8.0
-SPEAKER_FRONT_RADIUS = 60.0           # nearest full-width circular proxy for ≈3 mm end gap
+SPEAKER_FRONT_RADIUS = 60.0           # provisional circular front profile
 SPEAKER_REAR_RADIUS = 66.3
 CURVE_CENTRE_Z = SPEAKER_FRONT_Z + SPEAKER_DEPTH - SPEAKER_REAR_RADIUS
 
