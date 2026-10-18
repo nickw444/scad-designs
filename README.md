@@ -25,6 +25,7 @@ Model entry points own their measured dimensions, MakerWorld-facing parameters, 
 | [UniFi G5 PTZ soffit mount](https://makerworld.com/en/models/3095613-unifi-g5-ptz-soffit-ceiling-mount#profileId-3488652) | `models/unifi-g5-ptz-soffit-mount/unifi-g5-ptz-soffit-mount.scad` | three carriers and ceiling flange |
 | [Tesla trunk hook with M6 nut trap](https://makerworld.com/en/models/3237225-tesla-trunk-hook-with-captured-m6-nut) | `models/tesla-hook/tesla-hook.scad` | nut-retained trunk hook |
 | [Flush tablet wall mount](https://makerworld.com/en/models/1693448-super-minimal-frameless-tablet-ipad-wall-mount#profileId-1795300) | `models/tablet-mount/tablet-mount.scad` | legacy, Australian, European/UK, and US housings with round/flat cable channels and matching cleats |
+| [Sonos Era 100 ceiling mount](https://makerworld.com/en/models/3456696-sonos-era-100-flush-recessed-ceiling-mount#profileId-3943980) | `models/sonos-era-100-ceiling-mount/build.py` | modular build123d parts, assembly, and measured views |
 
 Open an entry point in OpenSCAD to use the Customizer. For numbered designs, choose `assembled` for previewing or export `panel` and `labels` separately for aligned multi-material parts.
 
@@ -38,6 +39,19 @@ make preview
 ```
 
 These commands render all production STLs and compact project-local PNG previews. Running `make` produces both. Set `OPENSCAD=/path/to/OpenSCAD` when the executable is not on `PATH`; the Makefile also detects the standard macOS application bundle.
+
+## Python CAD tools
+
+Build123d models and the reusable scripts in `tools/` use one repository-root virtual environment. [`pyproject.toml`](pyproject.toml) and `uv.lock` define its dependencies:
+
+```sh
+uv sync
+uv run regen --list
+uv run regen sonos-era-100-ceiling-mount
+uv run regen sonos-era-100-ceiling-mount --only views
+```
+
+`regen` handles build123d projects that have a `regenerate.toml` manifest. It runs that project's STL build, checks, and view scripts in order; `--only build`, `--only checks`, `--only views`, and `--dry-run` narrow the work. Add the same manifest to a future build123d project to make it available through this command. OpenSCAD and older CadQuery projects retain their existing build commands.
 
 ## Adding a model
 

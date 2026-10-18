@@ -1,5 +1,7 @@
 # Sonos Era 100 ceiling mount — build123d project
 
+Published model: [Sonos Era 100 flush recessed ceiling mount on MakerWorld](https://makerworld.com/en/models/3456696-sonos-era-100-flush-recessed-ceiling-mount#profileId-3943980).
+
 This is a parametric [build123d](https://github.com/gumyr/build123d) ceiling mount for the Sonos Era 100. The source is Python/build123d algebra mode. STL files are print exports; STEP is available as an optional interchange export. XY is the ceiling plane, +Z points into the cavity, and dimensions are in millimetres.
 
 ## Project layout
@@ -54,10 +56,10 @@ From the repository root, create the shared environment and regenerate every dec
 
 ```sh
 uv sync
-uv run regen sonos-era-100-ceiling-mount-build123d
+uv run regen sonos-era-100-ceiling-mount
 ```
 
-Use `uv run regen sonos-era-100-ceiling-mount-build123d --only build`, `--only checks`, or `--only views` for one stage. For individual scripts, run from this model directory with the root environment:
+Use `uv run regen sonos-era-100-ceiling-mount --only build`, `--only checks`, or `--only views` for one stage. For individual scripts, run from this model directory with the root environment:
 
 ```sh
 ../../.venv/bin/python build.py
@@ -85,8 +87,8 @@ Add a new printable part in `parts/`, then register its builder in `parts/__init
 
 The nine printable STL exports are in `build/`. Optional STEP exports go in `build/step/`. Generated views live beside their scripts under `views/`, while the current assembly-check report goes in `build/reports/`. The Python model is authoritative; STEP is useful when passing editable solids to another CAD application.
 
-## Validation and source
+## Validation and fit assumptions
 
-The assembly check covers the speaker dummy at 15 insertion positions, the locating rebate and retainer boss coverage, screw axes, a Ø30 mm plug passage, and cable grommet compression. Design credit: [Sonos One/Play:1 ceiling mount on MakerWorld](https://makerworld.com/en/models/1931421-sonos-one-play1-ceiling-mount#profileId-2073402).
+The assembly check covers the speaker dummy at 15 insertion positions, the locating rebate and retainer boss coverage, screw axes, a Ø30 mm plug passage, and cable grommet compression.
 
 The dummy's front and rear curves are based on owner measurements, not a manufacturer CAD model. Physical insertion, cable fit and grille pull-off force still require print testing.

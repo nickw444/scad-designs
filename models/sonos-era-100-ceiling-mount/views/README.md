@@ -13,4 +13,4 @@ The assembly scripts set the camera, selected grille and exploded spacing. `view
 The scripts in `drawings/` make annotated SVGs. Dimension numbers come from the actual build123d section wires or overall part bounds; hole diameters and counts are measured from circular cut wires. They are useful for checking a model before printing. The page is fitted to the image, so it is not a 1:1 cutting template. The drawings do not account for printer shrinkage, fit tolerance or hardware variation.
 
 Run `render_views.py`, `render_sections.py` and `render_drawings.py` from the project root to regenerate the complete sets.
-From the repository root, `uv run regen sonos-era-100-ceiling-mount-build123d --only views` regenerates all three view groups through the project manifest.
+From the repository root, `uv run regen sonos-era-100-ceiling-mount --only views` regenerates all three view groups through the project manifest.
